@@ -33,7 +33,7 @@
 
 		<!-- 메인 아이콘 -->
 		<div class="container-fluid px-5">
-			<a class="navbar-brand" href="#!"><img
+			<a class="navbar-brand" href="/"><img
 				src="/img/ezpick_nav_icon.png"></a>
 
 			<!-- 메뉴 목록 -->
