@@ -12,14 +12,13 @@ spring:
       suffix: .jsp
       
   datasource:
-    driver-class-name: org.h2.Driver
-    url: jdbc:h2:tcp://localhost/~/test
-    username: sa
-    password: 
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/ezpick_db?serverTimezone=Asia/Seoul
+    username: admin
+    password: admin1234
     
   jpa:
     open-in-view: true
-    database-platform: org.hibernate.dialect.H2Dialect
     show-sql: true
     hibernate:
       naming:
