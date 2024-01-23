@@ -1960,6 +1960,12 @@ progress {
     -webkit-overflow-scrolling: touch;
   }
 }
+
+
+.summoner_icon {
+	border-radius: 15%;
+}
+
 .form-label {
   margin-bottom: 0.5rem;
 }
@@ -10861,7 +10867,7 @@ textarea.form-control-lg {
 
 header.masthead {
   position: relative;
-  background-color: rgb(52, 58, 64);/*#343a40*/
+  background-color: rgb(52, 58, 64);
   background: url("../assets/img/bg-masthead.jpg") no-repeat center center;
   background-size: cover;
   padding-top: 8rem;
@@ -10875,8 +10881,9 @@ header.masthead:before {
   width: 100%;
   top: 0;
   left: 0;
-  opacity: 0.5;
+  opacity: 0.4;
 }
+
 header.masthead h1, header.masthead .h1 {
   font-size: 2rem;
 }
@@ -10888,6 +10895,25 @@ header.masthead h1, header.masthead .h1 {
   header.masthead h1, header.masthead .h1 {
     font-size: 3rem;
   }
+}
+
+header.masthead_summoner {
+  position: relative;
+  background-color: rgb(52, 58, 64);
+  background: url("../assets/img/bg-masthead.jpg") no-repeat center center;
+  background-size: cover;
+  padding-top: 6rem;
+  padding-bottom: 4rem;
+}
+header.masthead_summoner:before {
+  content: "";
+  position: absolute;
+  background-color: #353540;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  opacity: 1.0;
 }
 
 .showcase .showcase-text {

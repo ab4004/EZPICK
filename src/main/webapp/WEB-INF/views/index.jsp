@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Landing Page - Start Bootstrap Theme</title>
+<title>EZPICK</title>
 </head>
 <body>
 	<!-- 네비게이션 영역-->
@@ -22,15 +22,17 @@
 						</div>
 
 						<!-- 전적 검색 창 -->
-						<form class="form-subscribe" action="/summoner/search">
+						<form class="form-subscribe" action="/summoner" method="GET">
 							<div class="row">
 								<div class="col">
 									<div class="input-group mb-3">
 										<input type="text" class="form-control form-control-lg input-search"
-											id="s_name" placeholder="소환사 이름"
+											id="gameName" name="gameName" placeholder="소환사 이름"
 											style="border-radius: 100px 0 0 100px; padding-left: 20px">
+											
 										<input type="text" class="form-control form-control-lg input-search"
-											id="s_tagline" placeholder="#태그라인">
+											id="tagLine" name="tagLine" placeholder="#태그라인">
+											
 										<button class="btn btn-dark btn-lg" id="submitButton"
 											type="submit" style="border-radius: 0 100px 100px 0;">
 											<i class="bi bi-search px-2"></i>
