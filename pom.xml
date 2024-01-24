@@ -18,6 +18,15 @@
 		<java.version>17</java.version>
 	</properties>
 	<dependencies>
+		<dependency>
+
+			<groupId>org.webjars</groupId>
+
+			<artifactId>summernote</artifactId>
+
+			<version>0.8.10</version>
+
+		</dependency>
 		<!-- https://mvnrepository.com/artifact/com.mysql/mysql-connector-j -->
 		<dependency>
 			<groupId>com.mysql</groupId>
