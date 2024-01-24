@@ -1,5 +1,7 @@
 package com.ezpick.lol.service;
 
+import java.time.LocalDateTime;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +19,7 @@ public class UserService {
 	@Transactional
 	public void register(User user) {
 		user.setUser_role(RoleType.USER);
+		user.setUser_reg_date(LocalDateTime.now());
 		userRepository.save(user);
 	}
 

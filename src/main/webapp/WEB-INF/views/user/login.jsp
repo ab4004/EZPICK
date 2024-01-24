@@ -24,8 +24,8 @@
 			<button class="btn btn-primary" onclick="location.href='/auth/register'">회원가입</button>
 			<button class="btn btn-primary" id="findId-user">ID찾기</button>
 			<button class="btn btn-primary" id="findPassword-user">PW찾기</button>
-		</form>
 	</div>
+	<script src="/js/user.js"></script>
 	<jsp:include page="../layout/footer.jsp"></jsp:include>
 </body>
 </html>
