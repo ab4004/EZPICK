@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,7 +27,7 @@
 <link
 	href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap"
 	rel="stylesheet">
-	
+
 <script src="/webjars/jquery/3.6.0/dist/jquery.min.js"></script>
 <!-- summernote 시작 -->
 <link href="/webjars/summernote/0.8.10/summernote-bs4.css"
@@ -54,10 +55,18 @@
 						class="navbar-brand mx-3" href="#">뉴스</a>
 				</div>
 			</div>
-
-			<!-- 로그인 영역 -->
-			<a class="navbar-brand nav_sign" href="/auth/login"><i
-				class="bi bi-person-circle"></i> Sign Up</a>
+			<c:choose>
+				<c:when test="${empty user }">
+					<!-- 로그인 영역 -->
+					<a class="navbar-brand nav_sign" href="/auth/login"><i
+						class="bi bi-person-circle"></i> Sign Up</a>
+				</c:when>
+				<c:otherwise>
+				<a class="navbar-brand mx-3" href="/auth/logout">로그아웃</a>
+					<a class="navbar-brand nav_sign" href="#"><i
+						class="bi bi-person-circle"></i> ${user.user_nickname } 님</a>
+				</c:otherwise>
+			</c:choose>
 		</div>
 	</nav>
 
