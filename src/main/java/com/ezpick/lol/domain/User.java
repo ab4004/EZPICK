@@ -26,6 +26,7 @@ import lombok.NoArgsConstructor;
 public class User {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(nullable = false, columnDefinition = "varchar(40)")
 	private String user_id;
 	
@@ -46,6 +47,6 @@ public class User {
 	private LocalDateTime user_reg_date;
 	
 	@Enumerated(EnumType.STRING)
-	private RoleType userRole;
+	private RoleType user_role;
 	
 }

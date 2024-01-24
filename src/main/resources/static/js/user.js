@@ -5,6 +5,10 @@ let userObject = {
 		$("#register-user").on("click", () => {
 			_this.registerUser();
 		});
+
+		$("#get-user").on("click", () => {
+			_this.getUser();
+		});
 	},
 
 	registerUser: function() {
@@ -24,6 +28,23 @@ let userObject = {
 		}).done(function(response) {
 			alert(response["data"]);
 			location = "/";
+		}).fail(function(error) {
+			alert(error["data"]);
+		});
+	},
+
+	getUser: function() {
+		let getUser = {
+			user_id: $("#id").val()
+		}
+
+		$.ajax({
+			type: "POST",
+			url: "/auth/getUser",
+			data: JSON.stringify(getUser),
+			contentType: "application/json; charset=utf-8"
+		}).done(function(response) {
+			alert(response["data"]);
 		}).fail(function(error) {
 			alert(error["data"]);
 		});

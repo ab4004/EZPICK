@@ -18,7 +18,7 @@
 				<div class="valid-feedback"></div>
 				<div class="invalid-feedback">필수 정보입니다.</div>
 				<button class="btn btn-primary"
-					onclick="location.href='/auth/register'">중복검사</button>
+					id="get-user">중복검사</button>
 			</div>
 			<div class="mb-3">
 				<label for="password" class="form-label">비밀번호:</label> <input
@@ -51,6 +51,7 @@
 			<button type="submit" id="register-user">확인</button>
 		</form>
 	</div>
+	<script src="/js/user.js"></script>
 	<jsp:include page="../layout/footer.jsp"></jsp:include>
 </body>
 </html>
