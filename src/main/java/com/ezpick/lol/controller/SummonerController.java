@@ -1,5 +1,7 @@
 package com.ezpick.lol.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -7,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ezpick.lol.dto.AccountDTO;
+import com.ezpick.lol.dto.ChampionMasteryDTO;
 import com.ezpick.lol.dto.SummonerDTO;
 import com.ezpick.lol.service.RiotService;
 
@@ -27,11 +30,14 @@ public class SummonerController {
 		if (tagLine.equals("") || tagLine == null) {
 			tagLine = "KR1";
 		}
+		
 		AccountDTO account = riotService.getAccount(gameName, tagLine); // 소환사의 계정 정보를 가져옴(puuid)
-		SummonerDTO summoner = riotService.getSummoner(account.getPuuid());
+		SummonerDTO summoner = riotService.getSummoner(account.getPuuid()); // 소환사의 레벨과 같은 정보를 가져옴
+		List<ChampionMasteryDTO> championMasteryList = riotService.getChampionMastery(account.getPuuid());
 		
 		model.addAttribute("summoner", summoner);
 		model.addAttribute("account", account);
+		model.addAttribute("champtionMasteryList", championMasteryList);
 		return "search/summoner";
 	}
 	

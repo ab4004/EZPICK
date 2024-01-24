@@ -31,7 +31,7 @@
 											style="border-radius: 100px 0 0 100px; padding-left: 20px">
 											
 										<input type="text" class="form-control form-control-lg input-search"
-											id="tagLine" name="tagLine" placeholder="#태그라인">
+											id="tagLine" name="tagLine" placeholder="태그">
 											
 										<button class="btn btn-dark btn-lg" id="submitButton"
 											type="submit" style="border-radius: 0 100px 100px 0;">
