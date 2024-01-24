@@ -10,6 +10,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.ezpick.lol.dto.AccountDTO;
 import com.ezpick.lol.dto.ChampionMasteryDTO;
+import com.ezpick.lol.dto.MatchDTO;
 import com.ezpick.lol.dto.SummonerDTO;
 
 /*
@@ -67,5 +68,19 @@ public class RiotService {
 		// ParameterizedTypeReference 클래스는 매개변수가 제네릭 타입인걸 인식하여 전달하도록 하는 역할을 한다.
 		
 		return responseEntity.getBody();
+	}
+	
+	// 4. puuid를 통해 최근 매치 기록(20번까지)을 가져옵니다(추가적인 설정으로 과거 기록도 가져올 수 있습니다.)
+	public List<String> getMatchHistoryList(String puuid) {
+		String url = ASIA_URL + "/lol/match/v5/matches/by-puuid/" + puuid + "/ids?start=0&count=20&api_key=" + API_KEY;
+		ResponseEntity<List<String>> responseEntity = 
+				restTemplate.exchange(url, HttpMethod.GET, null, new ParameterizedTypeReference<List<String>>() {});
+		return responseEntity.getBody();
+	}
+	
+	// 5. matchid를 통해 해당 매치의 모든 정보를 가져옵니다.(반환되는 JSON 데이터의 양이 상당히 많기 때문에 JACKSON과 같은 JSON 데이터를 변환하는 기능 이용도 가능할듯)
+	public MatchDTO getMatchInfo(String matchId) {
+		String url = ASIA_URL + "/lol/match/v5/matches/" + matchId + "?api_key=" + API_KEY;
+		return restTemplate.getForObject(url, MatchDTO.class);
 	}
 }

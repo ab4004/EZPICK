@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -29,7 +30,7 @@
 								<div class="m-2">
 									<h2><strong>${account.gameName}</strong><span style="color: #9e9eb1"> #${account.tagLine}</span></h2>
 									<h5><span class="badge bg-dark">Prev. ${summoner.name}</span></h5>
-									<p>마지막 접속 : ${summoner.revisionDate }</p>
+									<p>마지막 접속 : ${date}</p>
 								</div>
 							</div>
 						</div>
@@ -44,13 +45,12 @@
 			<div class="row">
 				<div class="col-lg-4"></div>
 				<div>
-					<p>id : ${summoner.id}</p>
-					<p>accountId : ${summoner.accountId}</p>
-					<p>puuid : ${summoner.puuid}</p>
-					<p>name : ${summoner.name}</p>
-					<p>profileIconId : ${summoner.profileIconId}</p>
-					<p>revisionDate : ${summoner.revisionDate}</p>
-					<p>summonerLevel : ${summoner.summonerLevel}</p>
+				<!-- 
+				<c:forEach var="match" items="${matchList}">
+					<p>${match.metadata.matchid }</p>
+					<p>${match.info.gameMode }
+				</c:forEach>
+				 -->
 				</div>
 				<div>
 				</div>
