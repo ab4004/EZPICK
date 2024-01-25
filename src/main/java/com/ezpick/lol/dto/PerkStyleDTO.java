@@ -1,5 +1,7 @@
 package com.ezpick.lol.dto;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,6 +11,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PerkStyleDTO {
 	private String description;
-	private int selections;
+	private List<PerkStyleSelectionDTO> selections;
 	private int style;
 }
