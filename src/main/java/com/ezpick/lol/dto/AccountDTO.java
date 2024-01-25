@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AccountDTO {
-	private String puuid;
-	private String gameName;
-	private String tagLine;
+	private String puuid; // 유저의 puuid
+	private String gameName; // 소환사 명
+	private String tagLine; // 태그
 }
