@@ -5,6 +5,13 @@ server:
     encoding:
       charset: UTF-8
       
+logging:
+  level:
+    com: 
+      fasterxml:
+        jackson:
+          databind: DEBUG
+      
 spring:
   mvc:
     view:

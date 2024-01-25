@@ -9,5 +9,4 @@ public class EzPickTestApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(EzPickTestApplication.class, args);
 	}
-
 }

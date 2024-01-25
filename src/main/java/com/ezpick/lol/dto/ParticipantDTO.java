@@ -1,5 +1,8 @@
 package com.ezpick.lol.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,9 +10,13 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ParticipantDTO {
+	private int allInPings;
+	private int assistMePings;
 	private int assists;
 	private int baronKills;
+	private int basicPings;
 	private int bountyLevel;
 	private int champExperience;
 	private int champLevel;
@@ -45,6 +52,10 @@ public class ParticipantDTO {
 	private int item5;
 	private int item6;
 	private int itemsPurchased;
+	
+	@JsonProperty("kda")
+	private long kda;
+	
 	private int killingSprees;
 	private int kills;
 	private String lane;
@@ -63,7 +74,10 @@ public class ParticipantDTO {
 	private int objectivesStolenAssists;
 	private int participantId;
 	private int pentaKills;
+	
+	@JsonProperty("perks")
 	private PerksDTO perks;
+	
 	private int physicalDamageDealt;
 	private int physicalDamageDealtToChampions;
 	private int physicalDamageTaken;
@@ -79,9 +93,15 @@ public class ParticipantDTO {
 	private int spell3Casts;
 	private int spell4Casts;
 	private int summoner1Casts;
+	
+	@JsonProperty("summoner1Id")
 	private int summoner1Id;
+	
 	private int summoner2Casts;
+	
+	@JsonProperty("summoner2Id")
 	private int summoner2Id;
+	
 	private String summonerId;
 	private int summonerLevel;
 	private String summonerName;

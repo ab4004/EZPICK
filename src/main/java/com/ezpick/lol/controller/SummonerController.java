@@ -1,7 +1,6 @@
 package com.ezpick.lol.controller;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,12 +36,7 @@ public class SummonerController {
 		SummonerDTO summoner = riotService.getSummoner(account.getPuuid()); // 소환사의 레벨과 같은 정보를 가져옴
 //		List<ChampionMasteryDTO> championMasteryList = riotService.getChampionMastery(account.getPuuid()); // 소환사의 챔피언 숙련도 관련 정보를 가져옴
 		List<String> matchHistory = riotService.getMatchHistoryList(account.getPuuid()); // 소환사의 최근 매치 기록 아이디
-		
-//		List<MatchDTO> matchInfo = new ArrayList<>(); // 매치 기록별 해당 매치 정보 검색용
-//		
-//		for (String matchId : matchHistory) {
-//			matchInfo.add(riotService.getMatchInfo(matchId)); // 해당 매치 정보를 리스트로 저장
-//		}
+		List<MatchDTO> matchInfoList = riotService.getMatchInfoListAsync(matchHistory); // 매치 기록 확인용
 		
 		// 마지막 접속 시간 확인용
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yy.MM.dd HH:mm");
@@ -61,7 +55,7 @@ public class SummonerController {
 		model.addAttribute("date", date);
 		
 		// 소환사의 최근 매치 기록
-//		model.addAttribute("matchList", matchInfo);
+		model.addAttribute("matchList", matchInfoList);
 		
 		return "search/summoner";
 	}
