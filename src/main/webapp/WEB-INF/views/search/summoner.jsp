@@ -56,55 +56,86 @@
 				<div>
 					<!-- 매치기록 확인용 -->
 					<div>
-						<c:if test="${not empty matchList }">
+						<c:if test="${not empty matchList}">
 							<c:forEach var="match" items="${matchList}">
-								<div class="card">
+								<c:forEach var="participant" items="${match.info.participants}">
+									<c:if test="${participant.puuid eq account.puuid }">
+									<!-- 승리 여부 -->
+									<c:if test="${participant.win eq true}">
+										<div class="d-flex card py-2 px-3 my-3" style="border-left: 6px solid #5383e8; background-color: #f9fbfd">
+											<div class="d-flex">
+												<strong class="text-primary">승리</strong>
+									</c:if>
+									<c:if test="${participant.win ne true}">
+										<div class="d-flex card py-2 px-3 my-3" style="border-left: 6px solid #e84057; background-color: #fef9f9">
+											<div class="d-flex">
+												<strong class="text-danger">패배</strong>
+									</c:if>
+											
+											<!-- 해당 매치 게임 모드 -->
+											<c:choose>
+												<c:when test="${match.info.gameMode eq 'ARAM'}">
+													<p class="mx-3">칼바람 나락</p>
+												</c:when>
+												<c:when test="${match.info.gameMode eq 'CLASSIC'}">
+													<p class="mx-3">소환사의 협곡</p>
+												</c:when>
+											</c:choose>
+										</div>
+										<!-- 해당 매치 소환사 본인의 K/D/A -->
 
-									<div>
-										<!-- 해당 매치 게임 모드 -->
-										<c:choose>
-											<c:when test="${match.info.gameMode eq 'ARAM'}">
-												<div class="card-body">칼바람 나락</div>
-											</c:when>
-											<c:when test="${match.info.gameMode eq 'CLASSIC'}">
-												<div class="card-body">소환사의 협곡</div>
-											</c:when>
-										</c:choose>
-
-									</div>
-									<!-- 해당 매치 소환사 본인의 K/D/A -->
-									<c:forEach var="participant" items="${match.info.participants}">
-										<c:if test="${participant.puuid eq account.puuid }">
-
-											<div>
+											<div class="d-flex">
 												<!-- 사용한 챔피언 -->
 												<img
 													src="https://ddragon.leagueoflegends.com/cdn/14.2.1/img/champion/${participant.championName}.png"
-													width="100px" height="100px" />
+													width="72px" height="72px" />
 
 												<!-- 사용한 스펠 -->
-												<div>
+												<div class="d-flex flex-column mx-2">
 													<img src="/img/spell/${participant.summoner1Id}.png"
-														width="48px" height="48px" /> <img
+														width="32px" height="32px" /> <img class="mt-2" 
 														src="/img/spell/${participant.summoner2Id}.png"
-														width="48px" height="48px" />
+														width="32px" height="32px" />
+												</div>
+												
+												<div class="vr mx-3"></div>
+												
+												<div class="d-flex flex-column text-center" style="width: 100px">
+													<!-- KDA 관련 정보 -->
+													<strong>${participant.kills} / <span class="text-danger">${participant.deaths}</span> / ${participant.assists}</strong>
+													<c:choose>
+														<c:when test="${participant.deaths eq 0}">
+															<span>평점 : perfect</span>
+														</c:when>
+														<c:otherwise>
+															<fmt:formatNumber
+																value="${(participant.kills + participant.assists) / participant.deaths}"
+																pattern="#,##0.00" var="kda" />
+															<span>평점 : ${kda}</span>
+														</c:otherwise>
+													</c:choose>
+													<c:set var="multikill" value="${participant.pentaKills eq 0 ? (participant.quadraKills eq 0 ? (participant.tripleKills eq 0 ? (participant.doubleKills eq 0 ? '' : '더블킬') : '트리플킬') : '쿼드라킬') : '펜타킬'}"></c:set>
+													<c:if test="${!empty multikill}">
+														<span class="badge bg-danger">${multikill}</span>
+													</c:if>
+												</div>
+												
+												<div class="vr mx-3"></div>
+												
+												<!-- 사용한 아이템 -->
+												<div class="d-flex">
+													<img class="mx-2" src="https://ddragon.leagueoflegends.com/cdn/14.2.1/img/item/${participant.item0}.png" onerror="this.src='default-image.png'" width="32px" height="32px">
+													<img class="mx-2" src="https://ddragon.leagueoflegends.com/cdn/14.2.1/img/item/${participant.item1}.png" onerror="this.src='default-image.png'" width="32px" height="32px">
+													<img class="mx-2" src="https://ddragon.leagueoflegends.com/cdn/14.2.1/img/item/${participant.item2}.png" onerror="this.src='default-image.png'" width="32px" height="32px">
+													<img class="mx-2" src="https://ddragon.leagueoflegends.com/cdn/14.2.1/img/item/${participant.item3}.png" onerror="this.src='default-image.png'" width="32px" height="32px">
+													<img class="mx-2" src="https://ddragon.leagueoflegends.com/cdn/14.2.1/img/item/${participant.item4}.png" onerror="this.src='default-image.png'" width="32px" height="32px">
+													<img class="mx-2" src="https://ddragon.leagueoflegends.com/cdn/14.2.1/img/item/${participant.item5}.png" onerror="this.src='default-image.png'" width="32px" height="32px">
+													<img class="mx-2" src="https://ddragon.leagueoflegends.com/cdn/14.2.1/img/item/${participant.item6}.png" onerror="this.src='default-image.png'" width="32px" height="32px">
 												</div>
 											</div>
-											<!-- 승리 여부 -->
-											${participant.win eq true ? "승리" : "패배"}
-											
-											<!-- KDA 관련 정보 -->
-											<p>${participant.kills}/${participant.deaths}/${participant.assists}</p>
-											<fmt:formatNumber
-												value="${(participant.kills + participant.assists) / participant.deaths}"
-												pattern="#,##0.00" var="kda" />
-											<p>KDA : ${kda}</p>
-										</c:if>
-									</c:forEach>
-
-								</div>
-
-
+										</div>
+									</c:if>
+								</c:forEach>
 							</c:forEach>
 						</c:if>
 						<c:if test="${empty matchList }">
@@ -112,7 +143,6 @@
 						</c:if>
 					</div>
 				</div>
-				<div></div>
 			</div>
 		</div>
 	</section>

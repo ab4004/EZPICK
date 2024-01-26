@@ -31,7 +31,7 @@ public class RiotService {
 	 * 라이엇 API 서비스를 이용하기 위한 키입니다.
 	 * 단 하루 24시간만 이용 가능하니 만료되었을 경우 해당 페이지(https://developer.riotgames.com/)에서 생성 또는 갱신해주세요.
 	 */
-	private static final String API_KEY = "RGAPI-52236775-23ec-4572-b59c-59a510f33534";
+	private static final String API_KEY = "RGAPI-30f30c83-193e-42bd-af54-de72b5a63e79";
 	
 	/*
 	 * [NAME_TAG_URL]
