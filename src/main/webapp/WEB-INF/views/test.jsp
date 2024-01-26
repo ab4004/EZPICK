@@ -98,8 +98,14 @@
 								
 								<div class="vr mx-3"></div>
 								
-								<div class="d-flex">
-									<img class="mx-2" src="" width="32px" height="32px" style="background-color: #e6e6e6">
+								<div class="d-flex flex-column">
+									<div class="d-flex">
+										<img class="mx-2" src="" width="32px" height="32px" style="background-color: #e6e6e6">
+									</div>
+									<div class="d-flex">
+										<span>CS 351</span>
+										<span>총 킬수</span>
+									</div>
 								</div>
 								
 							</div>
