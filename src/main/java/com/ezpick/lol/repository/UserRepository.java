@@ -7,5 +7,5 @@ import com.ezpick.lol.domain.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, String> {
-
+	boolean existsByUserId(String userId);
 }

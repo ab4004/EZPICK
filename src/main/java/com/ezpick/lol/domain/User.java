@@ -26,26 +26,27 @@ import lombok.NoArgsConstructor;
 public class User {
 
 	@Id
-	@Column(nullable = false, columnDefinition = "varchar(40)")
-	private String user_id;
+	@Column(name = "user_id", nullable = false, columnDefinition = "varchar(40)")
+	private String userId;
 	
-	@Column(nullable = false, columnDefinition = "varchar(16)")
-	private String user_password;
+	@Column(name = "user_password", nullable = false, columnDefinition = "varchar(16)")
+	private String userPassword;
 	
-	@Column(nullable = false, columnDefinition = "nvarchar(20)")
-	private String user_name;
+	@Column(name = "user_name", nullable = false, columnDefinition = "nvarchar(20)")
+	private String userName;
 	
-	@Column(nullable = false, columnDefinition = "nvarchar(16)", unique = true)
-	private String user_nickname;
+	@Column(name = "user_nickname", nullable = false, columnDefinition = "nvarchar(16)", unique = true)
+	private String userNickname;
 	
-	@Column(nullable = false, columnDefinition = "varchar(11)")
-	private String user_phone;
+	@Column(name = "user_phone", nullable = false, columnDefinition = "varchar(11)")
+	private String userPhone;
 	
 	@CreatedDate
-	@Column(updatable = false)
-	private LocalDateTime user_reg_date;
+	@Column(name = "user_reg_date", updatable = false)
+	private LocalDateTime userRegDate;
 	
 	@Enumerated(EnumType.STRING)
-	private RoleType user_role;
+	@Column(name = "user_role")
+	private RoleType userRole;
 	
 }

@@ -10,48 +10,43 @@
 <body>
 	<jsp:include page="../layout/nav.jsp"></jsp:include>
 	<div class="container mt-3">
-		<form class="was-validated">
-			<h3>회원가입</h3>
-			<div class="mb-3 mt-3">
-				<label for="id" class="form-label">아이디:</label> <input type="text"
-					class="form-control" id="id" placeholder="Enter id" name="id"
-					required>
-				<div class="valid-feedback"></div>
-				<div class="invalid-feedback">필수 정보입니다.</div>
-				<button class="btn btn-primary" id="get-user">중복검사</button>
-			</div>
-			<div class="mb-3">
-				<label for="password" class="form-label">비밀번호:</label> <input
-					type="password" class="form-control" id="password"
-					placeholder="Enter password" name="password" required>
-				<div class="valid-feedback"></div>
-				<div class="invalid-feedback">8~16자의 영문 대소문자, 숫자, 특수문자</div>
-			</div>
-			<div class="mb-3">
-				<label for="name" class="form-label">이름:</label> <input type="text"
-					class="form-control" id="name" placeholder="Enter name" name="name"
-					required>
-				<div class="valid-feedback"></div>
-				<div class="invalid-feedback">필수 정보입니다.</div>
-			</div>
-			<div class="mb-3">
-				<label for="nickname" class="form-label">닉네임:</label> <input
-					type="text" class="form-control" id="nickname"
-					placeholder="Enter nickname" name="nickname" required>
-				<div class="valid-feedback"></div>
-				<div class="invalid-feedback">필수 정보입니다.</div>
-			</div>
-			<div class="mb-3">
-				<label for="phone" class="form-label">연락처:</label> <input type="tel"
-					class="form-control" id="phone" placeholder="Enter phone"
-					name="phone" required>
-				<div class="valid-feedback"></div>
-				<div class="invalid-feedback">필수 정보입니다.</div>
-			</div>
-			<button type="button" class="btn btn-primary" id="register-user">확인</button>
-		</form>
+		<h3>회원가입</h3>
+		<div class="mb-3 mt-3">
+			<label for="id" class="form-label">아이디:</label> <input type="text"
+				class="form-control" id="userId" placeholder="Enter id" name="id"
+				onblur="userObject.validateUserId()" required> <span
+				id="userIdError" style="color: red;"></span>
+		</div>
+		<div class="mb-3">
+			<label for="password" class="form-label">비밀번호:</label> <input
+				type="password" class="form-control" id="userPassword"
+				placeholder="Enter password" name="password"
+				onblur="userObject.validateUserPassword()" required> <span
+				id="userPasswordError" style="color: red;"></span>
+		</div>
+		<div class="mb-3">
+			<label for="name" class="form-label">이름:</label> <input type="text"
+				class="form-control" id="userName" placeholder="Enter name"
+				name="name" onblur="userObject.validateUserName()" required>
+			<span id="userNameError" style="color: red;"></span>
+		</div>
+		<div class="mb-3">
+			<label for="nickname" class="form-label">닉네임:</label> <input
+				type="text" class="form-control" id="userNickname"
+				placeholder="Enter nickname" name="nickname"
+				onblur="userObject.validateUserNickname()" required> <span
+				id="userNicknameError" style="color: red;"></span>
+		</div>
+		<div class="mb-3">
+			<label for="phone" class="form-label">연락처:</label> <input type="tel"
+				class="form-control" id="userPhone" placeholder="Enter phone"
+				name="phone" onblur="userObject.validateUserPhone()" required>
+			<span id="userPhoneError" style="color: red;"></span>
+		</div>
+		<button type="button" class="btn btn-primary" id="register-user">확인</button>
 	</div>
+	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 	<script src="/js/user.js"></script>
-	<jsp:include page="../layout/footer.jsp"></jsp:include>
+	<jsp:include page="../layout/footer.jsp"></jsp:include>.
 </body>
 </html>
