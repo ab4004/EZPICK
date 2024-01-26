@@ -1,19 +1,10 @@
 let userObject = {
 	init: function() {
-
-		function UserDTO() {
-			// 필요한 속성 및 메소드 추가
-		}
-
-		// validateField 메소드 추가
-		UserDTO.prototype.validateField = function(element) {
-			// 유효성 검사 로직 추가
-			// 예: alert("유효성 검사 로직 실행");
-		};
-
 		let _this = this;
 
-		$("#register-user").on("click", () => {
+		$("#register-user").on("click", function(event) {
+			event.preventDefault();
+
 			// 클라이언트 측에서의 유효성 검사
 			if (_this.validateForm()) {
 				// 서버로 회원가입 요청 전송
@@ -30,8 +21,7 @@ let userObject = {
 		});
 
 		$("#userPassword, #userName, #userNickname, #userPhone").on("blur", function() {
-			let userDTO = new UserDTO();  // UserDTO 객체 생성
-			userDTO.validateField($(this));  // 생성한 객체의 메소드 호출
+			_UserDTO.validateField($(this));
 		});
 
 		$("#userId").on("input", function() {
@@ -71,12 +61,11 @@ let userObject = {
 		let userIdErrorElement = $("#userIdError");
 
 		if (!this.validateBasicUserId(userId, userIdErrorElement)) {
-			console.log('validateBasicUserId failed');
 			return;
 		}
 
 		// 실시간으로 아이디 중복 검사를 수행
-		this.checkUserId(userId, userIdErrorElement);
+		this.checkUserIdDuplicate(userId, userIdErrorElement);
 	},
 
 	validateBasicUserId: function(userId, userIdErrorElement) {
@@ -109,7 +98,7 @@ let userObject = {
 		return true;
 	},
 
-	checkUserId: function(userId, userIdErrorElement) {
+	checkUserIdDuplicate: function(userId, userIdErrorElement) {
 		// 아이디 중복 검사를 수행
 		$.ajax({
 			type: "GET",
@@ -130,7 +119,6 @@ let userObject = {
 	},
 
 	registerUser: function() {
-		console.log("Register user function called");
 		let registerUser = {
 			userId: $("#id").val(),
 			userPassword: $("#password").val(),
