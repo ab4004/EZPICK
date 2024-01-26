@@ -2,7 +2,6 @@ package com.ezpick.lol.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.core.ParameterizedTypeReference;
@@ -14,11 +13,8 @@ import org.springframework.web.client.RestTemplate;
 
 import com.ezpick.lol.dto.AccountDTO;
 import com.ezpick.lol.dto.ChampionMasteryDTO;
-import com.ezpick.lol.dto.InfoDTO;
 import com.ezpick.lol.dto.MatchDTO;
-import com.ezpick.lol.dto.MetadataDTO;
 import com.ezpick.lol.dto.SummonerDTO;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 /*
  * 이 클래스는 실제로 라이엇 API 서버 쪽으로 요청하고 받아오는 영역입니다.
@@ -88,20 +84,7 @@ public class RiotService {
 	// 5. matchid를 통해 해당 매치의 모든 정보를 가져옵니다.
 	public MatchDTO getMatchInfo(String matchId) {
 		String url = ASIA_URL + "/lol/match/v5/matches/" + matchId + "?api_key=" + API_KEY;
-		ResponseEntity<Map<String, Object>> responseEntity = restTemplate.exchange(url, HttpMethod.GET, null, new ParameterizedTypeReference<Map<String, Object>>() {});
-		
-		 // responseEntity.getBody()로 Map을 가져오고, 여기서 "metadata"와 "info"를 추출
-	    Map<String, Object> responseBody = responseEntity.getBody();
-	    Map<String, Object> metadataMap = (Map<String, Object>) responseBody.get("metadata");
-	    Map<String, Object> infoMap = (Map<String, Object>) responseBody.get("info");
-	    
-	    // ObjectMapper를 사용하여 Map을 MatchDTO로 매핑
-	    ObjectMapper objectMapper = new ObjectMapper();
-	    MatchDTO matchDTO = objectMapper.convertValue(responseBody, MatchDTO.class);
-	    matchDTO.setMetadata(objectMapper.convertValue(metadataMap, MetadataDTO.class));
-	    matchDTO.setInfo(objectMapper.convertValue(infoMap, InfoDTO.class));
-		
-		return matchDTO;
+		return restTemplate.getForObject(url, MatchDTO.class);
 	}
 	
 	// *5번에서 연결하여 사용하게되는 메서드로 비동기를 위해 async 어노테이션, 한번 불러오고 빠르게 불러올수있게 cacheable 어노테이션을 사용하였습니다.
