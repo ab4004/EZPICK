@@ -1,68 +1,45 @@
 let userObject = {
 	init: function() {
-
-		function UserDTO() {
-			// 필요한 속성 및 메소드 추가
-		}
-
-		// validateField 메소드 추가
-		UserDTO.prototype.validateField = function(element) {
-			// 유효성 검사 로직 추가
-			// 예: alert("유효성 검사 로직 실행");
-		};
-
 		let _this = this;
 
-		$("#register-user").on("click", () => {
-			// 클라이언트 측에서의 유효성 검사
+		$("#register-user").on("click", function() {
 			if (_this.validateForm()) {
-				// 서버로 회원가입 요청 전송
 				_this.registerUser();
 			}
 		});
 
-		$("#login-user").on("click", () => {
+		$("#login-user").on("click", function() {
 			_this.loginUser();
 		});
 
-		$("#logout-user").on("click", () => {
+		$("#logout-user").on("click", function() {
 			_this.logoutUser();
 		});
 
-		$("#userPassword, #userName, #userNickname, #userPhone").on("blur", function() {
-			let userDTO = new UserDTO();  // UserDTO 객체 생성
-			userDTO.validateField($(this));  // 생성한 객체의 메소드 호출
-		});
-
-		$("#userId").on("input", function() {
-			_this.validateUserId();
+		$("#findId-user").on("click", function() {
+			_this.findIdUser();
 		});
 	},
 
+
 	validateForm: function() {
-		// 클라이언트 측에서의 각 필드에 대한 유효성 검사를 수행
 		let isValid = true;
 
 		if (!this.validateUserId()) {
 			isValid = false;
 		}
-
 		if (!this.validateUserPassword()) {
 			isValid = false;
 		}
-
 		if (!this.validateUserName()) {
 			isValid = false;
 		}
-
 		if (!this.validateUserNickname()) {
 			isValid = false;
 		}
-
 		if (!this.validateUserPhone()) {
 			isValid = false;
 		}
-
 		return isValid;
 	},
 
@@ -71,16 +48,66 @@ let userObject = {
 		let userIdErrorElement = $("#userIdError");
 
 		if (!this.validateBasicUserId(userId, userIdErrorElement)) {
-			console.log('validateBasicUserId failed');
-			return;
+			return false;
 		}
-
 		// 실시간으로 아이디 중복 검사를 수행
 		this.checkUserId(userId, userIdErrorElement);
+
+		return true;
+	},
+
+	validateUserNickname: function() {
+		let userNickname = $("#userNickname").val();
+		let userNicknameErrorElement = $("#userNicknameError");
+
+		if (!this.validateBasicUserNickname(userNickname, userNicknameErrorElement)) {
+			return false;
+		}
+		// 실시간으로 아이디 중복 검사를 수행
+		this.checkUserNickname(userNickname, userNicknameErrorElement);
+
+		return true;
+	},
+
+	checkUserId: function(userId, userIdErrorElement) {
+		// 아이디 중복 검사를 수행
+		$.ajax({
+			type: "GET",
+			url: "/auth/checkUserId/" + userId,
+			contentType: "application/json; charset=utf-8"
+		}).done(function(response) {
+			if (response["status"] === 200) {
+				// 중복이 없으면 메시지 초기화
+				userIdErrorElement.text("");
+			} else if (response["status"] === 400) {
+				// 중복이 있으면 에러 메시지 표시
+				userIdErrorElement.text(response["data"]);
+			}
+		}).fail(function(error) {
+			userIdErrorElement.text("서버 오류가 발생했습니다."); // 에러 메시지 표시
+		});
+	},
+
+	checkUserNickname: function(userNickname, userNicknameErrorElement) {
+		// 아이디 중복 검사를 수행
+		$.ajax({
+			type: "GET",
+			url: "/auth/checkUserNickname/" + userNickname,
+			contentType: "application/json; charset=utf-8"
+		}).done(function(response) {
+			if (response["status"] === 200) {
+				// 중복이 없으면 메시지 초기화
+				userNicknameErrorElement.text("");
+			} else if (response["status"] === 400) {
+				// 중복이 있으면 에러 메시지 표시
+				userNicknameErrorElement.text(response["data"]);
+			}
+		}).fail(function(error) {
+			userNicknameErrorElement.text("서버 오류가 발생했습니다."); // 에러 메시지 표시
+		});
 	},
 
 	validateBasicUserId: function(userId, userIdErrorElement) {
-		// 기본적인 유효성 검사
 		if (userId.trim() === "") {
 			userIdErrorElement.text("아이디는 필수 입력 항목입니다.");
 			return false;
@@ -104,86 +131,30 @@ let userObject = {
 			return false;
 		}
 
-		// 유효성 검사 통과 시 오류 메시지 초기화
 		userIdErrorElement.text("");
 		return true;
 	},
 
-	checkUserId: function(userId, userIdErrorElement) {
-		// 아이디 중복 검사를 수행
-		$.ajax({
-			type: "GET",
-			url: "/auth/checkUserId/" + userId,
-			contentType: "application/json; charset=utf-8"
-		}).done(function(response) {
-			if (response["status"] === 200) {
-				// 중복이 없으면 메시지 초기화
-				userIdErrorElement.text("");
-			} else if (response["status"] === 400) {
-				// 중복이 있으면 에러 메시지 표시
-				userIdErrorElement.text("이미 사용 중인 아이디입니다.");
-			}
-		}).fail(function(error) {
-			// 에러 처리
-			console.error("Error checking user ID:", error);
-		});
-	},
-
-	registerUser: function() {
-		console.log("Register user function called");
-		let registerUser = {
-			userId: $("#id").val(),
-			userPassword: $("#password").val(),
-			userName: $("#name").val(),
-			userNickname: $("#nickname").val(),
-			userPhone: $("#phone").val()
+	validateBasicUserNickname: function(userNickname, userNicknameErrorElement) {
+		if (userNickname.trim() === "") {
+			userNicknameErrorElement.text("닉네임은 필수 입력 항목입니다.");
+			return false;
 		}
 
-		$.ajax({
-			type: "POST",
-			url: "/auth/register",
-			data: JSON.stringify(registerUser),
-			contentType: "application/json; charset=utf-8"
-		}).done(function(response) {
-			if (response["status"] === 200) {
-				alert(response["data"]);
-				location.href = "/auth/login";
-			} else if (response["status"] === 400) {
-				// 클라이언트 측에서 유효성 검사에 실패한 경우, 각 입력란 아래에 에러 메시지를 표시
-				$.each(response["data"], function(fieldName, errorMessage) {
-					$("#" + fieldName + "Error").text(errorMessage);
-				});
-			}
-		}).fail(function(error) {
-			alert(error["data"]);
-		});
-	},
-
-	loginUser: function() {
-		let loginUser = {
-			userId: $("#id").val(),
-			userPassword: $("#password").val()
+		let hasSpecialCharacters = /[!@#$%^&*(),.?":{}|<>]/.test(userNickname);
+		if (hasSpecialCharacters) {
+			userNicknameErrorElement.text("닉네임은 특수 문자가 포함될 수 없습니다.");
+			return false;
 		}
 
-		$.ajax({
-			type: "POST",
-			url: "/auth/login",
-			data: JSON.stringify(loginUser),
-			contentType: "application/json; charset=utf-8"
-		}).done(function(response) {
-			alert(response["data"]);
-			if (response["status"] === 200) {
-				// 로그인이 성공하면 메인 페이지로 이동
-				location.href = "/";
-			}
-		}).fail(function(error) {
-			alert(error["data"]);
-		});
-	},
+		let nicknameLength = userNickname.length;
+		if (nicknameLength < 2 || nicknameLength > 16) {
+			userNicknameErrorElement.text("닉네임은 2자 이상 16자 이하로 입력하세요.");
+			return false;
+		}
 
-	logoutUser: function() {
-		alert("로그아웃이 완료되었습니다.");
-		location.href = "/";
+		userNicknameErrorElement.text("");
+		return true;
 	},
 
 	validateUserPassword: function() {
@@ -203,7 +174,7 @@ let userObject = {
 
 		let passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*(),.?":{}|<>]).{8,16}$/;
 		if (!passwordRegex.test(userPassword)) {
-			userPasswordErrorElement.text("비밀번호: 8~16자의 영문 대/소문자, 숫자, 특수문자를 사용해 주세요.");
+			userPasswordErrorElement.text("비밀번호는 8~16자의 영문 대/소문자, 숫자, 특수문자를 사용해 주세요.");
 			return false;
 		}
 
@@ -212,27 +183,27 @@ let userObject = {
 	},
 
 	validateUserName: function() {
-		let userNameInput = $("#userName").val();
+		let userName = $("#userName").val();
 		let userNameErrorElement = $("#userNameError");
 
-		if (userNameInput.trim() === "") {
+		if (userName.trim() === "") {
 			userNameErrorElement.text("이름은 필수 입력 항목입니다.");
 			return false;
 		}
 
-		let hasSpecialCharacters = /[!@#$%^&*(),.?":{}|<>]/.test(userNameInput);
+		let hasSpecialCharacters = /[!@#$%^&*(),.?":{}|<>]/.test(userName);
 		if (hasSpecialCharacters) {
 			userNameErrorElement.text("이름에는 특수 문자가 포함될 수 없습니다.");
 			return false;
 		}
 
 		let userNameRegex = /^[a-zA-Z가-힣]*$/;
-		if (!userNameRegex.test(userNameInput)) {
+		if (!userNameRegex.test(userName)) {
 			userNameErrorElement.text("이름은 한글, 영문 대/소문자만 사용 가능합니다. (특수기호, 공백 사용 불가)");
 			return false;
 		}
 
-		let nameLength = userNameInput.length;
+		let nameLength = userName.length;
 		if (nameLength < 2 || nameLength > 20) {
 			userNameErrorElement.text("이름은 2자 이상 20자 이하로 입력하세요.");
 			return false;
@@ -242,53 +213,22 @@ let userObject = {
 		return true;
 	},
 
-	validateUserNickname: function() {
-		let userNicknameInput = $("#userNickname").val();
-		let userNicknameErrorElement = $("#userNicknameError");
-
-		if (userNicknameInput.trim() === "") {
-			userNicknameErrorElement.text("닉네임은 필수 입력 항목입니다.");
-			return false;
-		}
-
-		let hasSpecialCharacters = /[!@#$%^&*(),.?":{}|<>]/.test(userNicknameInput);
-		if (hasSpecialCharacters) {
-			userNicknameErrorElement.text("닉네임에는 특수 문자가 포함될 수 없습니다.");
-			return false;
-		}
-
-		let userNicknameRegex = /^[a-zA-Z가-힣]*$/;
-		if (!userNicknameRegex.test(userNicknameInput)) {
-			userNicknameErrorElement.text("닉네임은 한글, 영문 대/소문자만 사용 가능합니다. (특수기호, 공백 사용 불가)");
-			return false;
-		}
-
-		let nicknameLength = userNicknameInput.length;
-		if (nicknameLength < 2 || nicknameLength > 16) {
-			userNicknameErrorElement.text("닉네임은 2자 이상 16자 이하로 입력하세요.");
-			return false;
-		}
-
-		userNicknameErrorElement.text("");
-		return true;
-	},
-
 	validateUserPhone: function() {
-		let userPhoneInput = $("#userPhone").val();
+		let userPhone = $("#userPhone").val();
 		let userPhoneErrorElement = $("#userPhoneError");
 
-		if (userPhoneInput.trim() === "") {
+		if (userPhone.trim() === "") {
 			userPhoneErrorElement.text("휴대전화번호는 필수 입력 항목입니다.");
 			return false;
 		}
 
-		let hasNonNumeric = /\D/.test(userPhoneInput); // Check for non-numeric characters
+		let hasNonNumeric = /\D/.test(userPhone);
 		if (hasNonNumeric) {
 			userPhoneErrorElement.text("휴대전화번호는 숫자로만 입력하세요.");
 			return false;
 		}
 
-		let phoneLength = userPhoneInput.length;
+		let phoneLength = userPhone.length;
 		if (phoneLength < 10 || phoneLength > 11) {
 			userPhoneErrorElement.text("휴대전화번호는 10자 이상 11자 이하로 입력하세요.");
 			return false;
@@ -296,6 +236,88 @@ let userObject = {
 
 		userPhoneErrorElement.text("");
 		return true;
-	}
-}
+	},
+
+	registerUser: function() {
+		let registerUser = {
+			userId: $("#userId").val(),
+			userPassword: $("#userPassword").val(),
+			userName: $("#userName").val(),
+			userNickname: $("#userNickname").val(),
+			userPhone: $("#userPhone").val()
+		}
+
+		$.ajax({
+			type: "POST",
+			url: "/auth/register",
+			data: JSON.stringify(registerUser),
+			contentType: "application/json; charset=utf-8"
+		}).done(function(response) {
+			if (response["status"] === 200) {
+				alert(response["data"]);
+				location.href = "/auth/login";
+			} else if (response["status"] === 400) {
+				let errorMessage = response["data"];
+            if (typeof errorMessage === 'string') {
+                alert(errorMessage);
+            } else {
+                alert("입력하신 내용을 다시 확인해주세요.");
+            }
+        }
+		}).fail(function(error) {
+			console.error("Error during registration:", error);
+		});
+	},
+
+	loginUser: function() {
+		let loginUser = {
+			userId: $("#userId").val(),
+			userPassword: $("#userPassword").val()
+		}
+
+		$.ajax({
+			type: "POST",
+			url: "/auth/login",
+			data: JSON.stringify(loginUser),
+			contentType: "application/json; charset=utf-8"
+		}).done(function(response) {
+			if (response["status"] === 200) {
+				location.href = "/";
+			} else {
+				// 로그인 실패 시에 대한 처리
+				alert(response["data"]);
+			}
+		}).fail(function(error) {
+			alert(error["data"]);
+		});
+	},
+
+	logoutUser: function() {
+		alert("로그아웃이 완료되었습니다.");
+		location.href = "/";
+	},
+
+	findIdUser: function() {
+		let findIdUser = {
+			userName: $("#userName").val(),
+			userPhone: $("#userPhone").val()
+		}
+
+		$.ajax({
+			type: "GET",
+			url: "/auth/findId",
+			data: findIdUser,
+			contentType: "application/json; charset=utf-8"
+		}).done(function(response) {
+			if (response["status"] === 200) {
+				location.href = "/";
+			} else {
+				alert(response["data"]);
+			}
+		}).fail(function(error) {
+			alert(error["data"]);
+		});
+	},
+};
+
 userObject.init();

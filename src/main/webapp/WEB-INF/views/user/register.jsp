@@ -7,6 +7,8 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="/js/user.js"></script>
 <body>
 	<jsp:include page="../layout/nav.jsp"></jsp:include>
 	<div class="container mt-3">
@@ -38,15 +40,15 @@
 				id="userNicknameError" style="color: red;"></span>
 		</div>
 		<div class="mb-3">
-			<label for="phone" class="form-label">연락처:</label> <input type="tel"
-				class="form-control" id="userPhone" placeholder="Enter phone"
-				name="phone" onblur="userObject.validateUserPhone()" required>
-			<span id="userPhoneError" style="color: red;"></span>
+			<label for="phone" class="form-label">연락처:</label> <input
+				type="tel" class="form-control" id="userPhone"
+				placeholder="Enter Phone" name="phone"
+				onblur="userObject.validateUserPhone()" required> <span
+				id="userPhoneError" style="color: red;"></span>
 		</div>
-		<button type="button" class="btn btn-primary" id="register-user">확인</button>
+	<button type="button" class="btn btn-primary" id="register-user"
+		onclick="userObject.registerUser()">확인</button>
 	</div>
-	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-	<script src="/js/user.js"></script>
 	<jsp:include page="../layout/footer.jsp"></jsp:include>.
 </body>
 </html>

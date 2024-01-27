@@ -5,7 +5,6 @@ import java.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.annotation.Validated;
 
 import com.ezpick.lol.domain.RoleType;
 import com.ezpick.lol.domain.User;
@@ -29,6 +28,11 @@ public class UserService {
 		return userRepository.existsByUserId(userId);
 	}
 
+	@Transactional
+	public boolean checkUserNickname(String userNickname) {
+		return userRepository.existsByUserNickname(userNickname);
+	}
+
 	@Transactional(readOnly = true)
 	public User getUser(String userId) {
 		// 검색 결과가 있으면 findUser에 반환된 값 대입하고, 없을 경우 new User()로 빈 객체 반환
@@ -36,5 +40,11 @@ public class UserService {
 			return new User();
 		});
 		return findUser;
+	}
+
+	@Transactional(readOnly = true)
+	public String findId(String userName, String userPhone) {
+		User findUser = userRepository.findByUserNameAndUserPhone(userName, userPhone).orElseGet(() -> new User());
+		return findUser.getUserId();
 	}
 }

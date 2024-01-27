@@ -38,7 +38,7 @@ public class User {
 	@Column(name = "user_nickname", nullable = false, columnDefinition = "nvarchar(16)", unique = true)
 	private String userNickname;
 	
-	@Column(name = "user_phone", nullable = false, columnDefinition = "varchar(11)")
+	@Column(name = "user_phone", nullable = false, columnDefinition = "varchar(30)", unique = true)
 	private String userPhone;
 	
 	@CreatedDate
