@@ -1,5 +1,6 @@
 package com.ezpick.lol.dto;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -31,9 +32,8 @@ public class UserDTO {
 	@Pattern(regexp = "^[a-zA-Z가-힣]*$", message = "닉네임은 한글, 영문 대/소문자만 사용 가능합니다. (특수기호, 공백 사용 불가)")
 	private String userNickname;
 
-	@NotBlank(message = "연락처는 필수 입력 항목입니다")
-	@Size(min = 10, max = 11, message = "연락처는 10자 이상 11자 이하로 입력하세요")
-	@Pattern(regexp = "^[0-9]*$", message = "연락처는 숫자로만 입력하세요.")
-	private String userPhone;
+	@NotBlank(message = "이메일은 필수 입력 항목입니다")
+	@Email(message = "유효한 이메일 주소를 입력하세요")
+	private String userEmail;
 
 }

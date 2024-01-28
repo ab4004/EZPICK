@@ -21,26 +21,46 @@ let userObject = {
 		});
 	},
 
-
 	validateForm: function() {
-		let isValid = true;
+		let validators = [
+			() => this.validateUserId(),
+			() => this.validateUserPassword(),
+			() => this.validateUserName(),
+			() => this.validateUserNickname(),
+			() => this.validateUserEmail()
+		];
+		return validators.every(validator => validator());
+	},
 
-		if (!this.validateUserId()) {
-			isValid = false;
+	sendNumber: function() {
+		$("#mail_number").css("display", "block");
+		$.ajax({
+			url: "/auth/checkEmail",
+			type: "post",
+			dataType: "json",
+			data: { "mail": $("#userEmail").val() },
+			success: function(data) {
+				// 이메일 입력란 수정 못하도록 비활성화
+				$("#userEmail").prop("disabled", true);
+				alert("인증번호 발송");
+				$("#Confirm").attr("value", data);
+			}
+		});
+	},
+
+	confirmNumber: function() {
+		var number1 = $("#number").val();
+		var number2 = $("#Confirm").val();
+
+		if (number1 == number2) {
+			alert("인증되었습니다.");
+			$("#userInfoSection").show();
+			$("#confirmButtonSection").show();
+			$("#mail_number").hide();  // 인증번호 입력란 숨기기
+			// 이메일 입력란 수정 못하도록 비활성화
+		} else {
+			alert("인증번호를 다시 확인해주세요.");
 		}
-		if (!this.validateUserPassword()) {
-			isValid = false;
-		}
-		if (!this.validateUserName()) {
-			isValid = false;
-		}
-		if (!this.validateUserNickname()) {
-			isValid = false;
-		}
-		if (!this.validateUserPhone()) {
-			isValid = false;
-		}
-		return isValid;
 	},
 
 	validateUserId: function() {
@@ -63,48 +83,47 @@ let userObject = {
 		if (!this.validateBasicUserNickname(userNickname, userNicknameErrorElement)) {
 			return false;
 		}
-		// 실시간으로 아이디 중복 검사를 수행
 		this.checkUserNickname(userNickname, userNicknameErrorElement);
 
 		return true;
 	},
 
-	checkUserId: function(userId, userIdErrorElement) {
-		// 아이디 중복 검사를 수행
+	validateUserEmail: function() {
+		let userEmail = $("#userEmail").val();
+		let userEmailErrorElement = $("#userEmailError");
+
+		if (!this.validateBasicUserEmail(userEmail, userEmailErrorElement)) {
+			return false;
+		}
+		this.checkUserEmail(userEmail, userEmailErrorElement);
+	},
+
+	checkUser: function(type, value, errorElement) {
 		$.ajax({
 			type: "GET",
-			url: "/auth/checkUserId/" + userId,
+			url: `/auth/check${type}/${value}`,
 			contentType: "application/json; charset=utf-8"
 		}).done(function(response) {
 			if (response["status"] === 200) {
-				// 중복이 없으면 메시지 초기화
-				userIdErrorElement.text("");
+				errorElement.text("");
 			} else if (response["status"] === 400) {
-				// 중복이 있으면 에러 메시지 표시
-				userIdErrorElement.text(response["data"]);
+				errorElement.text(response["data"]);
 			}
 		}).fail(function(error) {
-			userIdErrorElement.text("서버 오류가 발생했습니다."); // 에러 메시지 표시
+			errorElement.text("서버 오류가 발생했습니다.");
 		});
 	},
 
+	checkUserId: function(userId, userIdErrorElement) {
+		this.checkUser('UserId', userId, userIdErrorElement);
+	},
+
 	checkUserNickname: function(userNickname, userNicknameErrorElement) {
-		// 아이디 중복 검사를 수행
-		$.ajax({
-			type: "GET",
-			url: "/auth/checkUserNickname/" + userNickname,
-			contentType: "application/json; charset=utf-8"
-		}).done(function(response) {
-			if (response["status"] === 200) {
-				// 중복이 없으면 메시지 초기화
-				userNicknameErrorElement.text("");
-			} else if (response["status"] === 400) {
-				// 중복이 있으면 에러 메시지 표시
-				userNicknameErrorElement.text(response["data"]);
-			}
-		}).fail(function(error) {
-			userNicknameErrorElement.text("서버 오류가 발생했습니다."); // 에러 메시지 표시
-		});
+		this.checkUser('UserNickname', userNickname, userNicknameErrorElement);
+	},
+
+	checkUserEmail: function(userEmail, userEmailErrorElement) {
+		this.checkUser('UserEmail', userEmail, userEmailErrorElement);
 	},
 
 	validateBasicUserId: function(userId, userIdErrorElement) {
@@ -154,6 +173,23 @@ let userObject = {
 		}
 
 		userNicknameErrorElement.text("");
+		return true;
+	},
+
+	validateBasicUserEmail: function(userEmail, userEmailErrorElement) {
+		if (userEmail.trim() === "") {
+			userEmailErrorElement.text("이메일은 필수 입력 항목입니다.");
+			return false;
+		}
+
+		// 이메일 형식을 확인하는 정규식
+		let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+		if (!emailRegex.test(userEmail)) {
+			userEmailErrorElement.text("올바른 이메일 형식이 아닙니다.");
+			return false;
+		}
+
+		userEmailErrorElement.text("");
 		return true;
 	},
 
@@ -213,38 +249,14 @@ let userObject = {
 		return true;
 	},
 
-	validateUserPhone: function() {
-		let userPhone = $("#userPhone").val();
-		let userPhoneErrorElement = $("#userPhoneError");
-
-		if (userPhone.trim() === "") {
-			userPhoneErrorElement.text("휴대전화번호는 필수 입력 항목입니다.");
-			return false;
-		}
-
-		let hasNonNumeric = /\D/.test(userPhone);
-		if (hasNonNumeric) {
-			userPhoneErrorElement.text("휴대전화번호는 숫자로만 입력하세요.");
-			return false;
-		}
-
-		let phoneLength = userPhone.length;
-		if (phoneLength < 10 || phoneLength > 11) {
-			userPhoneErrorElement.text("휴대전화번호는 10자 이상 11자 이하로 입력하세요.");
-			return false;
-		}
-
-		userPhoneErrorElement.text("");
-		return true;
-	},
-
 	registerUser: function() {
+		let userEmail = $("#userEmail").val();
 		let registerUser = {
 			userId: $("#userId").val(),
 			userPassword: $("#userPassword").val(),
 			userName: $("#userName").val(),
 			userNickname: $("#userNickname").val(),
-			userPhone: $("#userPhone").val()
+			userEmail: userEmail
 		}
 
 		$.ajax({
@@ -258,12 +270,12 @@ let userObject = {
 				location.href = "/auth/login";
 			} else if (response["status"] === 400) {
 				let errorMessage = response["data"];
-            if (typeof errorMessage === 'string') {
-                alert(errorMessage);
-            } else {
-                alert("입력하신 내용을 다시 확인해주세요.");
-            }
-        }
+				if (typeof errorMessage === 'string') {
+					alert(errorMessage);
+				} else {
+					alert("입력하신 내용을 다시 확인해주세요.");
+				}
+			}
 		}).fail(function(error) {
 			console.error("Error during registration:", error);
 		});
@@ -299,8 +311,7 @@ let userObject = {
 
 	findIdUser: function() {
 		let findIdUser = {
-			userName: $("#userName").val(),
-			userPhone: $("#userPhone").val()
+			userName: $("#userEmail").val(),
 		}
 
 		$.ajax({
@@ -320,4 +331,6 @@ let userObject = {
 	},
 };
 
-userObject.init();
+$(document).ready(function() {
+	userObject.init();
+});

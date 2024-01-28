@@ -66,7 +66,8 @@ public class UserController {
 		}
 
 		// 아이디 중복 확인은 서비스에서 처리하도록 수정
-		if (userService.checkUserId(userDTO.getUserId()) || userService.checkUserNickname(userDTO.getUserNickname())) {
+		if (userService.checkUserId(userDTO.getUserId()) || userService.checkUserNickname(userDTO.getUserNickname())
+				|| userService.checkUserEmail(userDTO.getUserEmail())) {
 			// 중복된 아이디인 경우
 			return new ResponseDTO<>(HttpStatus.BAD_REQUEST.value(), "입력하신 내용을 다시 확인해주세요.");
 		}
@@ -85,7 +86,7 @@ public class UserController {
 		if (checkUser) {
 			return new ResponseDTO<>(HttpStatus.BAD_REQUEST.value(), "이미 사용중인 아이디입니다.");
 		} else {
-			return new ResponseDTO<>(HttpStatus.OK.value(), "");
+			return new ResponseDTO<>(HttpStatus.OK.value(), "인증번호 발송");
 		}
 	}
 
@@ -100,15 +101,39 @@ public class UserController {
 		}
 	}
 
+	@GetMapping("/auth/checkUserEmail/{userEmail}")
+	public @ResponseBody ResponseDTO<?> checkUserEmail(@PathVariable String userEmail) {
+		boolean checkUser = userService.checkUserEmail(userEmail);
+
+		if (checkUser) {
+			return new ResponseDTO<>(HttpStatus.BAD_REQUEST.value(), "이미 가입된 회원입니다.");
+		} else {
+			return new ResponseDTO<>(HttpStatus.OK.value(), "");
+		}
+	}
+
 	@GetMapping("/auth/findId")
-	public Object findId(@RequestParam(required = false) String userName,
-			@RequestParam(required = false) String userPhone) {
-		if (userName == null && userPhone == null) {
+	public Object findId(@RequestParam(required = false) String userEmail) {
+		if (userEmail == null) {
 			return "user/findId";
 		} else {
-			String findUser = userService.findId(userName, userPhone);
-			if (findUser != null) {
-				return new ResponseDTO<>(HttpStatus.OK.value(), "");
+			String findId = userService.findId(userEmail);
+			if (findId != null) {
+				return new ResponseDTO<>(HttpStatus.OK.value(), "회원님의 아이디는" + findId);
+			}
+			return new ResponseDTO<>(HttpStatus.BAD_REQUEST.value(), "일치하는 회원이 없습니다.\r\n" + "입력하신 내용을 다시 확인해주세요.");
+		}
+	}
+
+	@GetMapping("/auth/findPassword")
+	public Object findPassword(@RequestParam(required = false) String userName,
+			@RequestParam(required = false) String userEmail) {
+		if (userName == null && userEmail == null) {
+			return "user/findPassword";
+		} else {
+			String findPassword = userService.findPassword(userName, userEmail);
+			if (findPassword != null) {
+				return new ResponseDTO<>(HttpStatus.OK.value(), "회원님의 비밀번호는" + findPassword);
 			}
 			return new ResponseDTO<>(HttpStatus.BAD_REQUEST.value(), "일치하는 회원이 없습니다.\r\n" + "입력하신 내용을 다시 확인해주세요.");
 		}

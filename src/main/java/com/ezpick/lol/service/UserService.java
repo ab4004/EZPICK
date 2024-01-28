@@ -33,6 +33,11 @@ public class UserService {
 		return userRepository.existsByUserNickname(userNickname);
 	}
 
+	@Transactional
+	public boolean checkUserEmail(String userEmail) {
+		return userRepository.existsByUserEmail(userEmail);
+	}
+
 	@Transactional(readOnly = true)
 	public User getUser(String userId) {
 		// 검색 결과가 있으면 findUser에 반환된 값 대입하고, 없을 경우 new User()로 빈 객체 반환
@@ -43,8 +48,14 @@ public class UserService {
 	}
 
 	@Transactional(readOnly = true)
-	public String findId(String userName, String userPhone) {
-		User findUser = userRepository.findByUserNameAndUserPhone(userName, userPhone).orElseGet(() -> new User());
+	public String findId(String userEmail) {
+		User findUser = userRepository.findByUserEmail(userEmail).orElseGet(() -> new User());
 		return findUser.getUserId();
+	}
+
+	@Transactional(readOnly = true)
+	public String findPassword(String userName, String userEmail) {
+		User findUser = userRepository.findByUserNameAndUserEmail(userName, userEmail).orElseGet(() -> new User());
+		return findUser.getUserPassword();
 	}
 }

@@ -9,9 +9,14 @@ import com.ezpick.lol.domain.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, String> {
+
 	boolean existsByUserId(String userId);
 
 	boolean existsByUserNickname(String userNickname);
 
-	Optional<User> findByUserNameAndUserPhone(String userName, String userPhone);
+	boolean existsByUserEmail(String userEmail);
+
+	Optional<User> findByUserEmail(String userEmail);
+
+	Optional<User> findByUserNameAndUserEmail(String userName, String userEmail);
 }

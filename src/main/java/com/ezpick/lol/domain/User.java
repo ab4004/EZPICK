@@ -10,8 +10,6 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -38,8 +36,8 @@ public class User {
 	@Column(name = "user_nickname", nullable = false, columnDefinition = "nvarchar(16)", unique = true)
 	private String userNickname;
 	
-	@Column(name = "user_phone", nullable = false, columnDefinition = "varchar(30)", unique = true)
-	private String userPhone;
+	@Column(name = "user_email", nullable = false, columnDefinition = "varchar(30)", unique = true)
+	private String userEmail;
 	
 	@CreatedDate
 	@Column(name = "user_reg_date", updatable = false)

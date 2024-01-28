@@ -21,9 +21,9 @@
 		</div>
 		<button class="btn btn-primary" id="login-user">로그인</button>
 		<button class="btn btn-primary"
-			onclick="location.href='/auth/register'">회원가입</button>
+			onclick="location.href='/auth/checkEmail'">회원가입</button>
 		<button class="btn btn-primary" onclick="location.href='/auth/findId'">ID찾기</button>
-		<button class="btn btn-primary" id="findPassword-user">PW찾기</button>
+		<button class="btn btn-primary" onclick="location.href='/auth/findPassword'">PW찾기</button>
 	</div>
 	<script src="/js/user.js"></script>
 	<jsp:include page="../layout/footer.jsp"></jsp:include>
