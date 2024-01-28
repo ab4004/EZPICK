@@ -7,13 +7,13 @@
 <title>EZPICK</title>
 </head>
 <body>
-	<jsp:include page="../layout/nav.jsp"></jsp:include>
+	<jsp:include page="../layout/search_nav.jsp"></jsp:include>
 
 	<div class="container mt-3">
 		<div class="card mb-4">
 			<div class="card-header">
-				<a class="btn btn-primary float-end" href="/board/insertBoard"> <i
-					class="fas fa-edit"></i> 글 작성
+				<a class="btn btn-primary float-end" href="/board/insertBoard">
+					<i class="fas fa-edit"></i> 글 작성
 				</a>
 			</div>
 			<div class="card-body">
@@ -38,7 +38,9 @@
 					</tbody>
 				</table>
 			</div>
+		</div>
+	</div>
 
-			<jsp:include page="../layout/footer.jsp"></jsp:include>
+	<jsp:include page="../layout/footer.jsp"></jsp:include>
 </body>
 </html>

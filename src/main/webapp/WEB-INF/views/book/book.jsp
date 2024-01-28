@@ -7,7 +7,7 @@
 <title>경기 & 예매</title>
 </head>
 <body>
-<jsp:include page="../layout/nav.jsp"></jsp:include>
+<jsp:include page="../layout/search_nav.jsp"></jsp:include>
 
 <jsp:include page="../layout/footer.jsp"></jsp:include>
 </body>

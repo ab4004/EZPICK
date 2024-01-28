@@ -5,15 +5,43 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+<!-- Favicon-->
+<link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+<!-- Bootstrap icons-->
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
+	rel="stylesheet" type="text/css" />
+<!-- Google fonts-->
+<link
+	href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic"
+	rel="stylesheet" type="text/css" />
+<!-- Core theme CSS (includes Bootstrap)-->
+<link href="/css/styles.css" rel="stylesheet" />
+
+<!-- 글씨체 -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+	href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap"
+	rel="stylesheet">
+
+<script src="/webjars/jquery/3.6.0/dist/jquery.min.js"></script>
+<!-- summernote 시작 -->
+<link href="/webjars/summernote/0.8.10/summernote-bs4.css"
+	rel="stylesheet">
+<script src="/webjars/summernote/0.8.10/summernote-bs4.min.js"></script>
 <title>EZPICK</title>
 </head>
-<body>
+<body style="background-color: #f8f9fa">
 	<!-- 네비게이션 영역-->
-	<jsp:include page="./layout/nav.jsp"></jsp:include>
-
+	<jsp:include page="./layout/search_nav.jsp"></jsp:include>
+	
 	<!-- 상단 영역 / 검색 후 소환사 정보 -->
 	<header class="masthead_summoner"
-		style="padding-top: 50px; height: 50%">
+		style="padding-top: 105px; height: 50%; top: -55px; bottom: 55px">
 		<div class="container position-relative">
 			<div class="row justify-content-center">
 				<div class="col-xl-8">
@@ -28,15 +56,34 @@
 									<span class="badge bg-dark">123</span>
 								</div>
 							</div>
-							<div class="m-2">
+							<div class="m-2 w-50">
 								<h2>
-									<strong>홍길동</strong><span style="color: #9e9eb1"> #1234</span>
+									<strong>Hide on bush12312312312321</strong><span
+										style="color: #9e9eb1; font-size: 0.5em"> #1234</span>
 								</h2>
 								<h5>
 									<span class="badge bg-dark">Prev. 홍길동</span>
 								</h5>
-								<p>마지막 접속 : 24.01.01 00:00</p>
+								<p style="white-space: nowrap">마지막 접속 : 24.01.01 00:00</p>
 							</div>
+
+							<div class="d-flex flex-column text-center w-25">
+								<span>솔로랭크</span>
+								<div class="d-flex flex-fill justify-content-center">
+									<img class="align-self-center" src="/img/rank/GRANDMASTER.png"
+										width="100px" height="100px">
+								</div>
+								<strong>GRANDMASTER I</strong>
+							</div>
+
+							<div class="d-flex flex-column text-center w-25">
+								<span>자유랭크</span>
+								<div class="d-flex flex-fill justify-content-center">
+									<span class="align-self-center">해당 정보가 없습니다.</span>
+								</div>
+								<span>UNRANK</span>
+							</div>
+
 						</div>
 
 
@@ -91,23 +138,22 @@
 
 								<!-- KDA 관련 정보 -->
 								<div class="d-flex flex-column text-center" style="width: 100px">
-									<strong>10 / <span class="text-danger">1</span> / 5</strong>
-									<span>KDA : 15.00</span>
-									<span class="badge bg-danger">펜타킬</span>
+									<strong>10 / <span class="text-danger">1</span> / 5
+									</strong> <span>KDA : 15.00</span> <span class="badge bg-danger">펜타킬</span>
 								</div>
-								
+
 								<div class="vr mx-3"></div>
-								
+
 								<div class="d-flex flex-column">
 									<div class="d-flex">
-										<img class="mx-2" src="" width="32px" height="32px" style="background-color: #e6e6e6">
+										<img class="mx-2" src="" width="32px" height="32px"
+											style="background-color: #e6e6e6">
 									</div>
 									<div class="d-flex">
-										<span>CS 351</span>
-										<span>총 킬수</span>
+										<span>CS 351</span> <span>총 킬수</span>
 									</div>
 								</div>
-								
+
 							</div>
 
 						</div>
@@ -120,5 +166,10 @@
 
 	<!-- Footer-->
 	<jsp:include page="./layout/footer.jsp"></jsp:include>
+	
+	<!-- Bootstrap core JS-->
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
 </body>
 </html>
