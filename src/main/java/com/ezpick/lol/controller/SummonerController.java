@@ -1,7 +1,9 @@
 package com.ezpick.lol.controller;
 
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ezpick.lol.dto.AccountDTO;
+import com.ezpick.lol.dto.LeagueEntryDTO;
 import com.ezpick.lol.dto.MatchDTO;
 import com.ezpick.lol.dto.SummonerDTO;
 import com.ezpick.lol.service.RiotService;
@@ -42,6 +45,16 @@ public class SummonerController {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yy.MM.dd HH:mm");
 		String date = dateFormat.format(summoner.getRevisionDate());
 		
+		Set<LeagueEntryDTO> rankSet = riotService.getSummonerRankInfo(summoner.getId()); // 소환사의 랭크 정보를 가져옴
+		
+		for (LeagueEntryDTO rank : rankSet) {
+			if (rank.getQueueType().equals("RANKED_SOLO_5x5")) { // 솔랭
+				model.addAttribute("soloRank", rank);
+			} else { // 자랭
+				model.addAttribute("flexRank", rank);
+			}
+		}
+		
 		// 소환사 주요 정보
 		model.addAttribute("summoner", summoner);
 		
@@ -53,6 +66,9 @@ public class SummonerController {
 		
 		// 마지막 접속 시간 확인 정보
 		model.addAttribute("date", date);
+		
+		// 현재 시간에 대한 정보(현재 시간부터 얼마나 지났는지 파악하기 위해 사용)
+		model.addAttribute("currentDate", Instant.now());
 		
 		// 소환사의 최근 매치 기록
 		model.addAttribute("matchList", matchInfoList);
