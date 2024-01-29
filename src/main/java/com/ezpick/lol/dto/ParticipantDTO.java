@@ -84,7 +84,10 @@ public class ParticipantDTO {
 	private int profileIcon;
 	private String puuid;
 	private int quadraKills;
+	
+	@JsonProperty("riotIdGameName")
 	private String riotIdName;
+	
 	private String riotIdTagline;
 	private String role;
 	private int sightWardsBoughtInGame;
