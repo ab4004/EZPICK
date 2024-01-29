@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ezpick.lol.dto.AccountDTO;
+import com.ezpick.lol.dto.ChampionMasteryDTO;
 import com.ezpick.lol.dto.LeagueEntryDTO;
 import com.ezpick.lol.dto.MatchDTO;
 import com.ezpick.lol.dto.SummonerDTO;
@@ -37,7 +38,7 @@ public class SummonerController {
 		
 		AccountDTO account = riotService.getAccount(gameName, tagLine); // 소환사의 계정 정보를 가져옴(puuid)
 		SummonerDTO summoner = riotService.getSummoner(account.getPuuid()); // 소환사의 레벨과 같은 정보를 가져옴
-//		List<ChampionMasteryDTO> championMasteryList = riotService.getChampionMastery(account.getPuuid()); // 소환사의 챔피언 숙련도 관련 정보를 가져옴
+		List<ChampionMasteryDTO> championMasteryList = riotService.getChampionMastery(account.getPuuid()); // 소환사의 챔피언 숙련도 관련 정보를 가져옴
 		List<String> matchHistory = riotService.getMatchHistoryList(account.getPuuid()); // 소환사의 최근 매치 기록 아이디
 		List<MatchDTO> matchInfoList = riotService.getMatchInfoListAsync(matchHistory); // 매치 기록 확인용
 		
@@ -62,7 +63,7 @@ public class SummonerController {
 		model.addAttribute("account", account);
 		
 		// 소환사의 챔피언 숙련도에 관한 정보
-//		model.addAttribute("champtionMasteryList", championMasteryList);
+		model.addAttribute("championMasteryList", championMasteryList);
 		
 		// 마지막 접속 시간 확인 정보
 		model.addAttribute("date", date);

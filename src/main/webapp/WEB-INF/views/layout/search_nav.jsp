@@ -36,8 +36,8 @@
 <!-- summernate  종료 -->
 
 </head>
-<body style="font-family: 'Noto Sans KR', sans-serif;">
-	<nav class="sticky-top">
+<body>
+	<nav class="sticky-top" style="font-family: 'Noto Sans KR', sans-serif;">
 
 		<!-- 메인 아이콘 -->
 		<div class="container-fluid navbar navbar-light bg-light px-5">
