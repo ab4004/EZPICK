@@ -5,10 +5,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class EzPickMvcConfiguration {
-
+public class MvcConfiguration {
+	
 	@Bean
-	public ModelMapper modelMapper() {
+	ModelMapper modelMapper() {
 		return new ModelMapper();
 	}
 }

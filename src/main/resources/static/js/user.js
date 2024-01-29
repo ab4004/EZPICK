@@ -311,17 +311,18 @@ let userObject = {
 
 	findIdUser: function() {
 		let findIdUser = {
-			userName: $("#userEmail").val(),
+			userEmail: $("#userEmail").val(),
 		}
 
 		$.ajax({
-			type: "GET",
+			type: "POST",
 			url: "/auth/findId",
-			data: findIdUser,
-			contentType: "application/json; charset=utf-8"
+			data: $.param(findIdUser), // 변환
+			contentType: "application/x-www-form-urlencoded; charset=UTF-8"
 		}).done(function(response) {
 			if (response["status"] === 200) {
-				location.href = "/";
+				alert(response["data"]);
+				location.href = "/auth/login";
 			} else {
 				alert(response["data"]);
 			}

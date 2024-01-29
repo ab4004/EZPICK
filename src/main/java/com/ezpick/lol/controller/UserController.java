@@ -113,19 +113,20 @@ public class UserController {
 	}
 
 	@GetMapping("/auth/findId")
-	public Object findId(@RequestParam(required = false) String userEmail) {
-		if (userEmail == null) {
-			return "user/findId";
-		} else {
-			String findId = userService.findId(userEmail);
-			if (findId != null) {
-				return new ResponseDTO<>(HttpStatus.OK.value(), "회원님의 아이디는" + findId);
-			}
-			return new ResponseDTO<>(HttpStatus.BAD_REQUEST.value(), "일치하는 회원이 없습니다.\r\n" + "입력하신 내용을 다시 확인해주세요.");
-		}
+	public String findId() {
+		return "user/findId";
 	}
 
-	@GetMapping("/auth/findPassword")
+    @PostMapping("/auth/findId")
+	public @ResponseBody ResponseDTO<?> findId(@RequestParam String userEmail) {
+		String findId = userService.findId(userEmail);
+		if (findId != null) {
+			return new ResponseDTO<>(HttpStatus.OK.value(), "회원님의 아이디는 " + findId + "입니다");
+		}
+		return new ResponseDTO<>(HttpStatus.BAD_REQUEST.value(), "일치하는 회원이 없습니다.\r\n" + "입력하신 내용을 다시 확인해주세요.");
+	}
+
+	/*@GetMapping("/auth/findPassword")
 	public Object findPassword(@RequestParam(required = false) String userName,
 			@RequestParam(required = false) String userEmail) {
 		if (userName == null && userEmail == null) {
@@ -137,5 +138,5 @@ public class UserController {
 			}
 			return new ResponseDTO<>(HttpStatus.BAD_REQUEST.value(), "일치하는 회원이 없습니다.\r\n" + "입력하신 내용을 다시 확인해주세요.");
 		}
-	}
+	}*/
 }
