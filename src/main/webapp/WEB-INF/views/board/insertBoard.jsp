@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<jsp:include page="../layout/nav.jsp"></jsp:include>
+	<jsp:include page="../layout/search_nav.jsp"></jsp:include>
 	<div class="container mt-3">
 		<h1>게시글 작성</h1>
 		<p>제목 :</p>
