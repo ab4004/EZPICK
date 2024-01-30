@@ -13,6 +13,7 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler(HttpClientErrorException.NotFound.class)
 	@ResponseStatus(HttpStatus.NOT_FOUND)
 	public String handleNotFound(HttpClientErrorException.NotFound ex, Model model) {
+		System.err.println(ex.getMessage());
         return "error/summonerNotFound";
 	}
 	
@@ -20,6 +21,7 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler(HttpClientErrorException.Forbidden.class)
 	@ResponseStatus(HttpStatus.FORBIDDEN)
 	public String handleForbidden(HttpClientErrorException.Forbidden ex, Model model) {
+		System.err.println(ex.getMessage());
         return "error/summonerForbidden";
 	}
 }
