@@ -1,5 +1,7 @@
 package com.ezpick.lol.controller;
 
+import java.io.Console;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -8,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -86,7 +89,7 @@ public class UserController {
 		if (checkUser) {
 			return new ResponseDTO<>(HttpStatus.BAD_REQUEST.value(), "이미 사용중인 아이디입니다.");
 		} else {
-			return new ResponseDTO<>(HttpStatus.OK.value(), "인증번호 발송");
+			return new ResponseDTO<>(HttpStatus.OK.value(), "");
 		}
 	}
 
@@ -117,7 +120,7 @@ public class UserController {
 		return "user/findId";
 	}
 
-    @PostMapping("/auth/findId")
+	@PostMapping("/auth/findId")
 	public @ResponseBody ResponseDTO<?> findId(@RequestParam String userEmail) {
 		String findId = userService.findId(userEmail);
 		if (findId != null) {
@@ -126,17 +129,29 @@ public class UserController {
 		return new ResponseDTO<>(HttpStatus.BAD_REQUEST.value(), "일치하는 회원이 없습니다.\r\n" + "입력하신 내용을 다시 확인해주세요.");
 	}
 
-	/*@GetMapping("/auth/findPassword")
-	public Object findPassword(@RequestParam(required = false) String userName,
-			@RequestParam(required = false) String userEmail) {
-		if (userName == null && userEmail == null) {
-			return "user/findPassword";
+	@GetMapping("/auth/findPassword")
+	public String findPassword() {
+		return "user/findPassword";
+	}
+
+	@GetMapping("/auth/findPassword/{userId}/{userEmail}")
+	public @ResponseBody ResponseDTO<?> findPassword(@PathVariable String userId, @PathVariable String userEmail) {
+		User checkUser = userService.findPassword(userId, userEmail);
+
+		if (user != null) {
+			return new ResponseDTO<>(HttpStatus.OK.value(), "");
 		} else {
-			String findPassword = userService.findPassword(userName, userEmail);
-			if (findPassword != null) {
-				return new ResponseDTO<>(HttpStatus.OK.value(), "회원님의 비밀번호는" + findPassword);
-			}
 			return new ResponseDTO<>(HttpStatus.BAD_REQUEST.value(), "일치하는 회원이 없습니다.\r\n" + "입력하신 내용을 다시 확인해주세요.");
 		}
-	}*/
+	}
+
+	@PutMapping("/auth/findPassword")
+	public @ResponseBody ResponseDTO<?> updatePassword(@Valid @RequestBody UserDTO userDTO,
+			BindingResult bindingResult) {
+		if (bindingResult.hasFieldErrors("userPassword")) {
+			return new ResponseDTO<>(HttpStatus.BAD_REQUEST.value(), "입력하신 내용을 다시 확인해주세요.");
+		}
+		userService.updatePassword(userDTO.getUserId(), userDTO.getUserPassword());
+		return new ResponseDTO<>(HttpStatus.OK.value(), "비밀번호가 성공적으로 변경되었습니다.");
+	}
 }

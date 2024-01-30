@@ -64,19 +64,5 @@
 	<jsp:include page="../layout/footer.jsp"></jsp:include>
 	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 	<script src="/js/user.js"></script>
-	<script>
-		function sendNumber() {
-			userObject.sendNumber();
-		}
-
-		function confirmNumber() {
-			// 이메일 인증 성공 시
-			userObject.confirmNumber();
-
-			// 이메일 인증 성공 후 아이디, 비밀번호, 이름, 닉네임 입력란 표시
-			$("#userInfoSection").show();
-			$("#confirmButtonSection").show();
-		}
-	</script>
 </body>
 </html>

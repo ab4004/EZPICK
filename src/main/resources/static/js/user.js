@@ -19,6 +19,14 @@ let userObject = {
 		$("#findId-user").on("click", function() {
 			_this.findIdUser();
 		});
+
+		$("#findPassword-user").on("click", function() {
+			_this.findPasswordUser();
+		});
+
+		$("#updatePassword-user").on("click", function() {
+			_this.updatePasswordUser();
+		});
 	},
 
 	validateForm: function() {
@@ -57,7 +65,8 @@ let userObject = {
 			$("#userInfoSection").show();
 			$("#confirmButtonSection").show();
 			$("#mail_number").hide();  // 인증번호 입력란 숨기기
-			// 이메일 입력란 수정 못하도록 비활성화
+			$("#findId-user").show(); // 아이디 확인하기 버튼 보이기
+			$("#newPassword").show(); // 비밀번호 변경하기 버튼 보이기
 		} else {
 			alert("인증번호를 다시 확인해주세요.");
 		}
@@ -320,6 +329,54 @@ let userObject = {
 			data: $.param(findIdUser), // 변환
 			contentType: "application/x-www-form-urlencoded; charset=UTF-8"
 		}).done(function(response) {
+			if (response["status"] === 200) {
+				alert(response["data"]);
+				location.href = "/auth/login";
+			} else {
+				alert(response["data"]);
+			}
+		}).fail(function(error) {
+			alert(error["data"]);
+		});
+	},
+
+	findPasswordUser: function() {
+		let findPasswordUser = {
+			userId: $("#userId").val(),
+			userEmail: $("#userEmail").val(),
+		}
+
+		$.ajax({
+			type: "GET",
+			// encodeURIComponent로 인코딩된 값 사용
+			url: "/auth/findPassword/" + findPasswordUser.userId + "/" + findPasswordUser.userEmail,
+			contentType: "application/json; charset=UTF-8"
+		}).done(function(response) {
+			if (response["status"] === 200) {
+				$("#sendBtn").show(); // sendBtn 보이기
+				$("#mail_number").show(); // 인증번호 입력란 보이기
+			} else {
+				alert(response["data"]);
+			}
+		}).fail(function(error) {
+			alert(error["data"]);
+		});
+	},
+
+	updatePasswordUser: function() {
+		let userId = $("#userId").val();
+		let updatePasswordUser = {
+			userPassword: $("#userPassword").val(),
+			userId: userId
+		}
+
+		$.ajax({
+			type: "PUT",
+			url: "/auth/updatePassword",
+			data: updatePasswordUser,
+			contentType: "application/json; charset=UTF-8"
+		}).done(function(response) {
+			console.log(response);  // 응답을 콘솔에 출력
 			if (response["status"] === 200) {
 				alert(response["data"]);
 				location.href = "/auth/login";
