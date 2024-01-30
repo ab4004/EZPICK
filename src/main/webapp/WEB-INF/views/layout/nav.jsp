@@ -37,7 +37,7 @@
 
 </head>
 <body style="font-family: 'Noto Sans KR', sans-serif;">
-	<nav class="navbar navbar-light bg-light sticky-top"
+	<nav class="navbar navbar-light bg-light sticky-top border-bottom"
 		style="background-color: #EEEEEE">
 
 		<!-- 메인 아이콘 -->
@@ -50,7 +50,7 @@
 				<div class="btn-group nav_menu">
 					<a class="navbar-brand mx-3" href="#">패치노트</a> <a
 						class="navbar-brand mx-3" href="/board/boardList">커뮤니티</a> <a
-						class="navbar-brand mx-3" href="#">경기 & 예매</a> <a
+						class="navbar-brand mx-3" href="/janAllDate?date=2024-01">경기 & 예매</a> <a
 						class="navbar-brand mx-3" href="#">승부 예측</a> <a
 						class="navbar-brand mx-3" href="#">뉴스</a>
 				</div>

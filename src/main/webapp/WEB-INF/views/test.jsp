@@ -94,9 +94,16 @@
 			</div>
 		</div> -->
 	</header>
+	
+	<!-- 상단 버튼 영역 -->
+	<div class="container d-flex mb-3">
+		<div>
+			<a class="btn btn-dark" href="https://www.leagueoflegends.com/ko-kr/champions/" target="_blank">챔피언 정보</a>
+		</div>
+	</div>
 
 	<!-- 중단 컨텐츠 영역 -->
-	<section class="features-icons bg-light" style="min-height: 1000px">
+	<section class="bg-light" style="min-height: 1000px">
 		<div class="container">
 			<div class="d-flex">
 				<div class="d-flex-column w-25"> 
