@@ -10,6 +10,7 @@
 </head>
 <body
 	style="background-color: #f8f9fa; font-family: 'Noto Sans KR', sans-serif;">
+
 	<!-- 네비게이션 영역-->
 	<jsp:include page="../layout/search_nav.jsp"></jsp:include>
 
@@ -88,9 +89,16 @@
 			</div>
 		</div>
 	</header>
+	
+	<!-- 상단 버튼 영역 -->
+	<div class="container d-flex mb-3">
+		<div>
+			<a class="btn btn-dark" href="https://www.leagueoflegends.com/ko-kr/champions/" target="_blank">챔피언 정보</a>
+		</div>
+	</div>
 
 	<!-- 중단 컨텐츠 영역 -->
-	<section class="features-icons bg-light">
+	<section class="bg-light">
 		<div class="container">
 			<div class="d-flex">
 				<div class="d-flex-column w-25">
@@ -192,41 +200,35 @@
 											<c:when test="${play_time >= 31536000}">
 												<div>
 													<fmt:formatNumber value="${play_time div 31536000}"
-														pattern="#0" />
-													년 전
+														pattern="#0" />년 전
 												</div>
 											</c:when>
 											<c:when test="${play_time >= 2592000}">
 												<div>
 													<fmt:formatNumber value="${play_time div 2592000}"
-														pattern="#0" />
-													개월 전
+														pattern="#0" />개월 전
 												</div>
 											</c:when>
 											<c:when test="${play_time >= 86400}">
 												<div>
 													<fmt:formatNumber value="${play_time div 86400}"
-														pattern="#0" />
-													일 전
+														pattern="#0" />일 전
 												</div>
 											</c:when>
 											<c:when test="${play_time >= 3600}">
 												<div>
 													<fmt:formatNumber value="${play_time div 3600}"
-														pattern="#0" />
-													시간 전
+														pattern="#0" />시간 전
 												</div>
 											</c:when>
 											<c:when test="${play_time >= 60}">
 												<div>
-													<fmt:formatNumber value="${play_time div 60}" pattern="#0" />
-													분 전
+													<fmt:formatNumber value="${play_time div 60}" pattern="#0" />분 전
 												</div>
 											</c:when>
 											<c:otherwise>
 												<div>
-													<fmt:formatNumber value="${play_time}" pattern="#0" />
-													초 전
+													<fmt:formatNumber value="${play_time}" pattern="#0" />초 전
 												</div>
 											</c:otherwise>
 										</c:choose>
@@ -237,6 +239,7 @@
 						<!-- 사용한 챔피언 -->
 						<img
 							src="https://ddragon.leagueoflegends.com/cdn/14.2.1/img/champion/${participant.championName}.png"
+							onerror="this.onerror=null; this.src='/img/champion/${participant.championId}.png';"
 							width="72px" height="72px" />
 
 						<!-- 사용한 스펠 -->
@@ -245,6 +248,16 @@
 								width="32px" height="32px" /> <img class="mt-2" alt="스펠2"
 								src="/img/spell/${participant.summoner2Id}.png" width="32px"
 								height="32px" />
+						</div>
+
+						<!-- 사용한 특성 -->
+						<div class="d-flex flex-column">
+							<img
+								src="/img/perk/${participant.perks.styles[0].selections[0].perk}.png"
+								alt="특성1" width="32px" height="32px" />
+							<img class="mt-2 p-1"
+								src="/img/perk/${participant.perks.styles[1].style}.png"
+								alt="특성2" width="32px" height="32px" />
 						</div>
 
 						<div class="mx-2"></div>
@@ -303,8 +316,13 @@
 							<div class="d-flex p-2">
 								<c:forEach var="team" items="${match.info.teams}">
 									<c:if test="${team.win eq participant.win}">
-										<c:set var="totalKillAssi" value="${((participant.kills + participant.assists) div team.objectives.champion.kills) * 100}"/>
-										<div class="text-danger fw-bold">킬관여 <fmt:formatNumber value="${totalKillAssi}" pattern="##0"/>% </div>
+										<c:set var="totalKillAssi"
+											value="${((participant.kills + participant.assists) div team.objectives.champion.kills) * 100}" />
+										<div class="text-danger fw-bold">
+											킬관여
+											<fmt:formatNumber value="${totalKillAssi}" pattern="##0" />
+											%
+										</div>
 									</c:if>
 								</c:forEach>
 								<div class="mx-2">CS ${participant.totalMinionsKilled}</div>
@@ -313,38 +331,57 @@
 					</div>
 				</div>
 				<div class="d-flex">
-					<div class="d-flex align-items-center" style="min-width: 200px; font-size: 12px">
+					<div class="d-flex align-items-center"
+						style="min-width: 200px; font-size: 12px">
 						<div class="d-flex-column" style="width: 100px">
-							<c:forEach var="participant" items="${match.info.participants}" varStatus="status">
+							<c:forEach var="partyMember" items="${match.info.participants}"
+								varStatus="status">
 								<c:if test="${status.count < 6 }">
 									<div class="d-flex mx-1 align-items-center">
-										<img src="https://ddragon.leagueoflegends.com/cdn/14.2.1/img/champion/${participant.championName}.png"
-										width="16" height="16" />
-										<div class="mx-1" style="overflow: hidden; white-space:nowrap; text-overflow: ellipsis">
-											<c:if test="${!empty participant.summonerName}">
-												<a class="text-dark" style="text-decoration: none" href="/summoner?gameName=${participant.summonerName}&tagLine=${participant.riotIdTagline}">${participant.summonerName}</a>
-											</c:if>
-											<c:if test="${empty participant.summonerName}">
-												<a class="text-dark" style="text-decoration: none" href="/summoner?gameName=${participant.riotIdName}&tagLine=${participant.riotIdTagline}">${participant.summonerName}</a>
-											</c:if>
+										<img
+											src="https://ddragon.leagueoflegends.com/cdn/14.2.1/img/champion/${partyMember.championName}.png"
+											onerror="this.onerror=null; this.src='/img/champion/${partyMember.championId}.png';"
+											width="16" height="16" />
+										<div class="mx-1"
+											style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis">
+											<c:choose>
+												<c:when
+													test="${(not empty partyMember.summonerName) or (partyMember.summonerName ne '')}">
+													<a class="text-dark" style="text-decoration: none"
+														href="/summoner?gameName=${partyMember.summonerName}&tagLine=${partyMember.riotIdTagline}">${partyMember.summonerName}</a>
+												</c:when>
+												<c:otherwise>
+													<a class="text-dark" style="text-decoration: none"
+														href="/summoner?gameName=${partyMember.riotIdGameName}&tagLine=${partyMember.riotIdTagline}">${partyMember.riotIdGameName}</a>
+												</c:otherwise>
+											</c:choose>
 										</div>
 									</div>
 								</c:if>
 							</c:forEach>
 						</div>
 						<div class="d-flex-column" style="width: 100px">
-							<c:forEach var="participant" items="${match.info.participants}" varStatus="status">
+							<c:forEach var="partyMember" items="${match.info.participants}"
+								varStatus="status">
 								<c:if test="${status.count >= 6 }">
 									<div class="d-flex mx-1 align-items-center">
-										<img src="https://ddragon.leagueoflegends.com/cdn/14.2.1/img/champion/${participant.championName}.png"
+										<img
+											src="https://ddragon.leagueoflegends.com/cdn/14.2.1/img/champion/${partyMember.championName}.png"
+											onerror="this.onerror=null; this.src='/img/champion/${partyMember.championId}.png';"
 											width="16" height="16" />
-										<div class="mx-1" style="overflow: hidden; white-space:nowrap; text-overflow: ellipsis">
-											<c:if test="${!empty participant.summonerName}">
-												<a class="text-dark" style="text-decoration: none" href="/summoner?gameName=${participant.summonerName}&tagLine=${participant.riotIdTagline}">${participant.summonerName}</a>
-											</c:if>
-											<c:if test="${empty participant.summonerName}">
-												<a class="text-dark" style="text-decoration: none" href="/summoner?gameName=${participant.riotIdName}&tagLine=${participant.riotIdTagline}">${participant.summonerName}</a>
-											</c:if>
+										<div class="mx-1"
+											style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis">
+											<c:choose>
+												<c:when
+													test="${(not empty partyMember.summonerName) or (partyMember.summonerName ne '')}">
+													<a class="text-dark" style="text-decoration: none"
+														href="/summoner?gameName=${partyMember.summonerName}&tagLine=${partyMember.riotIdTagline}">${partyMember.summonerName}</a>
+												</c:when>
+												<c:otherwise>
+													<a class="text-dark" style="text-decoration: none"
+														href="/summoner?gameName=${partyMember.riotIdGameName}&tagLine=${partyMember.riotIdTagline}">${partyMember.riotIdGameName}</a>
+												</c:otherwise>
+											</c:choose>
 										</div>
 									</div>
 								</c:if>

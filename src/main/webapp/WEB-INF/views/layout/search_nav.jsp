@@ -40,7 +40,7 @@
 	<nav class="sticky-top" style="font-family: 'Noto Sans KR', sans-serif;">
 
 		<!-- 메인 아이콘 -->
-		<div class="container-fluid navbar navbar-light bg-light px-5">
+		<div class="container-fluid navbar navbar-light bg-light px-5 border-bottom">
 			<a class="navbar-brand" href="/"><img
 				src="/img/ezpick_nav_icon.png"></a>
 
@@ -49,7 +49,7 @@
 				<div class="btn-group nav_menu">
 					<a class="navbar-brand mx-3" href="#">패치노트</a> <a
 						class="navbar-brand mx-3" href="/board/boardList">커뮤니티</a> <a
-						class="navbar-brand mx-3" href="#">경기 & 예매</a> <a
+						class="navbar-brand mx-3" href="/janAllDate?date=2024-01">경기 & 예매</a> <a
 						class="navbar-brand mx-3" href="#">승부 예측</a> <a
 						class="navbar-brand mx-3" href="#">뉴스</a>
 				</div>
@@ -69,7 +69,7 @@
 		</div>
 		
 		<!-- 네비게이션 소환사 검색 영역 -->
-		<div class="container" style="background-color: #EEEEEE; border-radius: 0 0 25px 25px; max-width: 30%">
+		<div class="container" style="background-color: #EEEEEE; border-radius: 0 0 25px 25px; max-width: 30%; min-width: 300px">
 			<form class="form-subscribe d-flex justify-content-center" action="/summoner" method="GET">
 				<div class="input-group w-75 p-2">
 					<input type="text" class="form-control form-control-sm input-search"

@@ -6,10 +6,10 @@
 <meta charset="UTF-8">
 <title>EZPICK</title>
 </head>
-<body>
+<body style="display: flex; flex-direction: column; min-height: 100vh;">
 	<jsp:include page="../layout/search_nav.jsp"></jsp:include>
 
-	<div class="container mt-3">
+	<div class="container mt-3 flex-grow-1">
 		<div class="card mb-4">
 			<div class="card-header">
 				<a class="btn btn-primary float-end" href="/board/insertBoard">
