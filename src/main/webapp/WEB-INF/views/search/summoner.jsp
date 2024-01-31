@@ -89,11 +89,13 @@
 			</div>
 		</div>
 	</header>
-	
+
 	<!-- 상단 버튼 영역 -->
 	<div class="container d-flex mb-3">
 		<div>
-			<a class="btn btn-dark" href="https://www.leagueoflegends.com/ko-kr/champions/" target="_blank">챔피언 정보</a>
+			<a class="btn btn-dark"
+				href="https://www.leagueoflegends.com/ko-kr/champions/"
+				target="_blank">챔피언 정보</a>
 		</div>
 	</div>
 
@@ -133,7 +135,7 @@
 					<!-- 매치기록 확인용 -->
 					<div>
 						<c:if test="${not empty matchList}">
-							<c:forEach var="match" items="${matchList}">
+							<c:forEach var="match" items="${matchList}" varStatus="matchStatus">
 								<c:forEach var="participant" items="${match.info.participants}">
 									<c:if test="${participant.puuid eq account.puuid }">
 										<!-- 승리 여부 -->
@@ -200,35 +202,41 @@
 											<c:when test="${play_time >= 31536000}">
 												<div>
 													<fmt:formatNumber value="${play_time div 31536000}"
-														pattern="#0" />년 전
+														pattern="#0" />
+													년 전
 												</div>
 											</c:when>
 											<c:when test="${play_time >= 2592000}">
 												<div>
 													<fmt:formatNumber value="${play_time div 2592000}"
-														pattern="#0" />개월 전
+														pattern="#0" />
+													개월 전
 												</div>
 											</c:when>
 											<c:when test="${play_time >= 86400}">
 												<div>
 													<fmt:formatNumber value="${play_time div 86400}"
-														pattern="#0" />일 전
+														pattern="#0" />
+													일 전
 												</div>
 											</c:when>
 											<c:when test="${play_time >= 3600}">
 												<div>
 													<fmt:formatNumber value="${play_time div 3600}"
-														pattern="#0" />시간 전
+														pattern="#0" />
+													시간 전
 												</div>
 											</c:when>
 											<c:when test="${play_time >= 60}">
 												<div>
-													<fmt:formatNumber value="${play_time div 60}" pattern="#0" />분 전
+													<fmt:formatNumber value="${play_time div 60}" pattern="#0" />
+													분 전
 												</div>
 											</c:when>
 											<c:otherwise>
 												<div>
-													<fmt:formatNumber value="${play_time}" pattern="#0" />초 전
+													<fmt:formatNumber value="${play_time}" pattern="#0" />
+													초 전
 												</div>
 											</c:otherwise>
 										</c:choose>
@@ -254,8 +262,7 @@
 						<div class="d-flex flex-column">
 							<img
 								src="/img/perk/${participant.perks.styles[0].selections[0].perk}.png"
-								alt="특성1" width="32px" height="32px" />
-							<img class="mt-2 p-1"
+								alt="특성1" width="32px" height="32px" /> <img class="mt-2 p-1"
 								src="/img/perk/${participant.perks.styles[1].style}.png"
 								alt="특성2" width="32px" height="32px" />
 						</div>
@@ -330,6 +337,8 @@
 						</div>
 					</div>
 				</div>
+
+				<!-- 매치기록 모든 팀 이름과 선택 챔피언 -->
 				<div class="d-flex">
 					<div class="d-flex align-items-center"
 						style="min-width: 200px; font-size: 12px">
@@ -373,7 +382,7 @@
 											style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis">
 											<c:choose>
 												<c:when
-													test="${(not empty partyMember.summonerName) or (partyMember.summonerName ne '')}">
+													test="${not empty partyMember.summonerName}">
 													<a class="text-dark" style="text-decoration: none"
 														href="/summoner?gameName=${partyMember.summonerName}&tagLine=${partyMember.riotIdTagline}">${partyMember.summonerName}</a>
 												</c:when>
@@ -389,10 +398,96 @@
 						</div>
 					</div>
 				</div>
+				<!-- 상세매치 정보 버튼 -->
+				<div class="d-flex" style="width: 40px">
+					<button class="btn flex-grow-1 border" type="button"
+						onclick="detailTeamContent(teamInfo${matchStatus.count})">
+						<i class="bi bi-chevron-compact-down"></i>
+					</button>
+				</div>
 			</div>
 		</div>
 		</c:if>
+
 		</c:forEach>
+		<!-- 상세매치 정보 버튼 눌렀을 경우 보이는 영역 -->
+		<div class="d-flex-column card" id="teamInfo${matchStatus.count}"
+			style="display: none;">
+			<!-- 총 챔피언에게 가한 피해량과 받은 피해량 -->
+			<c:set var="maxDamage" value="0"></c:set>
+			<c:set var="maxTakenDamage" value="0"></c:set>
+			<c:forEach var="partyCalc" items="${match.info.participants}">
+				<c:if test="${maxDamage < partyCalc.totalDamageDealtToChampions}">
+					<c:set var="maxDamage"
+						value="${partyCalc.totalDamageDealtToChampions}"></c:set>
+				</c:if>
+				<c:if test="${maxTakenDamage < partyCalc.totalDamageTaken}">
+					<c:set var="maxTakenDamage" value="${partyCalc.totalDamageTaken}"></c:set>
+				</c:if>
+			</c:forEach>
+
+			<c:forEach var="partyEach" items="${match.info.participants}">
+				<div class="d-flex p-2">
+					<div>
+						<img class="rounded-circle" alt="파티원챔피언"
+							src="https://ddragon.leagueoflegends.com/cdn/14.2.1/img/champion/${partyEach.championName}.png"
+							onerror="this.onerror=null; this.src='/img/champion/${partyEach.championId}.png';"
+							width="30px" height="30px" />
+					</div>
+					<div class="d-flex mx-2 align-items-center" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis; width: 100px">
+						<c:choose>
+							<c:when
+								test="${(not empty partyEach.summonerName) or (partyEach.summonerName ne '')}">
+								<div style="font-size: 12px">${partyEach.summonerName}</div>
+							</c:when>
+							<c:otherwise>
+								<div style="font-size: 12px">${partyEach.riotIdGameName}</div>
+							</c:otherwise>
+						</c:choose>
+					</div>
+					<div class="d-flex">
+						<img class="mx-2"
+							src="https://ddragon.leagueoflegends.com/cdn/14.2.1/img/item/${partyEach.item0}.png"
+							onerror="this.onerror=null; this.src='default-image.png'; this.alt='아이템'"
+							width="28px" height="28px"> <img class="mx-2"
+							src="https://ddragon.leagueoflegends.com/cdn/14.2.1/img/item/${partyEach.item1}.png"
+							onerror="this.onerror=null; this.src='default-image.png'; this.alt='아이템'"
+							width="28px" height="28px"> <img class="mx-2"
+							src="https://ddragon.leagueoflegends.com/cdn/14.2.1/img/item/${partyEach.item2}.png"
+							onerror="this.onerror=null; this.src='default-image.png'; this.alt='아이템'"
+							width="28px" height="28px"> <img class="mx-2"
+							src="https://ddragon.leagueoflegends.com/cdn/14.2.1/img/item/${partyEach.item3}.png"
+							onerror="this.onerror=null; this.src='default-image.png'; this.alt='아이템'"
+							width="28px" height="28px"> <img class="mx-2"
+							src="https://ddragon.leagueoflegends.com/cdn/14.2.1/img/item/${partyEach.item4}.png"
+							onerror="this.onerror=null; this.src='default-image.png'; this.alt='아이템'"
+							width="28px" height="28px"> <img class="mx-2"
+							src="https://ddragon.leagueoflegends.com/cdn/14.2.1/img/item/${partyEach.item5}.png"
+							onerror="this.onerror=null; this.src='default-image.png'; this.alt='아이템'"
+							width="28px" height="28px"> <img class="mx-2"
+							src="https://ddragon.leagueoflegends.com/cdn/14.2.1/img/item/${partyEach.item6}.png"
+							onerror="this.onerror=null; this.src='default-image.png'; this.alt='아이템'"
+							width="28px" height="28px">
+					</div>
+					<div class="d-flex align-items-center">
+						<div class="mx-2">피해량 </div>
+						<div class="progress" style="width: 100px">
+							<div class="progress-bar"
+								style="width: ${(partyEach.totalDamageDealtToChampions / maxDamage) * 100}%"
+								aria-valuenow="${partyEach.totalDamageDealtToChampions}"
+								aria-valuemin="0" aria-valuemax="${maxDamage}"></div>
+						</div>
+						<div class="mx-2">받은 피해량 </div>
+						<div class="progress" style="width: 100px">
+							<div class="progress-bar"
+								style="width: ${(partyEach.totalDamageTaken / maxTakenDamage) * 100}%"
+								aria-valuenow="${partyEach.totalDamageTaken}" aria-valuemin="0"
+								aria-valuemax="${maxTakenDamage}"></div>
+						</div>
+					</div>
+				</div>
+			</c:forEach>
+		</div>
 		</c:forEach>
 		</c:if>
 		<c:if test="${empty matchList }">
@@ -406,5 +501,17 @@
 
 	<!-- Footer-->
 	<jsp:include page="../layout/footer.jsp"></jsp:include>
+
+	<script>
+		function detailTeamContent(teamInfo) {
+			var teamInfoContent = document.getElementById(teamInfo);
+			// content를 토글
+			if (teamInfoContent.style.display == 'none') {
+				teamInfoContent.style.display = 'block'; 
+			} else {
+				teamInfoContent.style.display = 'none';
+			}
+		}
+	</script>
 </body>
 </html>
