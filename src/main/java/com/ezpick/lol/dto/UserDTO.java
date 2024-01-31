@@ -1,5 +1,7 @@
 package com.ezpick.lol.dto;
 
+import com.ezpick.lol.repository.PasswordUpdate;
+
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -18,8 +20,8 @@ public class UserDTO {
 	@Pattern(regexp = "^[a-z0-9]+$", message = "아이디는 영문 소문자와 숫자로만 입력하세요")
 	private String userId;
 
-	@NotBlank(message = "비밀번호는 필수 입력 항목입니다")
-	@Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*(),.?\":{}|<>]).{8,16}$", message = "비밀번호는 8~16자의 영문 대/소문자, 숫자, 특수문자를 사용해 주세요.")
+	@NotBlank(message = "비밀번호는 필수 입력 항목입니다", groups = PasswordUpdate.class)
+	@Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*(),.?\":{}|<>]).{8,16}$", message = "비밀번호는 8~16자의 영문 대/소문자, 숫자, 특수문자를 사용해 주세요.", groups = PasswordUpdate.class)
 	private String userPassword;
 
 	@NotBlank(message = "이름은 필수 입력 항목입니다")
@@ -35,5 +37,4 @@ public class UserDTO {
 	@NotBlank(message = "이메일은 필수 입력 항목입니다")
 	@Email(message = "유효한 이메일 주소를 입력하세요")
 	private String userEmail;
-
 }

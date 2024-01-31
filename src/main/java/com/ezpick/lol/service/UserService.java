@@ -52,15 +52,21 @@ public class UserService {
 		return findUser.getUserId();
 	}
 
-	@Transactional // 비밀번호 찾기
-	public User findPassword(String userId, String userEmail, String newPassword) {
+	@Transactional(readOnly = true)
+	public User findPassword(String userId, String userEmail) {
 		User findUser = userRepository.findByUserIdAndUserEmail(userId, userEmail).orElseGet(() -> new User());
+		return findUser;
+	}
 
-		if (userId.equals(findUser.getUserId())) {
+	@Transactional
+	public boolean updatePassword(String userId, String userEmail, String newPassword) {
+		User findUser = findPassword(userId, userEmail);
+
+		if (findUser != null) {
 			findUser.setUserPassword(newPassword);
 			userRepository.save(findUser);
-			return findUser;
+			return true;
 		}
-		return findUser;
+		return false;
 	}
 }

@@ -1,12 +1,11 @@
 package com.ezpick.lol.controller;
 
-import java.io.Console;
-
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.ezpick.lol.domain.User;
 import com.ezpick.lol.dto.ResponseDTO;
 import com.ezpick.lol.dto.UserDTO;
+import com.ezpick.lol.repository.PasswordUpdate;
 import com.ezpick.lol.service.UserService;
 
 import jakarta.servlet.http.HttpSession;
@@ -134,24 +134,26 @@ public class UserController {
 		return "user/findPassword";
 	}
 
-	@GetMapping("/auth/findPassword/{userId}/{userEmail}")
-	public @ResponseBody ResponseDTO<?> findPassword(@PathVariable String userId, @PathVariable String userEmail) {
-		User checkUser = userService.findPassword(userId, userEmail);
-
-		if (user != null) {
+	@PostMapping("/auth/findPassword")
+	public @ResponseBody ResponseDTO<?> findPassword(@RequestParam String userId, @RequestParam String userEmail) {
+		User findPassword = userService.findPassword(userId, userEmail);
+		if (findPassword.getUserId() != null) {
 			return new ResponseDTO<>(HttpStatus.OK.value(), "");
-		} else {
-			return new ResponseDTO<>(HttpStatus.BAD_REQUEST.value(), "일치하는 회원이 없습니다.\r\n" + "입력하신 내용을 다시 확인해주세요.");
 		}
+		return new ResponseDTO<>(HttpStatus.BAD_REQUEST.value(), "일치하는 회원이 없습니다.\r\n" + "입력하신 내용을 다시 확인해주세요.");
 	}
 
-	@PutMapping("/auth/findPassword")
-	public @ResponseBody ResponseDTO<?> updatePassword(@Valid @RequestBody UserDTO userDTO,
-			BindingResult bindingResult) {
-		if (bindingResult.hasFieldErrors("userPassword")) {
+	@PutMapping("/auth/updatePassword")
+	public @ResponseBody ResponseDTO<?> findPassword(@Validated(PasswordUpdate.class) @RequestBody UserDTO userDTO, BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
 			return new ResponseDTO<>(HttpStatus.BAD_REQUEST.value(), "입력하신 내용을 다시 확인해주세요.");
 		}
-		userService.updatePassword(userDTO.getUserId(), userDTO.getUserPassword());
-		return new ResponseDTO<>(HttpStatus.OK.value(), "비밀번호가 성공적으로 변경되었습니다.");
+		boolean checkUser = userService.updatePassword(userDTO.getUserId(), userDTO.getUserEmail(),
+				userDTO.getUserPassword());
+
+		if (checkUser) {
+			return new ResponseDTO<>(HttpStatus.OK.value(), "비밀번호 변경이 완료되었습니다.");
+		}
+		return new ResponseDTO<>(HttpStatus.BAD_REQUEST.value(), "비밀번호 변경에 실패하였습니다.");
 	}
 }

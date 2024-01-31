@@ -347,14 +347,13 @@ let userObject = {
 		}
 
 		$.ajax({
-			type: "GET",
-			// encodeURIComponent로 인코딩된 값 사용
-			url: "/auth/findPassword/" + findPasswordUser.userId + "/" + findPasswordUser.userEmail,
-			contentType: "application/json; charset=UTF-8"
+			type: "POST",
+			url: "/auth/findPassword",
+			data: $.param(findPasswordUser), // 변환
+			contentType: "application/x-www-form-urlencoded; charset=UTF-8"
 		}).done(function(response) {
 			if (response["status"] === 200) {
 				$("#sendBtn").show(); // sendBtn 보이기
-				$("#mail_number").show(); // 인증번호 입력란 보이기
 			} else {
 				alert(response["data"]);
 			}
@@ -364,27 +363,32 @@ let userObject = {
 	},
 
 	updatePasswordUser: function() {
-		let userId = $("#userId").val();
 		let updatePasswordUser = {
+			userId: $("#userId").val(),
+			userEmail: $("#userEmail").val(),
 			userPassword: $("#userPassword").val(),
-			userId: userId
 		}
 
 		$.ajax({
 			type: "PUT",
 			url: "/auth/updatePassword",
-			data: updatePasswordUser,
-			contentType: "application/json; charset=UTF-8"
+			data: JSON.stringify(updatePasswordUser),
+			contentType: "application/json; charset=utf-8"
 		}).done(function(response) {
-			console.log(response);  // 응답을 콘솔에 출력
+			console.log(response);
 			if (response["status"] === 200) {
 				alert(response["data"]);
 				location.href = "/auth/login";
-			} else {
-				alert(response["data"]);
+			} else if (response["status"] === 400) {
+				let errorMessage = response["data"];
+				if (typeof errorMessage === 'string') {
+					alert(errorMessage);
+				} else {
+					alert("입력하신 내용을 다시 확인해주세요.");
+				}
 			}
 		}).fail(function(error) {
-			alert(error["data"]);
+			console.error("Error during registration:", error);
 		});
 	},
 };
