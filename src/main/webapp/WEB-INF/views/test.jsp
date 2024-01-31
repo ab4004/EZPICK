@@ -35,70 +35,178 @@
 <script src="/webjars/summernote/0.8.10/summernote-bs4.min.js"></script>
 <title>EZPICK</title>
 </head>
-<body style="background-color: #f8f9fa">
+<body
+	style="background-color: #f8f9fa; font-family: 'Noto Sans KR', sans-serif;">
 	<!-- 네비게이션 영역-->
 	<jsp:include page="./layout/search_nav.jsp"></jsp:include>
-	
+
 	<!-- 상단 영역 / 검색 후 소환사 정보 -->
 	<header class="masthead_summoner"
 		style="padding-top: 105px; height: 50%; top: -55px; bottom: 55px">
 		<div class="container position-relative">
-			<div class="row justify-content-center">
+			<!--  <div class="row">
 				<div class="col-xl-8">
-					<div class="row">
-						<div class="d-flex p-3 text-white">
-							<div class="m-3 text-center">
-								<img
-									src="https://ddragon.leagueoflegends.com/cdn/14.1.1/img/profileicon/15.png"
-									class="summoner_icon" onerror=this.src=
-									"/img/minion.png" width="100px" height="100px">
-								<div>
-									<span class="badge bg-dark">123</span>
-								</div>
-							</div>
-							<div class="m-2 w-50">
-								<h2>
-									<strong>Hide on bush12312312312321</strong><span
-										style="color: #9e9eb1; font-size: 0.5em"> #1234</span>
-								</h2>
-								<h5>
-									<span class="badge bg-dark">Prev. 홍길동</span>
-								</h5>
-								<p style="white-space: nowrap">마지막 접속 : 24.01.01 00:00</p>
-							</div>
-
-							<div class="d-flex flex-column text-center w-25">
-								<span>솔로랭크</span>
-								<div class="d-flex flex-fill justify-content-center">
-									<img class="align-self-center" src="/img/rank/GRANDMASTER.png"
-										width="100px" height="100px">
-								</div>
-								<strong>GRANDMASTER I</strong>
-							</div>
-
-							<div class="d-flex flex-column text-center w-25">
-								<span>자유랭크</span>
-								<div class="d-flex flex-fill justify-content-center">
-									<span class="align-self-center">해당 정보가 없습니다.</span>
-								</div>
-								<span>UNRANK</span>
-							</div>
-
-						</div>
-
-
+					<div class="row"> -->
+			<div class="d-flex flex-grow-1 text-white">
+				<div class="my-2 text-center">
+					<img
+						src="https://ddragon.leagueoflegends.com/cdn/14.1.1/img/profileicon/15.png"
+						class="summoner_icon" onerror=this.src=
+						"/img/minion.png" width="100px" height="100px">
+					<div>
+						<span class="badge bg-dark">123</span>
 					</div>
 				</div>
+				<div class="mx-4 my-2 flex-grow-1">
+					<h2>
+						<strong>Hide on bush12312312312321</strong><span
+							style="color: #9e9eb1; font-size: 0.5em"> #1234</span>
+					</h2>
+					<h5>
+						<span class="badge bg-dark">Prev. 홍길동</span>
+					</h5>
+					<p style="white-space: nowrap">마지막 접속 : 24.01.01 00:00</p>
+				</div>
+
+
+				<div class="d-flex my-2 text-center justify-content-end">
+					<div class="d-flex flex-column text-center mx-3">
+						<span>솔로랭크</span>
+						<div class="d-flex flex-fill justify-content-center">
+							<img class="align-self-center" src="/img/rank/GRANDMASTER.png"
+								width="100px" height="100px">
+						</div>
+						<strong>GRANDMASTER I</strong>
+					</div>
+
+					<div class="d-flex flex-column text-center mx-3">
+						<span>자유랭크</span>
+						<div class="d-flex flex-fill justify-content-center">
+							<span class="align-self-center">해당 정보가 없습니다.</span>
+						</div>
+						<span>UNRANK</span>
+					</div>
+				</div>
+
+
 			</div>
-		</div>
+			<!-- </div>
+			</div>
+		</div> -->
 	</header>
 
+	<!-- 상단 버튼 영역 -->
+	<div class="container d-flex mb-3">
+		<div>
+			<a class="btn btn-dark"
+				href="https://www.leagueoflegends.com/ko-kr/champions/"
+				target="_blank">챔피언 정보</a>
+		</div>
+	</div>
+
 	<!-- 중단 컨텐츠 영역 -->
-	<section class="features-icons bg-light">
+	<section class="bg-light" style="min-height: 1000px">
 		<div class="container">
-			<div class="row">
-				<div class="col-lg-4"></div>
-				<div>
+			<div class="d-flex">
+				<div class="d-flex-column w-25">
+					<div class="card" style="background-color: #f9fbfd">
+						<div class="p-3">
+							<strong class="mt-2">챔피언 모스트 TOP 10</strong>
+						</div>
+						<div class="d-flex p-3 border-top">
+							<img class="rounded-circle align-self-center" alt="챔피언"
+								src="/img/champion/110.png" width="40px" height="40px">
+							<div class="d-flex-column">
+								<div class="mx-3">Lv. 6</div>
+								<div class="mx-3">Last. 00년 00월 00일</div>
+							</div>
+						</div>
+						<div class="d-flex p-3 border-top">
+							<img class="rounded-circle align-self-center" alt="챔피언"
+								src="/img/champion/110.png" width="40px" height="40px">
+							<div class="d-flex-column">
+								<div class="mx-3">Lv. 6</div>
+								<div class="mx-3">Last. 00년 00월 00일</div>
+							</div>
+						</div>
+						<div class="d-flex p-3 border-top">
+							<img class="rounded-circle align-self-center" alt="챔피언"
+								src="/img/champion/110.png" width="40px" height="40px">
+							<div class="d-flex-column">
+								<div class="mx-3">Lv. 6</div>
+								<div class="mx-3">Last. 00년 00월 00일</div>
+							</div>
+						</div>
+						<div class="d-flex p-3 border-top">
+							<img class="rounded-circle align-self-center" alt="챔피언"
+								src="/img/champion/110.png" width="40px" height="40px">
+							<div class="d-flex-column">
+								<div class="mx-3">Lv. 6</div>
+								<div class="mx-3">Last. 00년 00월 00일</div>
+							</div>
+						</div>
+						<div class="d-flex p-3 border-top">
+							<img class="rounded-circle align-self-center" alt="챔피언"
+								src="/img/champion/110.png" width="40px" height="40px">
+							<div class="d-flex-column">
+								<div class="mx-3">Lv. 6</div>
+								<div class="mx-3">Last. 00년 00월 00일</div>
+							</div>
+						</div>
+						<div class="d-flex p-3 border-top">
+							<img class="rounded-circle align-self-center" alt="챔피언"
+								src="/img/champion/110.png" width="40px" height="40px">
+							<div class="d-flex-column">
+								<div class="mx-3">Lv. 6</div>
+								<div class="mx-3">Last. 00년 00월 00일</div>
+							</div>
+						</div>
+						<div class="d-flex p-3 border-top">
+							<img class="rounded-circle align-self-center" alt="챔피언"
+								src="/img/champion/110.png" width="40px" height="40px">
+							<div class="d-flex-column">
+								<div class="mx-3">Lv. 6</div>
+								<div class="mx-3">Last. 00년 00월 00일</div>
+							</div>
+						</div>
+						<div class="d-flex p-3 border-top">
+							<img class="rounded-circle align-self-center" alt="챔피언"
+								src="/img/champion/110.png" width="40px" height="40px">
+							<div class="d-flex-column">
+								<div class="mx-3">Lv. 6</div>
+								<div class="mx-3">Last. 00년 00월 00일</div>
+							</div>
+						</div>
+						<div class="d-flex p-3 border-top">
+							<img class="rounded-circle align-self-center" alt="챔피언"
+								src="/img/champion/110.png" width="40px" height="40px">
+							<div class="d-flex-column">
+								<div class="mx-3">Lv. 6</div>
+								<div class="mx-3">Last. 00년 00월 00일</div>
+							</div>
+						</div>
+						<div class="d-flex p-3 border-top">
+							<img class="rounded-circle align-self-center" alt="챔피언"
+								src="/img/champion/110.png" width="40px" height="40px">
+							<div class="d-flex-column">
+								<div class="mx-3">Lv. 6</div>
+								<div class="mx-3">Last. 00년 00월 00일</div>
+							</div>
+						</div>
+						<div class="d-flex p-3 border-top">
+							<img class="rounded-circle align-self-center" alt="챔피언"
+								src="/img/champion/110.png" width="40px" height="40px">
+							<div class="d-flex-column">
+								<div class="mx-3">Lv. 6</div>
+								<div class="mx-3">Last. 00년 00월 00일</div>
+							</div>
+						</div>
+						<div class="d-flex flex-grow-1"></div>
+					</div>
+				</div>
+				<div class="mx-2"></div>
+
+				<div class="flex-grow-1">
 					<!-- 매치기록 확인용 -->
 					<div>
 						<!-- 
@@ -110,63 +218,134 @@
 						패배 : border-left: 6px solid #e84057
 						승리 : border-left: 6px solid #5383e8
 						-->
-						<div class="d-flex card py-2 px-3"
+						<div class="d-flex card py-2 px-3 mb-3"
 							style="border-left: 6px solid #5383e8; background-color: #f9fbfd">
 							<div class="d-flex">
-								<!-- 승리 여부 -->
-								<strong class="text-primary">승리</strong>
-								<!-- 해당 매치 게임 모드 -->
-								<p class="mx-3">소환사의 협곡</p>
-
-							</div>
-
-							<!-- 해당 매치 소환사 본인의 K/D/A -->
-
-							<div class="d-flex">
-								<!-- 사용한 챔피언 -->
-								<img
-									src="https://ddragon.leagueoflegends.com/cdn/14.2.1/img/champion/Aatrox.png"
-									width="75px" height="75px" />
-
-								<!-- 사용한 스펠 -->
-								<div class="d-flex flex-column mx-2">
-									<img src="/img/spell/3.png" width="32px" height="32px" /> <img
-										class="mt-2" src="/img/spell/4.png" width="32px" height="32px" />
-								</div>
-
-								<div class="vr mx-3"></div>
-
-								<!-- KDA 관련 정보 -->
-								<div class="d-flex flex-column text-center" style="width: 100px">
-									<strong>10 / <span class="text-danger">1</span> / 5
-									</strong> <span>KDA : 15.00</span> <span class="badge bg-danger">펜타킬</span>
-								</div>
-
-								<div class="vr mx-3"></div>
-
-								<div class="d-flex flex-column">
+								<div class="d-flex-cloumn flex-grow-1">
 									<div class="d-flex">
-										<img class="mx-2" src="" width="32px" height="32px"
-											style="background-color: #e6e6e6">
+										<!-- 승리 여부 -->
+										<strong class="text-primary">승리</strong>
+										<!-- 해당 매치 게임 모드 -->
+										<p class="mx-3">소환사의 협곡</p>
+
 									</div>
+
+									<!-- 해당 매치 소환사 본인의 K/D/A -->
+
 									<div class="d-flex">
-										<span>CS 351</span> <span>총 킬수</span>
+										<!-- 사용한 챔피언 -->
+										<img
+											src="https://ddragon.leagueoflegends.com/cdn/14.2.1/img/champion/Aatrox.png"
+											width="75px" height="75px" />
+
+										<!-- 사용한 스펠 -->
+										<div class="d-flex flex-column mx-2">
+											<img src="/img/spell/3.png" width="32px" height="32px" /> <img
+												class="mt-2" src="/img/spell/4.png" width="32px"
+												height="32px" />
+										</div>
+
+										<div class="mx-1"></div>
+
+										<!-- KDA 관련 정보 -->
+										<div class="d-flex flex-column text-center"
+											style="width: 100px">
+											<strong>10 / <span class="text-danger">1</span> / 5
+											</strong> <span>KDA : 15.00</span> <span class="badge bg-danger">펜타킬</span>
+										</div>
+
+										<div class="mx-2"></div>
+
+										<div class="d-flex flex-column">
+											<div class="d-flex">
+												<img class="mx-2" src="" width="32px" height="32px"
+													style="background-color: #e6e6e6"> <img class="mx-2"
+													src="https://ddragon.leagueoflegends.com/cdn/14.2.1/img/item/5.png"
+													onerror="this.onerror=null; this.src='default-image.png'; this.alt='아이템'"
+													width="32px" height="32px"> <img class="mx-2"
+													src="https://ddragon.leagueoflegends.com/cdn/14.2.1/img/item/5.png"
+													onerror="this.onerror=null; this.src='default-image.png'; this.alt='아이템'"
+													width="32px" height="32px"> <img class="mx-2"
+													src="https://ddragon.leagueoflegends.com/cdn/14.2.1/img/item/5.png"
+													onerror="this.onerror=null; this.src='default-image.png'; this.alt='아이템'"
+													width="32px" height="32px"> <img class="mx-2"
+													src="https://ddragon.leagueoflegends.com/cdn/14.2.1/img/item/5.png"
+													onerror="this.onerror=null; this.src='default-image.png'; this.alt='아이템'"
+													width="32px" height="32px"> <img class="mx-2"
+													src="https://ddragon.leagueoflegends.com/cdn/14.2.1/img/item/5.png"
+													onerror="this.onerror=null; this.src='default-image.png'; this.alt='아이템'"
+													width="32px" height="32px"> <img class="mx-2"
+													src="https://ddragon.leagueoflegends.com/cdn/14.2.1/img/item/5.png"
+													onerror="this.onerror=null; this.src='default-image.png'; this.alt='아이템'"
+													width="32px" height="32px">
+											</div>
+											<div class="d-flex p-2">
+												<span>CS 351</span>
+											</div>
+										</div>
 									</div>
 								</div>
-
+								<div class="d-flex">
+									<div class="d-flex-column"
+										style="min-width: 75px; font-size: 12px">
+										<div class="justify-content-center">닉네임</div>
+										<div>닉네임</div>
+										<div>닉네임</div>
+										<div>닉네임</div>
+										<div>닉네임</div>
+									</div>
+									<div class="d-flex-column" style="min-width: 75px">
+										<div>닉네임</div>
+										<div>닉네임</div>
+										<div>닉네임</div>
+										<div>닉네임</div>
+										<div>닉네임</div>
+									</div>
+								</div>
+								
+								<!-- 상세매치 정보 버튼 -->
+								<div class="d-flex" style="width: 40px">
+									<button class="btn flex-grow-1 border" type="button" data-bs-toggle="collapse"
+										data-bs-target="#test">
+										<i class="bi bi-chevron-compact-down"></i>
+									</button>
+								</div>
 							</div>
-
+						</div>
+						<!-- 상세 버튼 클릭시 보이는 영역 -->
+						<div class="collapse" id="test">
+							<div class="d-flex-column card">
+								<div class="d-flex p-2">
+									<div><img class="rounded-circle" alt="test" src="/img/champion/35.png" width="30px"
+										height="30px"></div>
+									<div class="mx-2">홍길동</div>
+									<div class="d-flex">
+										<img class="mx-2" src="" width="30px" height="30px" style="background-color: #e6e6e6"> 
+										<img class="mx-2" src="" width="30px" height="30px" style="background-color: #e6e6e6"> 
+										<img class="mx-2" src="" width="30px" height="30px" style="background-color: #e6e6e6"> 
+										<img class="mx-2" src="" width="30px" height="30px" style="background-color: #e6e6e6"> 
+										<img class="mx-2" src="" width="30px" height="30px" style="background-color: #e6e6e6"> 
+										<img class="mx-2" src="" width="30px" height="30px" style="background-color: #e6e6e6"> 
+										<img class="mx-2" src="" width="30px" height="30px" style="background-color: #e6e6e6"> 
+									</div>
+									<div class="d-flex align-items-center">
+									<div>피해량:</div> 
+									<div class="progress" style="width: 100px">
+  										<div class="progress-bar" style="width:70%"></div>
+									</div>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
-				<div></div>
 			</div>
 		</div>
 	</section>
 
 	<!-- Footer-->
 	<jsp:include page="./layout/footer.jsp"></jsp:include>
-	
+
 	<!-- Bootstrap core JS-->
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>

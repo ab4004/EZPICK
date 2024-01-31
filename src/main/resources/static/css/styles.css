@@ -4175,6 +4175,10 @@ textarea.form-control-lg {
 	color: #00ADB5;
 }
 
+.a {
+	text-decoration: none;
+}
+
 .card {
   --bs-card-spacer-y: 1rem;
   --bs-card-spacer-x: 1rem;
@@ -10868,7 +10872,6 @@ textarea.form-control-lg {
 header.masthead {
   position: relative;
   background-color: rgb(52, 58, 64);
-  background: url("../assets/img/bg-masthead.jpg") no-repeat center center;
   background-size: cover;
   padding-top: 8rem;
   padding-bottom: 8rem;
@@ -10876,12 +10879,11 @@ header.masthead {
 header.masthead:before {
   content: "";
   position: absolute;
-  background-color: #00ADB5;
+  background-color: #99dee1;
   height: 100%;
   width: 100%;
   top: 0;
   left: 0;
-  opacity: 0.4;
 }
 
 header.masthead h1, header.masthead .h1 {
@@ -10900,7 +10902,6 @@ header.masthead h1, header.masthead .h1 {
 header.masthead_summoner {
   position: relative;
   background-color: rgb(52, 58, 64);
-  background: url("../assets/img/bg-masthead.jpg") no-repeat center center;
   background-size: cover;
   padding-top: 6rem;
   padding-bottom: 4rem;
@@ -10944,7 +10945,6 @@ header.masthead_summoner:before {
 .call-to-action {
   position: relative;
   background-color: #343a40;
-  background: url("../assets/img/bg-masthead.jpg") no-repeat center center;
   background-size: cover;
   padding-top: 7rem;
   padding-bottom: 7rem;

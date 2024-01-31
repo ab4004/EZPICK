@@ -29,7 +29,7 @@ public class RiotService {
 	 * 라이엇 API 서비스를 이용하기 위한 키입니다.
 	 * 단 하루 24시간만 이용 가능하니 만료되었을 경우 해당 페이지(https://developer.riotgames.com/)에서 생성 또는 갱신해주세요.
 	 */
-	private static final String API_KEY = "RGAPI-c3abd7fc-50c9-4edd-a0af-016aa821cc35";
+	private static final String API_KEY = "RGAPI-cf9198a8-d898-4252-a6ee-04abfc15470e";
 	
 	/*
 	 * [NAME_TAG_URL]
@@ -72,16 +72,15 @@ public class RiotService {
 	
 	// ************ /lol/champion-mastery/v4  ************
 	// -------------------------------------------
-	// puuid를 통해 소환사의 챔피언 숙련도와 암호화된 소환사 아이디 등을 가져옵니다.
+	// puuid를 통해 소환사의 모스트 챔피언 숙련도 정보를 가져옵니다. (default는 3이지만 10로 설정)
 	public List<ChampionMasteryDTO> getChampionMastery(String puuid) {
-		String url = KR_URL + "/lol/champion-mastery/v4/champion-masteries/by-puuid/" + puuid + "?api_key=" + API_KEY;
+		String url = KR_URL + "/lol/champion-mastery/v4/champion-masteries/by-puuid/" + puuid + "/top?count=10&api_key=" + API_KEY;
 		ResponseEntity<List<ChampionMasteryDTO>> responseEntity = 
 				restTemplate.exchange(url, HttpMethod.GET, null, new ParameterizedTypeReference<List<ChampionMasteryDTO>>() {});
-		// ParameterizedTypeReference 클래스는 매개변수가 제네릭 타입인걸 인식하여 전달하도록 하는 역할을 합니다.
+				// ParameterizedTypeReference 클래스는 매개변수가 제네릭 타입인걸 인식하여 전달하도록 하는 역할을 합니다.
 		
 		return responseEntity.getBody();
 	}
-	
 	
 	// ************ /lol/match/v5  ************
 	// -------------------------------------------
