@@ -40,7 +40,7 @@
 									</div>
 									<div class="col">
 										<a class="btn btn-dark" href="https://www.leagueoflegends.com/ko-kr/champions/" target="_blank">챔피언 정보</a>
-										<a class="mx-2 btn btn-dark" href="https://authenticate.riotgames.com/?client_id=opgg&method=riot_identity&platform=web&redirect_uri=https%3A%2F%2Fauth.riotgames.com%2Fauthorize%3Fclient_id%3Dopgg%26redirect_uri%3Dhttps%253A%252F%252Fmember.op.gg%252Foauth%252Frso%252Fcallback%26response_type%3Dcode%26scope%3Dopenid%2520cpid%2520offline_access%26state%3Df6a676aa-dc3f-42e7-b295-dfde19787290"><img src="./img/Riot.png" height="17px" width="17px"> 라이엇 ID 확인</a>
+										<a class="mx-2 btn btn-dark" href="https://authenticate.riotgames.com/?client_id=opgg&method=riot_identity&platform=web&redirect_uri=https%3A%2F%2Fauth.riotgames.com%2Fauthorize%3Fclient_id%3Dopgg%26redirect_uri%3Dhttps%253A%252F%252Fmember.op.gg%252Foauth%252Frso%252Fcallback%26response_type%3Dcode%26scope%3Dopenid%2520cpid%2520offline_access%26state%3Df6a676aa-dc3f-42e7-b295-dfde19787290" target="_blank"><img src="./img/Riot.png" height="17px" width="17px"> 라이엇 ID 확인</a>
 									</div>
 								</div>
 							</div>
