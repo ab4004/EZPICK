@@ -1,23 +1,23 @@
 package com.ezpick.lol.controller;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ezpick.lol.domain.User;
 import com.ezpick.lol.dto.ResponseDTO;
 import com.ezpick.lol.dto.UserDTO;
+import com.ezpick.lol.repository.PasswordUpdate;
 import com.ezpick.lol.service.UserService;
 
 import jakarta.servlet.http.HttpSession;
@@ -44,10 +44,10 @@ public class UserController {
 		if (findUser.getUserId() != null) {
 			if (findUser.getUserPassword().equals(user.getUserPassword())) {
 				session.setAttribute("user", findUser);
-				return new ResponseDTO<>(HttpStatus.OK.value(), findUser.getUserId() + "님 환영합니다.");
+				return new ResponseDTO<>(HttpStatus.OK.value(), "");
 			}
 		}
-		return new ResponseDTO<>(HttpStatus.BAD_REQUEST.value(), "로그인에 실패하였습니다.");
+		return new ResponseDTO<>(HttpStatus.BAD_REQUEST.value(), "아이디 또는 비밀번호를 잘못 입력했습니다.\r\n" + "입력하신 내용을 다시 확인해주세요.");
 	}
 
 	@GetMapping("/auth/logout")
@@ -64,17 +64,18 @@ public class UserController {
 	@PostMapping("/auth/register")
 	public @ResponseBody ResponseDTO<?> register(@Valid @RequestBody UserDTO userDTO, BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
-			return new ResponseDTO<>(HttpStatus.BAD_REQUEST.value(), "필수 정보를 다시 확인해주세요.");
+			// 입력값이 올바르지 않은 경우
+			return new ResponseDTO<>(HttpStatus.BAD_REQUEST.value(), "입력하신 내용을 다시 확인해주세요.");
 		}
 
-		String userId = userDTO.getUserId();
-
-		// 중복 검사
-		if (userService.checkUserId(userId)) {
-			return new ResponseDTO<>(HttpStatus.BAD_REQUEST.value(), "이미 사용중인 아이디입니다.");
+		// 아이디 중복 확인은 서비스에서 처리하도록 수정
+		if (userService.checkUserId(userDTO.getUserId()) || userService.checkUserNickname(userDTO.getUserNickname())
+				|| userService.checkUserEmail(userDTO.getUserEmail())) {
+			// 중복된 아이디인 경우
+			return new ResponseDTO<>(HttpStatus.BAD_REQUEST.value(), "입력하신 내용을 다시 확인해주세요.");
 		}
 
-		// 중복이 없으면 회원가입 진행
+		// 중복된 아이디가 없는 경우 회원가입 처리
 		User userEntity = modelMapper.map(userDTO, User.class);
 		userService.register(userEntity);
 
@@ -83,12 +84,76 @@ public class UserController {
 
 	@GetMapping("/auth/checkUserId/{userId}")
 	public @ResponseBody ResponseDTO<?> checkUserId(@PathVariable String userId) {
-		boolean checkUserId = userService.checkUserId(userId);
+		boolean checkUser = userService.checkUserId(userId);
 
-		if (checkUserId) {
+		if (checkUser) {
 			return new ResponseDTO<>(HttpStatus.BAD_REQUEST.value(), "이미 사용중인 아이디입니다.");
 		} else {
-			return new ResponseDTO<>(HttpStatus.OK.value(), "사용 가능한 아이디입니다.");
+			return new ResponseDTO<>(HttpStatus.OK.value(), "");
 		}
+	}
+
+	@GetMapping("/auth/checkUserNickname/{userNickname}")
+	public @ResponseBody ResponseDTO<?> checkUserNickname(@PathVariable String userNickname) {
+		boolean checkUser = userService.checkUserNickname(userNickname);
+
+		if (checkUser) {
+			return new ResponseDTO<>(HttpStatus.BAD_REQUEST.value(), "이미 사용중인 닉네임입니다.");
+		} else {
+			return new ResponseDTO<>(HttpStatus.OK.value(), "");
+		}
+	}
+
+	@GetMapping("/auth/checkUserEmail/{userEmail}")
+	public @ResponseBody ResponseDTO<?> checkUserEmail(@PathVariable String userEmail) {
+		boolean checkUser = userService.checkUserEmail(userEmail);
+
+		if (checkUser) {
+			return new ResponseDTO<>(HttpStatus.BAD_REQUEST.value(), "이미 가입된 회원입니다.");
+		} else {
+			return new ResponseDTO<>(HttpStatus.OK.value(), "");
+		}
+	}
+
+	@GetMapping("/auth/findId")
+	public String findId() {
+		return "user/findId";
+	}
+
+	@PostMapping("/auth/findId")
+	public @ResponseBody ResponseDTO<?> findId(@RequestParam String userEmail) {
+		String findId = userService.findId(userEmail);
+		if (findId != null) {
+			return new ResponseDTO<>(HttpStatus.OK.value(), "회원님의 아이디는 " + findId + "입니다");
+		}
+		return new ResponseDTO<>(HttpStatus.BAD_REQUEST.value(), "일치하는 회원이 없습니다.\r\n" + "입력하신 내용을 다시 확인해주세요.");
+	}
+
+	@GetMapping("/auth/findPassword")
+	public String findPassword() {
+		return "user/findPassword";
+	}
+
+	@PostMapping("/auth/findPassword")
+	public @ResponseBody ResponseDTO<?> findPassword(@RequestParam String userId, @RequestParam String userEmail) {
+		User findPassword = userService.findPassword(userId, userEmail);
+		if (findPassword.getUserId() != null) {
+			return new ResponseDTO<>(HttpStatus.OK.value(), "");
+		}
+		return new ResponseDTO<>(HttpStatus.BAD_REQUEST.value(), "일치하는 회원이 없습니다.\r\n" + "입력하신 내용을 다시 확인해주세요.");
+	}
+
+	@PutMapping("/auth/updatePassword")
+	public @ResponseBody ResponseDTO<?> findPassword(@Validated(PasswordUpdate.class) @RequestBody UserDTO userDTO, BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+			return new ResponseDTO<>(HttpStatus.BAD_REQUEST.value(), "입력하신 내용을 다시 확인해주세요.");
+		}
+		boolean checkUser = userService.updatePassword(userDTO.getUserId(), userDTO.getUserEmail(),
+				userDTO.getUserPassword());
+
+		if (checkUser) {
+			return new ResponseDTO<>(HttpStatus.OK.value(), "비밀번호 변경이 완료되었습니다.");
+		}
+		return new ResponseDTO<>(HttpStatus.BAD_REQUEST.value(), "비밀번호 변경에 실패하였습니다.");
 	}
 }

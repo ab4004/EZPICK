@@ -69,7 +69,6 @@ public class Board {
 	private int categoryNo;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "userid")
+	@JoinColumn(name = "board_writer", referencedColumnName = "user_nickname", insertable = false, updatable = false)
 	private User user;
-	
 }

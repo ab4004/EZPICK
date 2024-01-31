@@ -10,20 +10,21 @@
 	<jsp:include page="../layout/nav.jsp"></jsp:include>
 	<div class="container mt-3">
 		<h2>로그인</h2>
-			<div class="mb-3 mt-3">
-				<label for="id">아이디:</label> <input type="text"
-					class="form-control" id="id" placeholder="Enter id"
-					name="id">
-			</div>
-			<div class="mb-3">
-				<label for="password">비밀번호:</label> <input type="password"
-					class="form-control" id="password" placeholder="Enter password"
-					name="password">
-			</div>
-			<button class="btn btn-primary" id="login-user">로그인</button>
-			<button class="btn btn-primary" onclick="location.href='/auth/register'">회원가입</button>
-			<button class="btn btn-primary" id="findId-user">ID찾기</button>
-			<button class="btn btn-primary" id="findPassword-user">PW찾기</button>
+		<div class="mb-3 mt-3">
+			<label for="id">아이디:</label> <input type="text" class="form-control"
+				id="userId" placeholder="Enter id" name="id">
+		</div>
+		<div class="mb-3">
+			<label for="password">비밀번호:</label> <input type="password"
+				class="form-control" id="userPassword" placeholder="Enter password"
+				name="password">
+		</div>
+		<button class="btn btn-primary" id="login-user">로그인</button>
+		<button class="btn btn-primary"
+			onclick="location.href='/auth/register'">회원가입</button>
+		<button class="btn btn-primary" onclick="location.href='/auth/findId'">ID찾기</button>
+		<button class="btn btn-primary"
+			onclick="location.href='/auth/findPassword'">PW찾기</button>
 	</div>
 	<script src="/js/user.js"></script>
 	<jsp:include page="../layout/footer.jsp"></jsp:include>
