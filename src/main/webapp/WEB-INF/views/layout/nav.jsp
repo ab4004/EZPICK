@@ -64,7 +64,7 @@
 				<c:otherwise>
 				<a class="navbar-brand mx-3" href="/auth/logout">로그아웃</a>
 					<a class="navbar-brand nav_sign" href="#"><i
-						class="bi bi-person-circle"></i> ${user.user_nickname } 님</a>
+						class="bi bi-person-circle"></i> ${user.userNickname } 님</a>
 				</c:otherwise>
 			</c:choose>
 		</div>

@@ -17,8 +17,8 @@ let boardObject = {
 
 	insertBoard: function() {
 		let insertBoard = {
-			board_title: $("#title").val(),
-			board_content: $("#content").val(),
+			boardTitle: $("#title").val(),
+			boardContent: $("#content").val(),
 		}
 
 		$.ajax({
