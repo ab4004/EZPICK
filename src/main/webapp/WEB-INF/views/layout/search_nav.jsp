@@ -58,12 +58,20 @@
 				<c:when test="${empty user }">
 					<!-- 로그인 영역 -->
 					<a class="navbar-brand nav_sign" href="/auth/login"><i
-						class="bi bi-person-circle"></i> Sign Up</a>
+						class="bi bi-person-circle"></i> Sign In</a>
 				</c:when>
 				<c:otherwise>
-				<a class="navbar-brand mx-3" href="/auth/logout">로그아웃</a>
-					<a class="navbar-brand nav_sign" href="#"><i
-						class="bi bi-person-circle"></i> ${user.user_nickname } 님</a>
+					<div class="dropdown dropstart">
+						<a class="navbar-brand nav_sign btn dropdown-toggle"
+							data-bs-toggle="dropdown" aria-expanded="false">
+							<i class="bi bi-person-square"></i></a>
+						<ul class="dropdown-menu text-center">
+							<li><span class="dropdown-item-text">${user.userNickname} 님</span></li>
+							<li><hr class="dropdown-divider"></li>
+							<li><a class="dropdown-item" href="/user/myPage">내 정보</a></li>
+							<li><a class="dropdown-item" href="/auth/logout">로그아웃</a></li>
+						</ul>
+					</div>
 				</c:otherwise>
 			</c:choose>
 		</div>

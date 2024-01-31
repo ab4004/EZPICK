@@ -14,14 +14,22 @@ public class GlobalExceptionHandler {
 	@ResponseStatus(HttpStatus.NOT_FOUND)
 	public String handleNotFound(HttpClientErrorException.NotFound ex, Model model) {
 		System.err.println(ex.getMessage());
-        return "error/summonerNotFound";
+		return "error/summonerNotFound";
 	}
-	
+
 	// API가 만료되었을 경우 에러 처리
 	@ExceptionHandler(HttpClientErrorException.Forbidden.class)
 	@ResponseStatus(HttpStatus.FORBIDDEN)
 	public String handleForbidden(HttpClientErrorException.Forbidden ex, Model model) {
 		System.err.println(ex.getMessage());
-        return "error/summonerForbidden";
+		return "error/summonerForbidden";
+	}
+
+	// API가 만료되었을 경우 에러 처리
+	@ExceptionHandler(HttpClientErrorException.TooManyRequests.class)
+	@ResponseStatus(HttpStatus.TOO_MANY_REQUESTS)
+	public String handleForbidden(HttpClientErrorException.TooManyRequests ex, Model model) {
+		System.err.println(ex.getMessage());
+		return "error/summonerTooManyRequests";
 	}
 }
