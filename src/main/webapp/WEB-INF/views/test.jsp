@@ -302,41 +302,49 @@
 										<div>닉네임</div>
 									</div>
 								</div>
-								
+
 								<!-- 상세매치 정보 버튼 -->
 								<div class="d-flex" style="width: 40px">
-									<button class="btn flex-grow-1 border" type="button" data-bs-toggle="collapse"
-										data-bs-target="#test">
+									<button class="btn flex-grow-1 border" type="button"
+										onclick="toggleContent()">
 										<i class="bi bi-chevron-compact-down"></i>
 									</button>
 								</div>
 							</div>
 						</div>
 						<!-- 상세 버튼 클릭시 보이는 영역 -->
-						<div class="collapse" id="test">
-							<div class="d-flex-column card">
-								<div class="d-flex p-2">
-									<div><img class="rounded-circle" alt="test" src="/img/champion/35.png" width="30px"
-										height="30px"></div>
-									<div class="mx-2">홍길동</div>
-									<div class="d-flex">
-										<img class="mx-2" src="" width="30px" height="30px" style="background-color: #e6e6e6"> 
-										<img class="mx-2" src="" width="30px" height="30px" style="background-color: #e6e6e6"> 
-										<img class="mx-2" src="" width="30px" height="30px" style="background-color: #e6e6e6"> 
-										<img class="mx-2" src="" width="30px" height="30px" style="background-color: #e6e6e6"> 
-										<img class="mx-2" src="" width="30px" height="30px" style="background-color: #e6e6e6"> 
-										<img class="mx-2" src="" width="30px" height="30px" style="background-color: #e6e6e6"> 
-										<img class="mx-2" src="" width="30px" height="30px" style="background-color: #e6e6e6"> 
-									</div>
-									<div class="d-flex align-items-center">
-									<div>피해량:</div> 
+						<div class="d-flex-column card" id="test" style="display: none;">
+							<div class="d-flex p-2">
+								<div>
+									<img class="rounded-circle" alt="test"
+										src="/img/champion/35.png" width="30px" height="30px">
+								</div>
+								<div class="mx-2">홍길동</div>
+								<div class="d-flex">
+									<img class="mx-2" src="" width="30px" height="30px"
+										style="background-color: #e6e6e6"> <img class="mx-2"
+										src="" width="30px" height="30px"
+										style="background-color: #e6e6e6"> <img class="mx-2"
+										src="" width="30px" height="30px"
+										style="background-color: #e6e6e6"> <img class="mx-2"
+										src="" width="30px" height="30px"
+										style="background-color: #e6e6e6"> <img class="mx-2"
+										src="" width="30px" height="30px"
+										style="background-color: #e6e6e6"> <img class="mx-2"
+										src="" width="30px" height="30px"
+										style="background-color: #e6e6e6"> <img class="mx-2"
+										src="" width="30px" height="30px"
+										style="background-color: #e6e6e6">
+								</div>
+								<div class="d-flex align-items-center">
+									<div>피해량:</div>
 									<div class="progress" style="width: 100px">
-  										<div class="progress-bar" style="width:70%"></div>
-									</div>
+										<div class="progress-bar" style="width: 70%"></div>
 									</div>
 								</div>
 							</div>
 						</div>
+						<div>asd</div>
 					</div>
 				</div>
 			</div>
@@ -350,5 +358,17 @@
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
-</body><!-- ㅇ르ㅏㅣㅁㄴ을;ㅏㅁㅇ느파;ㅣ을;ㅣㅜㅢㅏ -->
+
+	<script>
+		function toggleContent() {
+			var testContent = document.getElementById('test');
+			// content를 토글
+			if (testContent.style.display == 'none') {
+				testContent.style.display = 'block'; 
+			} else {
+				testContent.style.display = 'none';
+			}
+		}
+	</script>
+</body>
 </html>
