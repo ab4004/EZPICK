@@ -1,9 +1,7 @@
 package com.ezpick.lol.controller;
 
+import java.time.LocalDateTime;
 import java.time.YearMonth;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,112 +45,33 @@ public class BookController {
 
 		return new ResponseDTO<>(HttpStatus.BAD_REQUEST.value(), "경기 일정 데이터 삽입 실패");
 	}
-
-// ----------------------------------------------------------------------------------------------------	
 	
-
-
-	// 1월 전체
-	@GetMapping("/janAllDate")
-	public String janAllDate(Model model, @RequestParam YearMonth date) {
-
-		List<Book> janAll = bookService.date(date);
-
-		model.addAttribute("janAll", janAll);
-
-		return "book/janAll";
-	}
-
-	// 1월 전체(조건문)
-		@GetMapping("/janAll")
-		public String janAll(Model model, @RequestParam YearMonth date, @RequestParam String team)		{
-
-			List<Book> janAll;
-			
-			List<Book> dateHome = bookService.dateHome(date, team);
-			List<Book> dateAway = bookService.dateAway(date, team);
-
-			janAll = new ArrayList<>(dateHome);
-			janAll.addAll(dateAway);
-
-			Collections.sort(janAll, Comparator.comparing(Book::getTime));	
-			model.addAttribute("janAll", janAll);
-			
+	@GetMapping("/match")
+	public String getMatchAndBook(Model model, @RequestParam(required = false, defaultValue = "0") int month,  @RequestParam(required = false) String team) {
+		int[] monthList = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
+		List<Book> bookList = null;
 		
-
-			return "book/janAll";
-
+		model.addAttribute("currentDate", LocalDateTime.now());
+		model.addAttribute("months", monthList);
+		
+		// 파라미터에 월 데이터가 들어왔을 경우
+		if (month != 0) {
+			if (team != null) { // 월 데이터와 팀 데이터를 받았을 경우
+				bookList = bookService.getTeamAllList(YearMonth.of(YearMonth.now().getYear(), month), team);
+			} else { // 월 데이터는 있으나 팀 데이터는 없을 경우
+				bookList = bookService.getAllList(YearMonth.of(YearMonth.now().getYear(), month));
+			}
+		} else if (month == 0 && team != null) { // 월 클릭 없이 팀만 클릭했을 경우
+			month = YearMonth.now().getMonthValue();
+			bookList = bookService.getTeamAllList(YearMonth.of(YearMonth.now().getYear(), month), team);
+		} else { // 두 데이터가 없을 경우 현재 기준으로 리스트 가져옴
+			month = YearMonth.now().getMonthValue();
+			bookList = bookService.getAllList(YearMonth.now());
 		}
-	
-//----------------------------------------------------------------------------------
-	
-	  // 2월 일정 ( 전체 )
-	  
-	  @GetMapping("/febAllDate") 
-	 public String febAll(Model model, @RequestParam  YearMonth date) {
-	 
-	  List<Book> febAll = bookService.date(date);
-	 
-	  model.addAttribute("febAll", febAll);
-	  
-	  return "book/febAll"; 
-	  }
-	 
-	  
-
-	// 2월 일정 ( 팀별 )
-	@GetMapping("/febAll")
-	public String febAll(Model model, @RequestParam YearMonth date, @RequestParam String team) {
-
-		List<Book> febAll;
 		
-
-			List<Book> dateHome = bookService.dateHome(date, team);
-			List<Book> dateAway = bookService.dateAway(date, team);
-
-			febAll = new ArrayList<>(dateHome);
-			febAll.addAll(dateAway);
-
-			model.addAttribute("febAll", febAll);
-			Collections.sort(febAll, Comparator.comparing(Book::getTime));
-
+		model.addAttribute("selectedMonth", month); // 선택한 월
+		model.addAttribute("book", bookList);
 		
-
-		return "book/febAll";
-
+		return "book/matchAndBook";
 	}
-
-//----------------------------------------------------------------------
-	// 3월 전체
-	@GetMapping("/marAllDate")
-	public String marAll(Model model, @RequestParam YearMonth date) {
-
-		List<Book> marAll = bookService.date(date);
-
-		model.addAttribute("marAll", marAll);
-
-		return "book/marAll";
-	}
-	
-	// 3월 전체(연습)
-		@GetMapping("/marAll")
-		public String book(Model model, @RequestParam YearMonth date, @RequestParam String team) {
-
-				List<Book> marAll;			
-
-				List<Book> dateHome = bookService.dateHome(date, team);
-				List<Book> dateAway = bookService.dateAway(date, team);
-
-				marAll = new ArrayList<>(dateHome);
-				marAll.addAll(dateAway);
-
-				model.addAttribute("marAll", marAll);
-				Collections.sort(marAll, Comparator.comparing(Book::getTime));
-
-			
-			return "book/marAll";
-
-		}
-
-
 }

@@ -2,7 +2,11 @@
 	pageEncoding="UTF-8"%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+
+<%@ page import="java.time.format.DateTimeFormatter"%>
+<%@ page import="java.time.LocalDateTime"%>
 
 
 <!DOCTYPE html>
@@ -28,7 +32,8 @@
 
 </head>
 
-<body style="display: flex; flex-direction: column; min-height: 100vh; font-family: 'Noto Sans KR', sans-serif;">
+<body
+	style="display: flex; flex-direction: column; min-height: 100vh; font-family: 'Noto Sans KR', sans-serif;">
 	<jsp:include page="../layout/search_nav.jsp"></jsp:include>
 
 	<div class="container mt-3 flex-grow-1">
@@ -37,31 +42,20 @@
 
 				<!-- nav tabs -->
 				<ul class="navbar-nav mx-auto">
-					<li class="nav-item" style="margin-right: 50px;"><a
-						class="nav-link active" href="/janAllDate?date=2024-01">1월</a></li>
-					<li class="nav-item" style="margin-right: 50px;"><a
-						class="nav-link" href="/febAllDate?date=2024-02">2월</a></li>
-					<li class="nav-item" style="margin-right: 50px;"><a
-						class="nav-link" href="/marAllDate?date=2024-03">3월</a></li>
-					<li class="nav-item" style="margin-right: 50px;"><a
-						class="nav-link disabled" href="#menu1">4월</a></li>
-					<li class="nav-item" style="margin-right: 50px;"><a
-						class="nav-link disabled" href="#menu1">5월</a></li>
-					<li class="nav-item" style="margin-right: 50px;"><a
-						class="nav-link disabled" href="#menu1">6월</a></li>
-					<li class="nav-item" style="margin-right: 50px;"><a
-						class="nav-link disabled" href="#menu1">7월</a></li>
-					<li class="nav-item" style="margin-right: 50px;"><a
-						class="nav-link disabled" href="#menu1">8월</a></li>
-					<li class="nav-item" style="margin-right: 50px;"><a
-						class="nav-link disabled" href="#menu1">9월</a></li>
-					<li class="nav-item" style="margin-right: 50px;"><a
-						class="nav-link disabled" href="#menu1">10월</a></li>
-					<li class="nav-item" style="margin-right: 50px;"><a
-						class="nav-link disabled" href="#menu1">11월</a></li>
-					<li class="nav-item" style="margin-right: 50px;"><a
-						class="nav-link disabled" href="#menu1">12월</a></li>
-
+					<c:forEach var="month" items="${months}">
+						<c:set var="qt" value="${month > 3 ? (month > 6 ? (month > 9 ? 4 : 3) : 2) : 1}"/>
+    					<c:set var="currentQt" value="${currentDate.getMonthValue() > 3 ? (currentDate.getMonthValue() > 6 ? (currentDate.getMonthValue() > 9 ? 4 : 3) : 2) : 1}" />
+						<li class="nav-item" style="margin-right: 50px;">
+							<c:choose>
+								<c:when test="${qt eq currentQt}">
+									<a class="nav-link active" href="/match?month=${month}">${month}월</a>
+								</c:when>
+								<c:otherwise>
+									<a class="nav-link disabled" href="/match?month=${month}">${month}월</a>
+								</c:otherwise>
+							</c:choose>
+						</li>
+					</c:forEach>
 				</ul>
 			</div>
 		</nav>
@@ -71,41 +65,39 @@
 
 		<nav class="navbar navbar-expand-sm bg-light navbar-light">
 			<div class="container-fluid">
-
-
 				<ul class="navbar-nav mx-auto">
 					<li class="nav-item" style="margin-right: 40px;"><a
-						class="nav-link" href="/janAllDate?date=2024-01"
+						class="nav-link" href="/match?month=${selectedMonth}"
 						data-active="true">전체</a></li>
 					<li class="nav-item" style="margin-right: 40px;"><a
-						class="nav-link" href="/janAll?date=2024-01&team=젠지"
+						class="nav-link" href="/match?month=${selectedMonth}&team=젠지"
 						data-active="true">젠지</a></li>
 					<li class="nav-item" style="margin-right: 40px;"><a
-						class="nav-link" href="/janAll?date=2024-01&team=T1"
+						class="nav-link" href="/match?month=${selectedMonth}&team=T1"
 						data-active="false">T1</a></li>
 					<li class="nav-item" style="margin-right: 40px;"><a
-						class="nav-link" href="/janAll?date=2024-01&team=KT 롤스터"
+						class="nav-link" href="/match?month=${selectedMonth}&team=kt 롤스터"
 						data-active="false">KT</a></li>
 					<li class="nav-item" style="margin-right: 40px;"><a
-						class="nav-link" href="/janAll?date=2024-01&team=한화생명 e스포츠"
+						class="nav-link" href="/match?month=${selectedMonth}&team=한화생명e스포츠"
 						data-active="false">한화생명</a></li>
 					<li class="nav-item" style="margin-right: 40px;"><a
-						class="nav-link" href="/janAll?date=2024-01&team=Dplus KIA"
+						class="nav-link" href="/match?month=${selectedMonth}&team=Dplus KIA"
 						data-active="false">DK</a></li>
 					<li class="nav-item" style="margin-right: 40px;"><a
-						class="nav-link" href="/janAll?date=2024-01&team=피어엑스"
+						class="nav-link" href="/match?month=${selectedMonth}&team=피어엑스"
 						data-active="false">피어엑스</a></li>
 					<li class="nav-item" style="margin-right: 40px;"><a
-						class="nav-link" href="/janAll?date=2024-01&team=광동 프릭스"
+						class="nav-link" href="/match?month=${selectedMonth}&team=광동 프릭스"
 						data-active="false">광동</a></li>
 					<li class="nav-item" style="margin-right: 40px;"><a
-						class="nav-link" href="/janAll?date=2024-01&team=OK저축은행 브리온"
+						class="nav-link" href="/match?month=${selectedMonth}&team=OK저축은행 브리온"
 						data-active="false">OK저축은행</a></li>
 					<li class="nav-item" style="margin-right: 40px;"><a
-						class="nav-link" href="/janAll?date=2024-01&team=DRX"
+						class="nav-link" href="/match?month=${selectedMonth}&team=DRX"
 						data-active="false">DRX</a></li>
 					<li class="nav-item" style="margin-right: 40px;"><a
-						class="nav-link" href="/janAll?date=2024-01&team=농심 레드포스"
+						class="nav-link" href="/match?month=${selectedMonth}&team=농심 레드포스"
 						data-active="false">농심</a></li>
 				</ul>
 
@@ -116,22 +108,35 @@
 
 
 		<div class="container mt-3">
+			<c:set var="checkDate" value="00월 00일 (X)"></c:set>
 
-			<c:forEach items="${janAll}" var="book" varStatus="loop">
+			<c:forEach items="${book}" var="book" varStatus="loop">
+				<c:set var="dateTime" value="${book.date}" />
 
-				<c:if
-					test="${loop.index eq 0 || janAll[loop.index - 1].time.toLocalDate() ne book.time.toLocalDate()}">
-					<span class="table-title"> ${book.time.getMonthValue()}월
-						${book.time.getDayOfMonth()}일 (${book.time.getDayOfWeek()}) </span>
+				<%
+				// 가져온 데이터가 LocalDateTime 형식인데 실제로 JSP에서 나타낼 땐 Date 형식으로 바꿔줘야 해서 포맷팅 진행
+				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 (E) HH:mm:ss");
+				LocalDateTime localDateTime = (LocalDateTime) pageContext.getAttribute("dateTime");
+				String fmtDate = formatter.format(localDateTime);
+				pageContext.setAttribute("matchDate", fmtDate);
+				%>
+				<fmt:parseDate var="parsedDate" value="${matchDate}" pattern="yyyy년 MM월 dd일 (E) HH:mm:ss" />
+				
+				<fmt:formatDate value="${parsedDate}" pattern="MM월 dd일 (E)" var="date"/>
+				
+				<c:if test="${checkDate ne date}">
+					<span class="table-title">${date}</span>
+					<c:set var="checkDate" value="${date}"></c:set>
 				</c:if>
-
+				
 				<table class="table">
 					<tbody>
 						<tr>
+							<td width="50" style="text-align: left; font-weight: bold;"><fmt:formatDate value="${parsedDate}" pattern="HH:mm"/></td>
 
-							<td width="50" style="text-align: left; font-weight: bold;">${book.time.toLocalTime()}</td>
 							<td width="50"
 								style="text-align: center; color: gray; font-size: 15px;">${book.status}</td>
+								
 							<td width="100"
 								style="text-align: center; color: gray; font-size: 15px;">${book.round}</td>
 
@@ -150,11 +155,11 @@
 									<img src="/img/team/dk.png" alt="dk.png" width="35">
 								</c:if> <c:if test="${book.homeTeam eq '광동 프릭스'}">
 									<img src="/img/team/kdf.png" alt="kdf.png" width="35">
-								</c:if> <c:if test="${book.homeTeam eq 'KT 롤스터'}">
+								</c:if> <c:if test="${book.homeTeam eq 'kt 롤스터'}">
 									<img src="/img/team/kt.png" alt="kt.png" width="35">
 								</c:if> <c:if test="${book.homeTeam eq '농심 레드포스'}">
 									<img src="/img/team/ns.png" alt="ns.png" width="35">
-								</c:if> <c:if test="${book.homeTeam eq '한화생명 e스포츠'}">
+								</c:if> <c:if test="${book.homeTeam eq '한화생명e스포츠'}">
 									<img src="/img/team/hle.png" alt="hle.png" width="35">
 								</c:if>
 							</td>
@@ -180,19 +185,19 @@
 									<img src="/img/team/dk.png" alt="Team Logo" width="35">
 								</c:if> <c:if test="${book.awayTeam eq 'OK저축은행 브리온'}">
 									<img src="/img/team/bro.png" alt="Team Logo" width="35">
-								</c:if> <c:if test="${book.awayTeam eq 'KT 롤스터'}">
+								</c:if> <c:if test="${book.awayTeam eq 'kt 롤스터'}">
 									<img src="/img/team/kt.png" alt="Team Logo" width="35">
 								</c:if> <c:if test="${book.awayTeam eq '젠지'}">
 									<img src="/img/team/gen.png" alt="Team Logo" width="35">
-								</c:if> <c:if test="${book.awayTeam eq '한화생명 e스포츠'}">
+								</c:if> <c:if test="${book.awayTeam eq '한화생명e스포츠'}">
 									<img src="/img/team/hle.png" alt="Team Logo" width="35">
 								</c:if> ${book.awayTeam}</td>
 
 							<td width="150" style="text-align: right">
 								<button class="btn btn-dark" id="btn-book">
-									<a href="${book.link }"
+									<a href="${book.link}"
 										style="text-decoration: none; color: #0d6efd; font-size: 14px;">
-										<input type="hidden" value="${book.link}" />예매
+										<input type="hidden" value="${book.link}"/>예매
 									</a>
 								</button>
 							</td>

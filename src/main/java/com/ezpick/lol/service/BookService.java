@@ -1,11 +1,10 @@
 package com.ezpick.lol.service;
 
+import java.time.LocalDateTime;
 import java.time.YearMonth;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,86 +16,28 @@ public class BookService {
 
 	@Autowired
 	private BookRepository bookRepository;
-		
-//----------------------------------------------------------------------------
 	
-	   // 경기 일정 데이터 삽입 ( 사용 )
-	   @Transactional
-	   public void insertBook(Book book) {
-	         
-	      bookRepository.save(book);
-	      
-	   }
-	   
-//--------------------- 가능 / 불가능 ------------------------------------------------------------
-	   	
-	   // 일정 전체  ( 사용 )
-	    @Transactional
-	    public List<Book> date(YearMonth date) {
-	    	
-	        int monthValue = date.getMonthValue();
-	        List<Book> books = bookRepository.findAllByDate(date, Sort.by(Sort.Order.asc("time")));
-	        
-	        return books.stream()
-	                .filter(book -> book.getDate().getMonthValue() == monthValue)
-	                .collect(Collectors.toList());
-	    }
-	   
-	   
-//----------------------------------------------------------------------------------------------------------
-	   
+	// 월(MONTH)에 맞는 경기 일정 리스트
+	@Transactional(readOnly = true)
+	public List<Book> getAllList(YearMonth yearMonth) {
+		LocalDateTime startOfMonth = yearMonth.atDay(1).atStartOfDay();
+		LocalDateTime startOfNextMonth = yearMonth.plusMonths(1).atDay(1).atStartOfDay();
+
+		return bookRepository.findAllByMonth(startOfMonth, startOfNextMonth);
+	}
 	
-	   // 홈 팀 ( 사용 )
-	   @Transactional
-	    public List<Book> dateHome(YearMonth date, String homeTeam) {
-		   
-		   int monthValue = date.getMonthValue();
-	    
-	        List<Book> books = bookRepository.findAllByDateAndHomeTeam(date, homeTeam, Sort.by(Sort.Order.asc("time")));
-	        
-	        return books.stream()
-	               .filter(book -> book.getDate().getMonthValue() == monthValue)
-	               .collect(Collectors.toList());
-	        
-	       
-	    }
-	   
-	   //--------------------------------------------------------------------------------
-	   
-	   // 원정 팀 ( 사용 )
-	   @Transactional
-	    public List<Book> dateAway(YearMonth date, String awayTeam) {
-		   
-		   int monthValue = date.getMonthValue();
-	    
-	        List<Book> books = bookRepository.findAllByDateAndAwayTeam(date, awayTeam, Sort.by(Sort.Order.asc("time")));
-	        
-	        return books.stream()
-	        		.filter(book -> book.getDate().getMonthValue() == monthValue)
-	        		.collect(Collectors.toList());
-	        
-	       
-	    }
-	   
-//--------------------------------------------------------------------------------
-	   	   
-	   /*
-	   // 홈 팀, 원정 팀 ( 미 사용)
-	   @Transactional
-	    public List<Book> bookHomeAway(YearMonth date, String homeTeam, List<String> awayTeam) {
-		   
-		   int monthValue = date.getMonthValue();
-	    
-	        List<Book> books = bookRepository.findAllByDateAndHomeTeamAndAwayTeamIn(date, homeTeam, awayTeam, Sort.by(Sort.Order.asc("time")));
-	        
-	        return books.stream()
-	               .filter(book -> book.getDate().getMonthValue() == monthValue)
-	              
-	               .collect(Collectors.toList());
-	        
-	       
-	    }
-	    */
+	// 월(MONTH)과 팀(TEAM)이 맞는 일정 리스트
+	@Transactional(readOnly = true)
+	public List<Book> getTeamAllList(YearMonth yearMonth, String team) {
+		LocalDateTime startOfMonth = yearMonth.atDay(1).atStartOfDay();
+		LocalDateTime startOfNextMonth = yearMonth.plusMonths(1).atDay(1).atStartOfDay();
+
+		return bookRepository.findAllByMonthAndTeam(startOfMonth, startOfNextMonth, team);
+	}		
 	
-	  
+	// 경기 일정 데이터 삽입 ( 사용 )
+	@Transactional
+	public void insertBook(Book book) {
+		bookRepository.save(book);
+	}
 }

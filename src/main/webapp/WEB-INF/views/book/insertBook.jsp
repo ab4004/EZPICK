@@ -24,14 +24,16 @@
     
   	<div class="mb-3">
       <label for="date">경기 날짜:</label>
-      <input type="text" class="form-control" id="date" placeholder="Enter date" name="date">
+      <input type="text" class="form-control" id="date" placeholder="yyyy-MM-ddThh:00:00" name="date">
     </div>
     
+    <!-- 
     <div class="mb-3">
       <label for="time">경기 시간:</label>
       <input type="text" class="form-control" id="time" placeholder="Enter time" name="time">
-    </div>    
-    
+    </div>  
+     -->
+     
     <div class="mb-3">
       <label for="status">경기 진행 상태:</label>
       <input type="text" class="form-control" id="status" placeholder="Enter status" name="status">

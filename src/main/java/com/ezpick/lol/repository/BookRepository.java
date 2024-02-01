@@ -1,37 +1,23 @@
 package com.ezpick.lol.repository;
 
-import java.time.YearMonth;
+import java.time.LocalDateTime;
 import java.util.List;
 
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import com.ezpick.lol.domain.Book;
 
+
 public interface BookRepository extends JpaRepository<Book, Integer> {
-			
-	// 날짜 (사용)
-	List<Book> findAllByDate(YearMonth date, Sort sort);			
 	
-	// 날짜, 홈 팀(사용)
-	List<Book> findAllByDateAndHomeTeam(YearMonth date, String homeTeam, Sort sort);
+	List<Book> findAllByDate(LocalDateTime date);
 	
-	// 날짜, 원정 팀(사용)
-	List<Book> findAllByDateAndAwayTeam(YearMonth date, String awayTeam, Sort sort);
+	// JPQL(Java Persistence Query Language - 테이블이 아닌 엔티티 객체 대상으로 쿼리)
+	@Query("SELECT b FROM Book b WHERE b.date >= :startOfMonth AND b.date < :startOfNextMonth")
+    List<Book> findAllByMonth(@Param("startOfMonth") LocalDateTime startOfMonth, @Param("startOfNextMonth") LocalDateTime startOfNextMonth);
 	
-//---------- 사용 / 미사용------------------------------------------------
-		
-	/*	
-	 // 홈 팀 ( 미사용 )
-	List<Book> findAllByHomeTeam(String homeTeam);
-	
-	// 원정 팀 ( 미사용 )
-	List<Book> findAllByAwayTeam(String awayTeam);
-	
-	// 날짜, 홈 팀, 원정 팀( 미사용 )
-	List<Book> findAllByDateAndHomeTeamAndAwayTeamIn(YearMonth date, String homeTeam, List<String> awayTeam, Sort sort);
-	
-	// 날짜, 홈 팀, 원정 팀( 미사용 )
-	List<Book> findAllByDateAndHomeTeamOrAwayTeamIn(YearMonth date, String homeTeam, List<String> awayTeam, Sort sort);
-*/
+	@Query("SELECT b FROM Book b WHERE b.date >= :startOfMonth AND b.date < :startOfNextMonth AND (b.homeTeam = :team OR b.awayTeam = :team)")
+    List<Book> findAllByMonthAndTeam(@Param("startOfMonth") LocalDateTime startOfMonth, @Param("startOfNextMonth") LocalDateTime startOfNextMonth, @Param("team") String team);
 }
