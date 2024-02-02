@@ -6,9 +6,9 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
-<body>
+<body style="display: flex; flex-direction: column; min-height: 100vh;">
 	<jsp:include page="../layout/nav.jsp"></jsp:include>
-	<div class="container mt-3">
+	<div class="container mt-3 flex-grow-1">
 		<h2>비밀번호 찾기</h2>
 		<div class="mb-3">
 			<label for="id">아이디:</label> <input type="text" class="form-control"
