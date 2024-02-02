@@ -302,41 +302,77 @@
 										<div>닉네임</div>
 									</div>
 								</div>
-								
+
 								<!-- 상세매치 정보 버튼 -->
 								<div class="d-flex" style="width: 40px">
-									<button class="btn flex-grow-1 border" type="button" data-bs-toggle="collapse"
-										data-bs-target="#test">
+									<button class="btn flex-grow-1 border" type="button"
+										onclick="toggleContent('test1')">
 										<i class="bi bi-chevron-compact-down"></i>
 									</button>
 								</div>
 							</div>
 						</div>
 						<!-- 상세 버튼 클릭시 보이는 영역 -->
-						<div class="collapse" id="test">
-							<div class="d-flex-column card">
-								<div class="d-flex p-2">
-									<div><img class="rounded-circle" alt="test" src="/img/champion/35.png" width="30px"
-										height="30px"></div>
-									<div class="mx-2">홍길동</div>
-									<div class="d-flex">
-										<img class="mx-2" src="" width="30px" height="30px" style="background-color: #e6e6e6"> 
-										<img class="mx-2" src="" width="30px" height="30px" style="background-color: #e6e6e6"> 
-										<img class="mx-2" src="" width="30px" height="30px" style="background-color: #e6e6e6"> 
-										<img class="mx-2" src="" width="30px" height="30px" style="background-color: #e6e6e6"> 
-										<img class="mx-2" src="" width="30px" height="30px" style="background-color: #e6e6e6"> 
-										<img class="mx-2" src="" width="30px" height="30px" style="background-color: #e6e6e6"> 
-										<img class="mx-2" src="" width="30px" height="30px" style="background-color: #e6e6e6"> 
-									</div>
-									<div class="d-flex align-items-center">
-									<div>피해량:</div> 
+						<div class="d-flex-column card mb-2" id="test1"
+							style="display: block; font-size: 12px">
+							<div class="d-flex p-2">
+								<div style="max-width: 30px;overflow: hidden; white-space: nowrap;">
+									<img class="rounded-circle" alt="파티원챔피언"
+										src="https://ddragon.leagueoflegends.com/cdn/14.2.1/img/champion/${partyEach.championName}.png"
+										onerror="this.onerror=null; this.src='/img/champion/${partyEach.championId}.png';"
+										width="30px" height="30px" />
+								</div>
+								<div class="d-flex mx-2 align-items-center"
+									style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis; width: 100px">
+										<div style="font-size: 12px">가나다라마바사아자차카타파하</div>
+								</div>
+								<div class="d-flex mx-2">
+									<img class="rounded me-1"
+										src="https://ddragon.leagueoflegends.com/cdn/14.2.1/img/item/${partyEach.item0}.png"
+										onerror="this.onerror=null; this.src='default-image.png'; this.alt='아이템'"
+										width="28px" height="28px"> <img class="rounded me-1"
+										src="https://ddragon.leagueoflegends.com/cdn/14.2.1/img/item/${partyEach.item1}.png"
+										onerror="this.onerror=null; this.src='default-image.png'; this.alt='아이템'"
+										width="28px" height="28px"> <img class="rounded me-1"
+										src="https://ddragon.leagueoflegends.com/cdn/14.2.1/img/item/${partyEach.item2}.png"
+										onerror="this.onerror=null; this.src='default-image.png'; this.alt='아이템'"
+										width="28px" height="28px"> <img class="rounded me-1"
+										src="https://ddragon.leagueoflegends.com/cdn/14.2.1/img/item/${partyEach.item3}.png"
+										onerror="this.onerror=null; this.src='default-image.png'; this.alt='아이템'"
+										width="28px" height="28px"> <img class="rounded me-1"
+										src="https://ddragon.leagueoflegends.com/cdn/14.2.1/img/item/${partyEach.item4}.png"
+										onerror="this.onerror=null; this.src='default-image.png'; this.alt='아이템'"
+										width="28px" height="28px"> <img class="rounded me-1"
+										src="https://ddragon.leagueoflegends.com/cdn/14.2.1/img/item/${partyEach.item5}.png"
+										onerror="this.onerror=null; this.src='default-image.png'; this.alt='아이템'"
+										width="28px" height="28px"> <img class="rounded me-1"
+										src="https://ddragon.leagueoflegends.com/cdn/14.2.1/img/item/${partyEach.item6}.png"
+										onerror="this.onerror=null; this.src='default-image.png'; this.alt='아이템'"
+										width="28px" height="28px">
+								</div>
+								<div class="d-flex align-items-center">
+									<div class="mx-2">피해량</div>
 									<div class="progress" style="width: 100px">
-  										<div class="progress-bar" style="width:70%"></div>
+										<div class="progress-bar"
+											style="width: ${(127389/247907) * 100}%"
+											aria-valuenow="127389"
+											aria-valuemin="0" aria-valuemax="${247907}"></div>
 									</div>
+									<div class="mx-2">받은 피해량</div>
+									<div class="progress" style="width: 100px">
+										<div class="progress-bar"
+											style="width: ${(138900/247907) * 100}%"
+											aria-valuenow="1389"
+											aria-valuemin="0" aria-valuemax="247907"></div>
 									</div>
+								</div>
+								<div class="d-flex-column text-center" style="width: 100px;">
+									<div>30/15/24(2.32)</div>
 								</div>
 							</div>
 						</div>
+						
+						
 					</div>
 				</div>
 			</div>
@@ -350,5 +386,17 @@
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
-</body><!-- ㅇ르ㅏㅣㅁㄴ을;ㅏㅁㅇ느파;ㅣ을;ㅣㅜㅢㅏ -->
+
+	<script>
+		function toggleContent(test) {
+			var testContent = document.getElementById(test);
+			// content를 토글
+			if (testContent.style.display == 'none') {
+				testContent.style.display = 'block';
+			} else {
+				testContent.style.display = 'none';
+			}
+		}
+	</script>
+</body>
 </html>

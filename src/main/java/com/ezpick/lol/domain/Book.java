@@ -1,13 +1,13 @@
 package com.ezpick.lol.domain;
 
 import java.time.LocalDateTime;
-import java.time.YearMonth;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,17 +18,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 @Entity
+@Table(name = "BOOK_TBL")
 public class Book {
 
 	   @Id
 	   @GeneratedValue(strategy = GenerationType.IDENTITY)
 	   private int id;
 		
-	   @Column(nullable = false)
-	   private YearMonth date;
-	   
-	   @Column(nullable = false)
-	   private LocalDateTime time;
+	   @Column(nullable = false, columnDefinition = "TIMESTAMP")
+	   private LocalDateTime date;
 	   
 	   @Column
 	   private String status;
@@ -39,12 +37,11 @@ public class Book {
 	   @Column(nullable = false)
 	   private String homeTeam;
 	   
-	   
 	   @Column(nullable = false)
 	   private String awayTeam;
 	   	   
 	   @Column(nullable = true)
-	   private Integer homeScore;	   
+	   private Integer homeScore; 
 	   
 	   @Column(nullable = true)
 	   private Integer awayScore;	 

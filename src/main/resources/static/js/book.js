@@ -17,7 +17,7 @@ let bookObject = {
 		let bookInfo = {
 
 			date: $("#date").val(),
-			time: $("#time").val(),
+			//time: $("#time").val(),
 			status: $("#status").val(),
 			round: $("#round").val(),
 			homeTeam: $("#homeTeam").val(),
