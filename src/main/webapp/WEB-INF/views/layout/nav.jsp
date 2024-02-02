@@ -52,22 +52,22 @@
 						class="navbar-brand mx-3" href="/board/boardList">커뮤니티</a> <a
 						class="navbar-brand mx-3" href="/match">경기 &
 						예매</a> <a class="navbar-brand mx-3" href="#">승부 예측</a> <a
-						class="navbar-brand mx-3" href="#">뉴스</a>
+						class="navbar-brand mx-3" href="/news">뉴스</a>
 				</div>
 			</div>
 			<c:choose>
 				<c:when test="${empty user }">
 					<!-- 로그인 영역 -->
 					<a class="navbar-brand nav_sign" href="/auth/login"><i
-						class="bi bi-person-circle"></i> Sign In</a>
+						class="bi bi-person-circle"></i> 로그인</a>
 				</c:when>
 				<c:otherwise>
 					<div class="dropdown dropstart">
 						<a class="navbar-brand nav_sign btn dropdown-toggle"
 							data-bs-toggle="dropdown" aria-expanded="false">
-							<i class="bi bi-person-square"></i></a>
+							<i class="bi bi-person-square"></i> ${user.userNickname}</a>
 						<ul class="dropdown-menu text-center">
-							<li><span class="dropdown-item-text">${user.userNickname} 님</span></li>
+							<li><span class="dropdown-item-text">환영합니다</span></li>
 							<li><hr class="dropdown-divider"></li>
 							<li><a class="dropdown-item" href="/user/myPage">내 정보</a></li>
 							<li><a class="dropdown-item" href="/auth/logout">로그아웃</a></li>
