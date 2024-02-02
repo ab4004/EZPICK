@@ -27,6 +27,18 @@ let userObject = {
 		$("#updatePassword-user").on("click", function() {
 			_this.updatePasswordUser();
 		});
+
+		$("#myPage-user").on("click", function() {
+			_this.myPageUser();
+		});
+
+		$("#updateNickname-user").on("click", function() {
+			_this.updateNicknameUser();
+		});
+
+		$("#delete-user").on("click", function() {
+			_this.deleteUser();
+		});
 	},
 
 	validateForm: function() {
@@ -172,6 +184,12 @@ let userObject = {
 		let hasSpecialCharacters = /[!@#$%^&*(),.?":{}|<>]/.test(userNickname);
 		if (hasSpecialCharacters) {
 			userNicknameErrorElement.text("닉네임은 특수 문자가 포함될 수 없습니다.");
+			return false;
+		}
+
+		let userNicknameRegex = /^[a-zA-Z가-힣0-9]*$/;
+		if (!userNicknameRegex.test(userNickname)) {
+			userNicknameErrorElement.text("닉네임은 한글, 영문 대/소문자만 사용 가능합니다. (특수기호, 공백 사용 불가)");
 			return false;
 		}
 
@@ -391,8 +409,82 @@ let userObject = {
 			console.error("Error during registration:", error);
 		});
 	},
-};
 
+	updateNicknameUser: function() {
+		let updateNicknameUser = {
+			userId: $("#userId").val(),
+			userEmail: $("#userEmail").val(),
+			userNickname: $("#userNickname").val(),
+		}
+
+		$.ajax({
+			type: "PUT",
+			url: "/auth/updateNickname",
+			data: JSON.stringify(updateNicknameUser),
+			contentType: "application/json; charset=utf-8"
+		}).done(function(response) {
+			console.log(response);
+			if (response["status"] === 200) {
+				alert(response["data"]);
+				location.href = "/auth/login";
+			} else if (response["status"] === 400) {
+				let errorMessage = response["data"];
+				if (typeof errorMessage === 'string') {
+					alert(errorMessage);
+				} else {
+					alert("입력하신 내용을 다시 확인해주세요.");
+				}
+			}
+		}).fail(function(error) {
+			console.error("Error during registration:", error);
+		});
+	},
+
+	myPageUser: function() {
+		let myPageUser = {
+			userPassword: $("#checkPassword").val(),
+		}
+
+		$.ajax({
+			type: "POST",
+			url: "/auth/myPage",
+			data: $.param(myPageUser),
+			contentType: "application/x-www-form-urlencoded; charset=UTF-8"
+		}).done(function(response) {
+			if (response["status"] === 200) {
+				$("#checkUser").hide();
+				$("#myInfo").show();
+			} else {
+				alert(response["data"]);
+			}
+		}).fail(function(error) {
+			alert(error["data"]);
+		});
+	},
+
+	deleteUser: function() {
+		let deleteUser = {
+			userId: $("#userId").val(),
+			userPassword: $("#deleteUserPassword").val()
+		}
+
+		$.ajax({
+			type: "DELETE",
+			url: "/auth/deleteUser",
+			data: $.param(deleteUser),
+			contentType: "application/x-www-form-urlencoded; charset=UTF-8"
+		}).done(function(response) {
+			if (response["status"] === 200) {
+				alert(response["data"]);
+				location.href = "/"
+			} else {
+				alert(response["data"]);
+			}
+		}).fail(function(error) {
+			alert(error["data"]);
+		});
+	},
+}
 $(document).ready(function() {
 	userObject.init();
 });

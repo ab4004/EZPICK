@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.ezpick.lol.domain.User;
 import com.ezpick.lol.dto.ResponseDTO;
 import com.ezpick.lol.dto.UserDTO;
+import com.ezpick.lol.repository.NicknameUpdate;
 import com.ezpick.lol.repository.PasswordUpdate;
 import com.ezpick.lol.service.UserService;
 
@@ -33,7 +35,8 @@ public class UserController {
 	private ModelMapper modelMapper;
 
 	@GetMapping("/auth/login")
-	public String login() {
+	public String login(HttpSession session) {
+		session.invalidate();
 		return "user/login";
 	}
 
@@ -136,7 +139,7 @@ public class UserController {
 
 	@PostMapping("/auth/findPassword")
 	public @ResponseBody ResponseDTO<?> findPassword(@RequestParam String userId, @RequestParam String userEmail) {
-		User findPassword = userService.findPassword(userId, userEmail);
+		User findPassword = userService.findUser(userId, userEmail);
 		if (findPassword.getUserId() != null) {
 			return new ResponseDTO<>(HttpStatus.OK.value(), "");
 		}
@@ -144,7 +147,8 @@ public class UserController {
 	}
 
 	@PutMapping("/auth/updatePassword")
-	public @ResponseBody ResponseDTO<?> findPassword(@Validated(PasswordUpdate.class) @RequestBody UserDTO userDTO, BindingResult bindingResult) {
+	public @ResponseBody ResponseDTO<?> updatePassword(@Validated(PasswordUpdate.class) @RequestBody UserDTO userDTO,
+			BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
 			return new ResponseDTO<>(HttpStatus.BAD_REQUEST.value(), "입력하신 내용을 다시 확인해주세요.");
 		}
@@ -155,5 +159,57 @@ public class UserController {
 			return new ResponseDTO<>(HttpStatus.OK.value(), "비밀번호 변경이 완료되었습니다.");
 		}
 		return new ResponseDTO<>(HttpStatus.BAD_REQUEST.value(), "비밀번호 변경에 실패하였습니다.");
+	}
+
+	@PutMapping("/auth/updateNickname")
+	public @ResponseBody ResponseDTO<?> updateNickname(@Validated(NicknameUpdate.class) @RequestBody UserDTO userDTO,
+			BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+			return new ResponseDTO<>(HttpStatus.BAD_REQUEST.value(), "입력하신 내용을 다시 확인해주세요.");
+		}
+		boolean checkUser = userService.updateNickname(userDTO.getUserId(), userDTO.getUserEmail(),
+				userDTO.getUserNickname());
+
+		if (checkUser) {
+			return new ResponseDTO<>(HttpStatus.OK.value(), "닉네임 변경이 완료되었습니다.");
+		}
+		return new ResponseDTO<>(HttpStatus.BAD_REQUEST.value(), "닉네임 변경에 실패하였습니다.");
+	}
+
+	@GetMapping("/auth/myPage")
+	public String myPage() {
+		return "user/myPage";
+	}
+
+	@PostMapping("/auth/myPage")
+	public @ResponseBody ResponseDTO<?> myPage(@RequestParam String userPassword, HttpSession session) {
+		User findUser = (User) session.getAttribute("user");
+
+		if (findUser != null) {
+			if (findUser.getUserPassword().equals(userPassword)) {
+				return new ResponseDTO<>(HttpStatus.OK.value(), "");
+			} else {
+				return new ResponseDTO<>(HttpStatus.BAD_REQUEST.value(), "비밀번호가 일치하지 않습니다.");
+			}
+		} else {
+			return new ResponseDTO<>(HttpStatus.UNAUTHORIZED.value(), "세션이 만료되었거나 로그인되어 있지 않습니다.");
+		}
+	}
+
+	@DeleteMapping("/auth/deleteUser")
+	public @ResponseBody ResponseDTO<?> deleteUser(@RequestParam String userId, @RequestParam String userPassword, HttpSession session) {
+		User findUser = (User) session.getAttribute("user");
+
+		if (findUser != null) {
+			if (findUser.getUserPassword().equals(userPassword)) {
+				userService.deleteUser(findUser.getUserId());
+				session.invalidate();
+				return new ResponseDTO<>(HttpStatus.OK.value(), "회원 탈퇴가 완료되었습니다.");
+			} else {
+				return new ResponseDTO<>(HttpStatus.BAD_REQUEST.value(), "비밀번호가 일치하지 않습니다.");
+			}
+		} else {
+			return new ResponseDTO<>(HttpStatus.UNAUTHORIZED.value(), "세션이 만료되었거나 로그인되어 있지 않습니다.");
+		}
 	}
 }

@@ -51,15 +51,15 @@ public class UserService {
 		return findUser.getUserId();
 	}
 
-	@Transactional(readOnly = true)
-	public User findPassword(String userId, String userEmail) {
+	@Transactional(readOnly = true) // 비밀번호, 닉네임을 변경을 위한 유저 찾기
+	public User findUser(String userId, String userEmail) {
 		User findUser = userRepository.findByUserIdAndUserEmail(userId, userEmail).orElseGet(() -> new User());
 		return findUser;
 	}
 
-	@Transactional
+	@Transactional // 인증받고 확인이 되야 수정이 가능
 	public boolean updatePassword(String userId, String userEmail, String newPassword) {
-		User findUser = findPassword(userId, userEmail);
+		User findUser = findUser(userId, userEmail);
 
 		if (findUser != null) {
 			findUser.setUserPassword(newPassword);
@@ -67,5 +67,24 @@ public class UserService {
 			return true;
 		}
 		return false;
+	}
+
+	@Transactional
+	public boolean updateNickname(String userId, String userEmail, String newNickname) {
+		User findUser = findUser(userId, userEmail);
+
+		if (findUser != null) {
+			findUser.setUserNickname(newNickname);
+			userRepository.save(findUser);
+			return true;
+		}
+		return false;
+	}
+
+	// ifPresent는 Optional객체의 값이(findById) 존재할경우에만 실행
+	// 비어있지않은 경우에는 아무런 동작도 실행하지않음 NullPointException 방지가능
+	@Transactional
+	public void deleteUser(String userId) {
+		userRepository.findById(userId).ifPresent(user -> userRepository.delete(user));
 	}
 }

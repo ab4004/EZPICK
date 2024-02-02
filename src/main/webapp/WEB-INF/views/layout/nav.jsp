@@ -72,7 +72,7 @@
 							<li><a class="dropdown-item" href="/user/myPage">내 정보</a></li>
 							<li><a class="dropdown-item" href="/auth/logout">로그아웃</a></li>
 						</ul>
-					</div>
+          </div>
 				</c:otherwise>
 			</c:choose>
 		</div>
