@@ -59,11 +59,11 @@
 				<c:when test="${empty user }">
 					<!-- 로그인 영역 -->
 					<a class="navbar-brand nav_sign" href="/auth/login"><i
-						class="bi bi-person-circle"></i> Sign Up</a>
+						class="bi bi-person-circle"></i> Sign In</a>
 				</c:when>
 				<c:otherwise>
 				<a class="navbar-brand mx-3" href="/auth/logout">로그아웃</a>
-					<a class="navbar-brand nav_sign" href="#"><i
+					<a class="navbar-brand nav_sign" href="/auth/myPage"><i
 						class="bi bi-person-circle"></i> ${user.userNickname } 님</a>
 				</c:otherwise>
 			</c:choose>

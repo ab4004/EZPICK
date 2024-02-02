@@ -1,5 +1,6 @@
 package com.ezpick.lol.dto;
 
+import com.ezpick.lol.repository.NicknameUpdate;
 import com.ezpick.lol.repository.PasswordUpdate;
 
 import jakarta.validation.constraints.Email;
@@ -29,9 +30,9 @@ public class UserDTO {
 	@Pattern(regexp = "^[a-zA-Z가-힣]*$", message = "이름은 한글, 영문 대/소문자만 사용 가능합니다. (특수기호, 공백 사용 불가)")
 	private String userName;
 
-	@NotBlank(message = "닉네임은 필수 입력 항목입니다")
-	@Size(min = 2, max = 16, message = "닉네임은 2자 이상 16자 이하로 입력하세요")
-	@Pattern(regexp = "^[a-zA-Z가-힣]*$", message = "닉네임은 한글, 영문 대/소문자만 사용 가능합니다. (특수기호, 공백 사용 불가)")
+	@NotBlank(message = "닉네임은 필수 입력 항목입니다", groups = NicknameUpdate.class)
+	@Size(min = 2, max = 16, message = "닉네임은 2자 이상 16자 이하로 입력하세요", groups = NicknameUpdate.class)
+	@Pattern(regexp = "^[a-zA-Z가-힣0-9]*$", message = "닉네임은 한글, 영문 대/소문자만 사용 가능합니다. (특수기호, 공백 사용 불가)", groups = NicknameUpdate.class)
 	private String userNickname;
 
 	@NotBlank(message = "이메일은 필수 입력 항목입니다")
