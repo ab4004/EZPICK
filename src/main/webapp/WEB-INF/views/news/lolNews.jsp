@@ -22,8 +22,10 @@
 						<div class="d-flex">
 							<!-- 
 							<img alt="기사 썸네일" src="${pageContext.request.contextPath}${news.imageUrl}" width="200px"
-								height="110px"> -->
-							<div style='${news.imageUrl} width: 200px; height: 110px'></div>
+								height="110px"> 
+							<div style="background-image: url('${news.imageUrl}'); width: 200px; height: 110px"></div>
+							-->
+							<img alt="섬네일" src="${news.imageUrl}" width="200px" height="110px">
 							<div class="d-flex-column mx-3">
 								<h5 class="text-body">${news.title}</h5>
 								<p class="text-secondary">${news.content}</p>

@@ -5,7 +5,7 @@
 <head>
 <title>EZPICK</title>
 </head>
-<body>
+<body class="totalBodyStyle">
 	<!-- 네비게이션 영역-->
 	<jsp:include page="./layout/nav.jsp"></jsp:include>
 

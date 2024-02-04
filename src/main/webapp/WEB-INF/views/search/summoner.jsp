@@ -9,7 +9,7 @@
 <title>EZPICK</title>
 </head>
 <body
-	style="background-color: #f8f9fa; font-family: 'Noto Sans KR', sans-serif;">
+	style="background-color: #f8f9fa; font-family: 'Noto Sans KR', sans-serif; -ms-overflow-style: none;">
 
 	<!-- 네비게이션 영역-->
 	<jsp:include page="../layout/search_nav.jsp"></jsp:include>
@@ -333,7 +333,8 @@
 										</div>
 									</c:if>
 								</c:forEach>
-								<div class="mx-2">CS ${participant.totalMinionsKilled}</div>
+								<div class="mx-2" data-bs-toggle="tooltip" data-bs-placement="top"
+								title="미니언 ${participant.totalMinionsKilled} + 몬스터 ${participant.neutralMinionsKilled}">CS ${participant.totalMinionsKilled + participant.neutralMinionsKilled}</div>
 							</div>
 						</div>
 					</div>
