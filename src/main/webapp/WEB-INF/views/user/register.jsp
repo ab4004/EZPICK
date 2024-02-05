@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>EZPICK - 회원가입</title>
 </head>
 <body class="totalBodyStyle">
 	<jsp:include page="../layout/nav.jsp"></jsp:include>
