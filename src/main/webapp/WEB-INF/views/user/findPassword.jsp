@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>EZPICK - 비밀번호 찾기</title>
 </head>
 <body class="totalBodyStyle">
 	<jsp:include page="../layout/nav.jsp"></jsp:include>

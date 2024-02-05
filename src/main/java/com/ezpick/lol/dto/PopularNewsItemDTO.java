@@ -7,11 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class NewsItemDTO {
+public class PopularNewsItemDTO {
 	private String title;
-	private String content;
 	private String imageUrl;
 	private String linkUrl;
-	private String mediaCompany;
-	private String writeTime;
 }

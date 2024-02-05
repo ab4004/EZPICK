@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>EZPICK</title>
+<title>EZPICK - 소환사 검색</title>
 </head>
 <body
 	style="background-color: #f8f9fa; font-family: 'Noto Sans KR', sans-serif; -ms-overflow-style: none;">
