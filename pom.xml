@@ -18,7 +18,7 @@
 		<java.version>17</java.version>
 	</properties>
 	<dependencies>
-		<!-- 사용하는 브라우저 버전에 맞는 드라이벌르 다운로드하기 위해 사용
+		<!-- 사용하는 브라우저 버전에 맞는 드라이버를 다운로드하기 위해 사용
 		https://mvnrepository.com/artifact/io.github.bonigarcia/webdrivermanager -->
 		<dependency>
 			<groupId>io.github.bonigarcia</groupId>

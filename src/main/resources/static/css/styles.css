@@ -493,6 +493,13 @@ progress {
   display: none !important;
 }
 
+.textOneLine {
+	text-overflow: ellipsis; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1;
+}
+.textTwoLine {
+	text-overflow: ellipsis; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2;
+}
+
 .lead {
   font-size: 1.25rem;
   font-weight: 300;

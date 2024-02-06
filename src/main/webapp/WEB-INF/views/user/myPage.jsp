@@ -5,9 +5,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>EZPICK - My Page</title>
 </head>
-<body style="display: flex; flex-direction: column; min-height: 100vh;">
+<body class="totalBodyStyle">
 	<jsp:include page="../layout/nav.jsp"></jsp:include>
 	<div class="container mt-3 flex-grow-1">
 		<div class="mt-3" id="checkUser">

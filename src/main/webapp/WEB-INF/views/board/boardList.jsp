@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>EZPICK</title>
+<title>EZPICK - 커뮤니티</title>
 </head>
 <body style="display: flex; flex-direction: column; min-height: 100vh;">
 	<jsp:include page="../layout/search_nav.jsp"></jsp:include>

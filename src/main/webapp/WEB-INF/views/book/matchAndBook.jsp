@@ -14,7 +14,7 @@
 
 <head>
 <meta charset="UTF-8">
-<title>경기 일정 및 예매</title>
+<title>EZPICK - 경기 일정 및 예매</title>
 
 <style>
 #btn-book {

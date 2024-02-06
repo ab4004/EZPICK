@@ -58,7 +58,7 @@
 				<c:when test="${empty user }">
 					<!-- 로그인 영역 -->
 					<a class="navbar-brand nav_sign" href="/auth/login"><i
-						class="bi bi-person-circle"></i> Sign In</a>
+						class="bi bi-person-circle"></i> 로그인</a>
 				</c:when>
 				<c:otherwise>
 					<div class="dropdown dropstart">

@@ -10,31 +10,83 @@
 <body class="totalBodyStyle">
 	<jsp:include page="../layout/search_nav.jsp"></jsp:include>
 
+	<!-- 상단 컨텐츠 -->
+	<div class="container-fluid my-5 py-2 d-flex"
+		style="height: 100px; background-color: #99dee1;">
+		<div class="container h-100 d-flex align-items-center">
+			<img alt="롤 이미지" src="/img/lol_logo_white.png" class="h-75">
+		</div>
+	</div>
+
+	<!-- 메인 컨텐츠(뉴스 기사) -->
 	<div class="container my-3 flex-grow-1">
-		<c:if test="${empty newsList}">
-			<h2>현재 작성된 기사가 없습니다.</h2>
-		</c:if>
-		<c:if test="${!empty newsList}">
-			<c:forEach var="news" items="${newsList}">
-				<a href="${news.linkUrl}" target="_blank"
-					style="text-decoration: none;">
-					<div class="d-flex card p-3 my-3">
-						<div class="d-flex">
-							<!-- 
+		<div class="d-flex">
+			<div class="d-flex-column flex-grow-1">
+				<c:if test="${empty newsList}">
+					<h2>현재 작성된 기사가 없습니다.</h2>
+				</c:if>
+				<c:if test="${!empty newsList}">
+					<c:forEach var="news" items="${newsList}">
+						<a href="${news.linkUrl}" target="_blank"
+							style="text-decoration: none;">
+							<div class="d-flex card p-3 my-3">
+								<div class="d-flex">
+									<!-- 
 							<img alt="기사 썸네일" src="${pageContext.request.contextPath}${news.imageUrl}" width="200px"
-								height="110px"> -->
-							<div style='${news.imageUrl} width: 200px; height: 110px'></div>
-							<div class="d-flex-column mx-3">
-								<h5 class="text-body">${news.title}</h5>
-								<p class="text-secondary">${news.content}</p>
+								height="110px"> 
+							<div style="background-image: url('${news.imageUrl}'); width: 200px; height: 110px"></div>
+							-->
+									<div class="d-flex align-items-center">
+										<c:if test="${!empty news.imageUrl}">
+											<img alt="섬네일" src="${news.imageUrl}" width="200px"
+												height="110px">
+										</c:if>
+									</div>
+									<div class="d-flex-column mx-3">
+										<h5 class="text-body textOneLine">${news.title}</h5>
+										<p class="text-secondary textTwoLine">${news.content}</p>
+										<div class="d-flex text-dark mt-2">
+											<small class="me-2 textOneLine">${news.mediaCompany}</small> <small class="textOneLine">${news.writeTime}</small>
+										</div>
+									</div>
+								</div>
 							</div>
+						</a>
+					</c:forEach>
+				</c:if>
+				<div class="text-center">
+					<a class="my-3 btn btn-outline-dark btn-lg" href="https://game.naver.com/esports/League_of_Legends/news/lol" target="_blank">더보기</a>
+				</div>
+			</div>
+			<div class="d-flex-column m-3">
+				<div class="d-flex-clumn card p-3" style="width: 300px;">
+					<h5 class="mb-2">인기 뉴스</h5>
+					<c:if test="${empty popNewsList}">
+						<div class="text-center">
+							<strong>해당 기사가 없습니다.</strong>
 						</div>
-					</div>
-				</a>
-			</c:forEach>
-		</c:if>
-		<small class="my-3">출처 : 네이버 e스포츠
-			뉴스(https://game.naver.com/esports/League_of_Legends/news/lol)</small>
+					</c:if>
+					<c:if test="${!empty popNewsList}">
+						<c:forEach var="popNews" items="${popNewsList}">
+							<a href="${popNews.linkUrl}" target="_blank"
+								style="text-decoration: none;">
+								<div class="d-flex mb-3">
+									<div class="d-flex align-items-center">
+										<c:if test="${!empty popNews.imageUrl}">
+											<img alt="섬네일" src="${popNews.imageUrl}" width="90px"
+												height="50px">
+										</c:if>
+									</div>
+									<div class="text-dark ms-2">
+										<span class="textTwoLine">${popNews.title}</span>
+									</div>
+								</div>
+							</a>
+						</c:forEach>
+					</c:if>
+				</div>
+			</div>
+		</div>
 	</div>
 
 	<jsp:include page="../layout/footer.jsp"></jsp:include>
