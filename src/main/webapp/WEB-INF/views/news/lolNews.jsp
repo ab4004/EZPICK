@@ -31,11 +31,6 @@
 							style="text-decoration: none;">
 							<div class="d-flex card p-3 my-3">
 								<div class="d-flex">
-									<!-- 
-							<img alt="기사 썸네일" src="${pageContext.request.contextPath}${news.imageUrl}" width="200px"
-								height="110px"> 
-							<div style="background-image: url('${news.imageUrl}'); width: 200px; height: 110px"></div>
-							-->
 									<div class="d-flex align-items-center">
 										<c:if test="${!empty news.imageUrl}">
 											<img alt="섬네일" src="${news.imageUrl}" width="200px"
@@ -46,7 +41,7 @@
 										<h5 class="text-body textOneLine">${news.title}</h5>
 										<p class="text-secondary textTwoLine">${news.content}</p>
 										<div class="d-flex text-dark mt-2">
-											<small class="me-2 textOneLine">${news.mediaCompany}</small> <small class="textOneLine">${news.writeTime}</small>
+											<small class="textOneLine">${news.mediaCompany}</small>
 										</div>
 									</div>
 								</div>
@@ -55,7 +50,53 @@
 					</c:forEach>
 				</c:if>
 				<div class="text-center">
-					<a class="my-3 btn btn-outline-dark btn-lg" href="https://game.naver.com/esports/League_of_Legends/news/lol" target="_blank">더보기</a>
+					<a class="my-3 btn btn-outline-dark btn-lg"
+						href="https://game.naver.com/esports/League_of_Legends/news/lol"
+						target="_blank">더보기</a>
+				</div>
+				<div>
+					<!-- 페이지가 1페이지가 넘으면 페이징 링크 생성 -->
+					<c:if test="${totalPages > 1}">
+						<ul class="pagination">
+							<!-- 이전 페이지 링크 -->
+							<c:choose>
+								<c:when test="${currentPage > 0}">
+									<li class="page-item"><a class="page-link"
+										href="/news?page=${currentPage - 1}">Previous</a></li>
+								</c:when>
+								<c:otherwise>
+									<li class="page-item disabled"><span class="page-link">Previous</span>
+									</li>
+								</c:otherwise>
+							</c:choose>
+
+							<!-- 페이지 링크 목록 -->
+							<c:forEach begin="0" end="${totalPages - 1}" varStatus="status">
+								<c:choose>
+									<c:when test="${status.index eq currentPage}">
+										<li class="page-item active"><span class="page-link">${status.index + 1}</span>
+										</li>
+									</c:when>
+									<c:otherwise>
+										<li class="page-item"><a class="page-link"
+											href="/news?page=${status.index}">${status.index + 1}</a></li>
+									</c:otherwise>
+								</c:choose>
+							</c:forEach>
+
+							<!-- 다음 페이지 링크 -->
+							<c:choose>
+								<c:when test="${currentPage < totalPages - 1}">
+									<li class="page-item"><a class="page-link"
+										href="/news?page=${currentPage + 1}">Next</a></li>
+								</c:when>
+								<c:otherwise>
+									<li class="page-item disabled"><span class="page-link">Next</span>
+									</li>
+								</c:otherwise>
+							</c:choose>
+						</ul>
+					</c:if>
 				</div>
 			</div>
 			<div class="d-flex-column m-3">
