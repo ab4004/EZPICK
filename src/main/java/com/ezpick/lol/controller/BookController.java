@@ -24,28 +24,6 @@ public class BookController {
 	@Autowired
 	private BookService bookService;
 
-//--------------------------------------------------------------------------------------------
-
-	// 경기 일정 데이터 삽입 화면
-	@GetMapping("/book/insertBook")
-	public String insertBook() {
-		return "book/insertBook";
-	}
-
-	// 경기 일정 데이터 삽입
-	@PostMapping("/book/insertBook")
-	public @ResponseBody ResponseDTO<?> insertBook(@RequestBody Book book) {
-
-		if (book != null) {
-
-			bookService.insertBook(book);
-
-			return new ResponseDTO<>(HttpStatus.OK.value(), "경기 일정 데이터 삽입 성공");
-		}
-
-		return new ResponseDTO<>(HttpStatus.BAD_REQUEST.value(), "경기 일정 데이터 삽입 실패");
-	}
-	
 	@GetMapping("/match")
 	public String getMatchAndBook(Model model, @RequestParam(required = false, defaultValue = "0") int month,  @RequestParam(required = false) String team) {
 		int[] monthList = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};

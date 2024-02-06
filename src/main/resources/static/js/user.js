@@ -79,6 +79,7 @@ let userObject = {
 			$("#mail_number").hide();  // 인증번호 입력란 숨기기
 			$("#findId-user").show(); // 아이디 확인하기 버튼 보이기
 			$("#newPassword").show(); // 비밀번호 변경하기 버튼 보이기
+			$("#sendBtn").hide();
 		} else {
 			alert("인증번호를 다시 확인해주세요.");
 		}
@@ -325,6 +326,7 @@ let userObject = {
 			} else {
 				// 로그인 실패 시에 대한 처리
 				alert(response["data"]);
+				location.href = "/auth/login";
 			}
 		}).fail(function(error) {
 			alert(error["data"]);
@@ -465,7 +467,7 @@ let userObject = {
 	deleteUser: function() {
 		let deleteUser = {
 			userId: $("#userId").val(),
-			userPassword: $("#deleteUserPassword").val()
+			userPassword: $("#userPassword").val()
 		}
 
 		$.ajax({
