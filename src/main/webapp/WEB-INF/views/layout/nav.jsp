@@ -50,8 +50,8 @@
 				<div class="btn-group nav_menu">
 					<a class="navbar-brand mx-3" href="#">패치노트</a> <a
 						class="navbar-brand mx-3" href="/board/boardList">커뮤니티</a> <a
-						class="navbar-brand mx-3" href="/match">경기 &
-						예매</a> <a class="navbar-brand mx-3" href="#">승부 예측</a> <a
+						class="navbar-brand mx-3" href="/match">경기 & 예매</a> <a
+						class="navbar-brand mx-3" href="#">승부 예측</a> <a
 						class="navbar-brand mx-3" href="/news">뉴스</a>
 				</div>
 			</div>
@@ -62,17 +62,32 @@
 						class="bi bi-person-circle"></i> 로그인</a>
 				</c:when>
 				<c:otherwise>
-					<div class="dropdown dropstart">
-						<a class="navbar-brand nav_sign btn dropdown-toggle"
-							data-bs-toggle="dropdown" aria-expanded="false">
-							<i class="bi bi-person-square"></i> ${user.userNickname}</a>
-						<ul class="dropdown-menu text-center">
-							<li><span class="dropdown-item-text">환영합니다</span></li>
-							<li><hr class="dropdown-divider"></li>
-							<li><a class="dropdown-item" href="/user/myPage">내 정보</a></li>
-							<li><a class="dropdown-item" href="/auth/logout">로그아웃</a></li>
-						</ul>
-          </div>
+					<c:if test="${user.userRole eq 'ADMIN' }">
+						<div class="dropdown dropstart">
+							<a class="navbar-brand nav_sign btn dropdown-toggle"
+								data-bs-toggle="dropdown" aria-expanded="false"> <i
+								class="bi bi-person-square"></i> ${user.userNickname}
+							</a>
+							<ul class="dropdown-menu text-center">
+								<li><a class="dropdown-item" href="/admin/page">관리자 페이지</a></li>
+								<li><a class="dropdown-item" href="/auth/logout">로그아웃</a></li>
+							</ul>
+						</div>
+					</c:if>
+					<c:if test="${user.userRole ne 'ADMIN' }">
+						<div class="dropdown dropstart">
+							<a class="navbar-brand nav_sign btn dropdown-toggle"
+								data-bs-toggle="dropdown" aria-expanded="false"> <i
+								class="bi bi-person-square"></i> ${user.userNickname}
+							</a>
+							<ul class="dropdown-menu text-center">
+								<li><span class="dropdown-item-text">환영합니다</span></li>
+								<li><hr class="dropdown-divider"></li>
+								<li><a class="dropdown-item" href="/auth/myPage">내 정보</a></li>
+								<li><a class="dropdown-item" href="/auth/logout">로그아웃</a></li>
+							</ul>
+						</div>
+					</c:if>
 				</c:otherwise>
 			</c:choose>
 		</div>
