@@ -31,7 +31,7 @@ let bookObject = {
 
 		$.ajax({
 			type: "POST",
-			url: "/book/insertBook",
+			url: "/admin/insertBook",
 			data: JSON.stringify(bookInfo),
 			contentType: "application/json; charset=utf-8"
 

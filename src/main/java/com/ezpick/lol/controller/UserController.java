@@ -180,6 +180,11 @@ public class UserController {
 	public String myPage() {
 		return "user/myPage";
 	}
+	
+	@GetMapping("/auth/deleteUser")
+	public String deleteUser() {
+		return "user/deleteUser";
+	}
 
 	@PostMapping("/auth/myPage")
 	public @ResponseBody ResponseDTO<?> myPage(@RequestParam String userPassword, HttpSession session) {
