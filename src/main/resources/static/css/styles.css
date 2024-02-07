@@ -10868,9 +10868,10 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+
 .features-icons {
   padding-top: 4rem;
-  padding-bottom: 7rem;
+  padding-bottom: 3rem;
 }
 .features-icons .features-icons-item {
   max-width: 20rem;
@@ -10880,6 +10881,22 @@ textarea.form-control-lg {
 }
 .features-icons .features-icons-item .features-icons-icon i {
   font-size: 4.5rem;
+}
+
+.patch_more_button:hover {
+	-webkit-transform: scale(1.1);
+	transform: scale(1.1);
+}
+
+.patch_more_button {
+	-webkit-transform: scale(1);
+	transform: scale(1);
+	-webkit-transition: .3s ease-in-out;
+	transition: .3s ease-in-out;
+}
+
+.patch_image:hover {
+	opacity: 0.9;
 }
 
 header.masthead {

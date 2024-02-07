@@ -49,11 +49,6 @@
 						</a>
 					</c:forEach>
 				</c:if>
-				<div class="text-center">
-					<a class="my-3 btn btn-outline-dark btn-lg"
-						href="https://game.naver.com/esports/League_of_Legends/news/lol"
-						target="_blank">더보기</a>
-				</div>
 				<div>
 					<!-- 페이지가 1페이지가 넘으면 페이징 링크 생성 -->
 					<c:if test="${totalPages > 1}">
@@ -97,6 +92,11 @@
 							</c:choose>
 						</ul>
 					</c:if>
+				</div>
+				<div class="text-center">
+					<a class="my-3 btn btn-outline-dark btn-lg"
+						href="https://game.naver.com/esports/League_of_Legends/news/lol"
+						target="_blank">더보기</a>
 				</div>
 			</div>
 			<div class="d-flex-column m-3">
