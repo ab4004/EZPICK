@@ -52,39 +52,11 @@
 	</header>
 	
 	<!-- 중단 컨텐츠 영역 -->
-	<section class="features-icons bg-light text-center">
+	<section class="features-icons bg-light">
 		<div class="container">
-			<div class="row">
-				<div class="col-lg-4">
-					<div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
-						<div class="features-icons-icon d-flex">
-							<i class="bi-window m-auto text-primary"></i>
-						</div>
-						<h3>Fully Responsive</h3>
-						<p class="lead mb-0">This theme will look great on any device,
-							no matter the size!</p>
-					</div>
-				</div>
-				<div class="col-lg-4">
-					<div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
-						<div class="features-icons-icon d-flex">
-							<i class="bi-layers m-auto text-primary"></i>
-						</div>
-						<h3>Bootstrap 5 Ready</h3>
-						<p class="lead mb-0">Featuring the latest build of the new
-							Bootstrap 5 framework!</p>
-					</div>
-				</div>
-				<div class="col-lg-4">
-					<div class="features-icons-item mx-auto mb-0 mb-lg-3">
-						<div class="features-icons-icon d-flex">
-							<i class="bi-terminal m-auto text-primary"></i>
-						</div>
-						<h3>Easy to Use</h3>
-						<p class="lead mb-0">Ready to use with your own content, or
-							customize the source files!</p>
-					</div>
-				</div>
+			<div class="d-flex-column">
+				<h2 class="mb-4">14.3 패치노트</h2>
+				<img alt="패치내역" src="https://images.contentstack.io/v3/assets/blt731acb42bb3d1659/blt369a779b76843fd5/65c1f62a0872228f8e495383/LOL_14.3_Patch-Highlights_TW_1920x1080_KR.png" width="100%">
 			</div>
 		</div>
 	</section>

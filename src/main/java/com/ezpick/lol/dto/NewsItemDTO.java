@@ -13,5 +13,4 @@ public class NewsItemDTO {
 	private String imageUrl;
 	private String linkUrl;
 	private String mediaCompany;
-	private String writeTime;
 }
