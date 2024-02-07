@@ -3,6 +3,9 @@ package com.ezpick.lol.interceptor;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ezpick.lol.domain.RoleType;
+import com.ezpick.lol.domain.User;
+
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -18,10 +21,24 @@ public class LoggerInterceptor implements HandlerInterceptor {
 		log.debug("======================= preHandle =======================");
 		
 		HttpSession session = request.getSession();
-		Object user = session.getAttribute("user");
+		User user = (User) session.getAttribute("user");
 		
-		if (user == null) {
+		if (user != null) {
+			if (user.getUserRole() == RoleType.USER) {
+				if (request.getRequestURI().contains("/admin")) {
+					// 일반 사용자가 관리자 경로로 들어오려고 할 경우 접근 거부
+					response.sendRedirect("/error/accessDenied");
+					return false;
+				}
+			}
+		} else {
 			log.warn("로그인이 필요합니다.");
+			
+			if (request.getRequestURI().contains("/admin")) {
+				// 일반 사용자가 관리자 경로로 들어오려고 할 경우 접근 거부
+				response.sendRedirect("/error/accessDenied");
+				return false;
+			}
 			
 			response.sendRedirect("/auth/login");
 			return false;
