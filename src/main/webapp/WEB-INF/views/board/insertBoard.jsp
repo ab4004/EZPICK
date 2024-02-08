@@ -4,11 +4,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>EZPICK - 게시글 작성</title>
 </head>
-<body>
+<body class="totalBodyStyle">
 	<jsp:include page="../layout/search_nav.jsp"></jsp:include>
-	<div class="container mt-3">
+	<div class="container mt-3 flex-grow-1">
 		<h1>게시글 작성</h1>
 		<p>제목 :</p>
 		<div>

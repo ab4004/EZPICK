@@ -109,6 +109,14 @@ body {
 	flex-direction: column; 
 	min-height: 100vh; 
 	font-family: 'Noto Sans KR', sans-serif;
+	
+	overflow-y: scroll;
+	-ms-overflow-style: none;
+}
+
+/* 스크롤바 기능은 되지만 안보이게 설정 */
+.totalBodyStyle::-webkit-scrollbar {
+    display: none; /* 크롬, 사파리, 오페라, 엣지 */
 }
 
 hr {
@@ -10893,6 +10901,10 @@ textarea.form-control-lg {
 	transform: scale(1);
 	-webkit-transition: .3s ease-in-out;
 	transition: .3s ease-in-out;
+}
+
+.patch_image {
+	opacity: 0;
 }
 
 .patch_image:hover {
