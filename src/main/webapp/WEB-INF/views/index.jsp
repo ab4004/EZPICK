@@ -71,6 +71,22 @@
 					<a href="${patch_link}" target="_blank"><img class="rounded patch_image" alt="패치내역"
 						src="${patch_image}"
 						width="100%"></a>
+						
+					<!--스크롤 이미지 나타나기-->
+					<script>
+					$(document).ready(function() {
+    					$(window).scroll(function(){
+        					$('.patch_image').each(function(i){
+            					var bottom_of_element = $(this).offset().top + $(this).outerHeight() / 5;
+					            var bottom_of_window = $(window).scrollTop() + $(window).height();
+            
+            					if (bottom_of_window > bottom_of_element) {
+                					$(this).animate({'opacity':'1'},700);
+            					}
+        					}); 
+    					});
+					});
+					</script>
 				</div>
 			</div>
 			<div class="text-center">

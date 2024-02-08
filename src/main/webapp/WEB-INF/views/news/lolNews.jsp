@@ -57,10 +57,10 @@
 							<c:choose>
 								<c:when test="${currentPage > 0}">
 									<li class="page-item"><a class="page-link"
-										href="/news?page=${currentPage - 1}">Previous</a></li>
+										href="/news?page=${currentPage - 1}">이전</a></li>
 								</c:when>
 								<c:otherwise>
-									<li class="page-item disabled"><span class="page-link">Previous</span>
+									<li class="page-item disabled"><span class="page-link">이전</span>
 									</li>
 								</c:otherwise>
 							</c:choose>
@@ -83,10 +83,10 @@
 							<c:choose>
 								<c:when test="${currentPage < totalPages - 1}">
 									<li class="page-item"><a class="page-link"
-										href="/news?page=${currentPage + 1}">Next</a></li>
+										href="/news?page=${currentPage + 1}">다음</a></li>
 								</c:when>
 								<c:otherwise>
-									<li class="page-item disabled"><span class="page-link">Next</span>
+									<li class="page-item disabled"><span class="page-link">다음</span>
 									</li>
 								</c:otherwise>
 							</c:choose>
