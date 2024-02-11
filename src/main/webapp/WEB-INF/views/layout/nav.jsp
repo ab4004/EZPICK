@@ -34,9 +34,10 @@
 	rel="stylesheet">
 <script src="/webjars/summernote/0.8.10/summernote-bs4.min.js"></script>
 <!-- summernate  종료 -->
-
+<script src="/js/loading.js"></script>
 </head>
 <body style="font-family: 'Noto Sans KR', sans-serif;">
+	<div class="loader"></div>
 	<nav class="navbar navbar-light bg-light sticky-top border-bottom"
 		style="background-color: #EEEEEE">
 
