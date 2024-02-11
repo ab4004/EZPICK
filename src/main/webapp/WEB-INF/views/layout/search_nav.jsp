@@ -34,9 +34,10 @@
 	rel="stylesheet">
 <script src="/webjars/summernote/0.8.10/summernote-bs4.min.js"></script>
 <!-- summernate  종료 -->
-
+<script src="/js/loading.js"></script>
 </head>
 <body>
+	<div class="loader"></div>
 	<nav class="sticky-top" style="font-family: 'Noto Sans KR', sans-serif;">
 
 		<!-- 메인 아이콘 -->
@@ -93,7 +94,7 @@
 		
 		<!-- 네비게이션 소환사 검색 영역 -->
 		<div class="container" style="background-color: #EEEEEE; border-radius: 0 0 25px 25px; max-width: 30%; min-width: 300px">
-			<form class="form-subscribe d-flex justify-content-center" action="/summoner" method="GET">
+			<form class="form-subscribe d-flex justify-content-center" id="summoner_search" action="/summoner" method="GET">
 				<div class="input-group w-75 p-2">
 					<input type="text" class="form-control form-control-sm input-search"
 						id="gameName" name="gameName" placeholder="소환사 이름">
