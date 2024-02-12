@@ -167,27 +167,27 @@
 									class="position-images d-flex justify-content-center align-items-center mt-3">
 									찾고 있는 포지션 <input type="hidden" id="positionModal" value="" />
 									<button class="image-button mx-2" type="button" value="상관없이"
-										onclick="modalPosition(this.value)">
+										onclick="selectPosition(this.value)">
 										<img src="/img/position/fill.png">
 									</button>
 									<button class="image-button mx-2" type="button" value="탑"
-										onclick="modalPosition(this.value)">
+										onclick="selectPosition(this.value)">
 										<img src="/img/position/top.png">
 									</button>
 									<button class="image-button mx-2" type="button" value="정글"
-										onclick="modalPosition(this.value)">
+										onclick="selectPosition(this.value)">
 										<img src="/img/position/jgl.png">
 									</button>
 									<button class="image-button mx-2" type="button" value="미드"
-										onclick="modalPosition(this.value)">
+										onclick="selectPosition(this.value)">
 										<img src="/img/position/mid.png">
 									</button>
 									<button class="image-button mx-2" type="button" value="원딜"
-										onclick="modalPosition(this.value)">
+										onclick="selectPosition(this.value)">
 										<img src="/img/position/bot.png">
 									</button>
 									<button class="image-button mx-2" type="button" value="서폿"
-										onclick="modalPosition(this.value)">
+										onclick="selectPosition(this.value)">
 										<img src="/img/position/spt.png">
 									</button>
 								</div>

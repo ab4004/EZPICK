@@ -121,7 +121,8 @@
 					onclick="selectPosition(this.value)">
 					<img src="/img/position/spt.png" style="width: 35px; height: 35px;">
 				</button>
-				<button type="button" class="btn btn-outline-primary" id="search-duo">검색</button>
+				<button type="button" class="btn btn-outline-primary"
+					id="search-duo">검색</button>
 			</div>
 			<button type="button" class="btn btn-primary modal-confirm-btn"
 				data-bs-toggle="modal" data-bs-target="#myModal">글쓰기</button>
@@ -215,23 +216,46 @@
 		</div>
 		<hr>
 		<div class="card-container">
-			<c:forEach var="list" items="${duoList }">
-				<div class="card">
-					<div class="card-header">${list.duoGameType }&nbsp${list.duoTier
-						} ${list.duoPosition } 구함</div>
-					<div class="card-body" style="height: 120px; display: flex">
-						${list.duoContent } <span
-							style="white-space: nowrap; margin-top: auto; margin-left: auto">${list.duoNickname }</span>
-					</div>
-					<div class="card-footer" style="display: flex;">
-						<span>${list.duoWrtDate.format(DateTimeFormatter.ofPattern("HH:mm"))}</span>
-						<span style="margin-left: auto;">${list.duoReTime }분 후 만료</span>
-					</div>
-				</div>
-			</c:forEach>
+			<c:choose>
+				<c:when test="${not empty searchDuo}">
+					<!-- 검색된 리스트를 보여주는 부분 -->
+					<c:forEach var="list" items="${searchDuo}">
+						<div class="card">
+							<div class="card-header">${list.duoGameType }&nbsp${list.duoTier
+								} ${list.duoPosition } 구함</div>
+							<div class="card-body" style="height: 120px; display: flex">
+								${list.duoContent } <span
+									style="white-space: nowrap; margin-top: auto; margin-left: auto">${list.duoNickname }</span>
+							</div>
+							<div class="card-footer" style="display: flex;">
+								<span>${list.duoWrtDate.format(DateTimeFormatter.ofPattern("HH:mm"))}</span>
+								<span style="margin-left: auto;">${list.duoReTime }분 후 만료</span>
+							</div>
+						</div>
+					</c:forEach>
+				</c:when>
+				<c:otherwise>
+					<!-- 전체 리스트를 보여주는 부분 -->
+					<c:forEach var="list" items="${duoList }">
+						<div class="card">
+							<div class="card-header">${list.duoGameType }&nbsp${list.duoTier
+								} ${list.duoPosition } 구함</div>
+							<div class="card-body" style="height: 120px; display: flex">
+								${list.duoContent } <span
+									style="white-space: nowrap; margin-top: auto; margin-left: auto">${list.duoNickname }</span>
+							</div>
+							<div class="card-footer" style="display: flex;">
+								<span>${list.duoWrtDate.format(DateTimeFormatter.ofPattern("HH:mm"))}</span>
+								<span style="margin-left: auto;">${list.duoReTime }분 후 만료</span>
+							</div>
+						</div>
+					</c:forEach>
+				</c:otherwise>
+			</c:choose>
 		</div>
 	</div>
 	<script src="/js/duo.js"></script>
+	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 	<jsp:include page="../layout/footer.jsp"></jsp:include>
 </body>
 </html>

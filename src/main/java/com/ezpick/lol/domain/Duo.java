@@ -6,8 +6,6 @@ import org.springframework.data.annotation.CreatedDate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -24,31 +22,31 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "DUO_TBL")
 public class Duo {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "duo_seq", nullable = false)
 	private int duoSeq;
-	
+
 	@Column(name = "duo_nickname", nullable = false)
 	private String duoNickname;
-	
+
 	@Column(name = "duo_content", columnDefinition = "nvarchar(80)")
 	private String duoContent;
-	
+
 	@CreatedDate
 	@Column(name = "duo_wrt_date", updatable = false)
 	private LocalDateTime duoWrtDate;
-	
-	@Enumerated(EnumType.STRING)
-	@Column(name = "duo_position")
-	private PositionType duoPosition;
-	
-	@Enumerated(EnumType.STRING)
-	@Column(name = "duo_game_type")
-	private GameType duoGameType;
-	
-	@Enumerated(EnumType.STRING)
-	@Column(name = "duo_tier")
-	private TierType duoTier;
+
+	@Column(name = "duo_re_time")
+	private int duoReTime;
+
+	@Column(name = "duo_position", columnDefinition = "varchar(8)")
+	private String duoPosition;
+
+	@Column(name = "duo_game_type", columnDefinition = "varchar(8)")
+	private String duoGameType;
+
+	@Column(name = "duo_tier", columnDefinition = "varchar(8)")
+	private String duoTier;
 }

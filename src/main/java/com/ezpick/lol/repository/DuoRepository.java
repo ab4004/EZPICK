@@ -12,5 +12,7 @@ import com.ezpick.lol.domain.Duo;
 public interface DuoRepository extends JpaRepository<Duo, Integer> {
 	
 	List<Duo> findByDuoWrtDateIsBefore(LocalDateTime dateTime);
+	
+	List<Duo> findByDuoGameTypeAndDuoTierAndDuoPosition(String gameType, String tier, String position);
 
 }
