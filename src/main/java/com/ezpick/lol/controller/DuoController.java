@@ -1,5 +1,7 @@
 package com.ezpick.lol.controller;
 
+import java.util.List;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,33 +31,30 @@ public class DuoController {
 	private ModelMapper modelMapper;
 
 	@GetMapping("/duo/duoList")
-	public String duoList(Model model) {
-		model.addAttribute("duoList", duoService.duoList());
+	public String duoList(@RequestParam(required = false) String gameType, @RequestParam(required = false) String tier,
+			@RequestParam(required = false) String position, Model model) {
+		List<Duo> duoList = null;
+		if ((gameType == null || gameType.isEmpty()) && (tier == null || tier.isEmpty())
+				&& (position == null || position.isEmpty())) {
+			duoList = duoService.duoList();
+		} else if ((tier == null || tier.isEmpty()) && (position == null || position.isEmpty())) {
+			duoList = duoService.selectGameType(gameType);
+		} else if ((gameType == null || gameType.isEmpty()) && (position == null || position.isEmpty())) {
+			duoList = duoService.selectTier(tier);
+		} else if ((gameType == null || gameType.isEmpty()) && (tier == null || tier.isEmpty())) {
+			duoList = duoService.selectPosition(position);
+		} else if ((position == null || position.isEmpty())) {
+			duoList = duoService.positionNull(gameType, tier);
+		} else if ((tier == null || tier.isEmpty())) {
+			duoList = duoService.tierNull(gameType, position);
+		} else if ((gameType == null || gameType.isEmpty())) {
+			duoList = duoService.gameTypeNull(tier, position);
+		} else {
+			duoList = duoService.searchDuo(gameType, tier, position);
+		}
+		model.addAttribute("duoList", duoList);
 		return "duo/duoList";
 	}
-
-	/*@GetMapping("/duo/searchDuo")
-	public String searchDuo(@RequestParam String gameType, @RequestParam String tier, @RequestParam String position,
-			Model model) {
-		System.out.println(gameType + tier + position);
-		model.addAttribute("searchDuo", duoService.serchDuo(gameType, tier, position));
-		return "duo/searchDuo";
-	}*/
-	
-	/*@GetMapping("/duo/searchDuo")
-	public @ResponseBody ResponseDTO<?> searchDuo(@RequestParam String gameType, @RequestParam String tier, @RequestParam String position,
-			Model model) {
-		model.addAttribute("searchDuo", duoService.serchDuo(gameType, tier, position));
-		return new ResponseDTO<>(HttpStatus.OK.value(), "");
-	}*/
-	
-	@GetMapping("/duo/searchDuo")
-	public String searchDuo(@RequestParam String gameType, @RequestParam String tier, @RequestParam String position,
-			Model model) {
-		model.addAttribute("searchDuo", duoService.serchDuo(gameType, tier, position));
-		return "duo/searchDuo";
-	}
-	
 
 	@PostMapping("/duo/insertDuo")
 	public @ResponseBody ResponseDTO<?> insertDuo(@Valid @RequestBody DuoDTO duoDTO, BindingResult bindingResult) {

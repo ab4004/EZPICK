@@ -41,24 +41,6 @@ let duoObject = {
 			console.error("Error during registration:", error);
 		});
 	},
-
-	searchDuo: function() {
-		let searchDuo = {
-			gameType: $("#gameTypeSelection").val(),
-			tier: $("#tierSelection").val(),
-			position: $("#positionSelection").val(),
-		};
-
-		$.ajax({
-			type: "GET",
-			url: "/duo/searchDuo",
-			data: $.param(searchDuo),
-			contentType: "application/x-www-form-urlencoded; charset=UTF-8"
-		}).done(function(response) {
-			alert(response["data"]);
-			location.href = "/duo/searchDuo";
-		})
-	},
 }
 
 duoObject.init();

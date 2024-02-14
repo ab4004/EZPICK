@@ -17,6 +17,7 @@ public class DuoDTO {
 	@Size(max = 80)
 	private String duoContent;
 	
+	@NotBlank
 	private String duoPosition;
 	
 	private String duoGameType;
