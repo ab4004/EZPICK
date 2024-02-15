@@ -34,7 +34,7 @@ let duoObject = {
 				if (typeof errorMessage === 'string') {
 					alert(errorMessage);
 				} else {
-					alert("입력하신 내용을 다시 확인해주세요.");
+					alert("입력하신 내용을 다시 확인해주세요");
 				}
 			}
 		}).fail(function(error) {
@@ -45,12 +45,23 @@ let duoObject = {
 
 duoObject.init();
 
+document.getElementById('duoContent').addEventListener('input', function() {
+	if (this.value.length > 80) {
+		this.value = this.value.slice(0, 80); // 내용 80자가 넘어가면 자르기 (유효성 검사 필요X)
+	}
+});
+
 document.addEventListener('DOMContentLoaded', function() {
 	var imageButtons = document.querySelectorAll('.image-button');
 
 	imageButtons.forEach(function(button) {
 		button.addEventListener('click', function() {
-			// 다른 이미지 버튼의 클릭 클래스를 제거.
+			// 이미 클릭된 버튼이라면 토글하지 않고 빠져나감
+			if (this.classList.contains('clicked')) {
+				return;
+			}
+
+			// 다른 이미지 버튼의 클릭 클래스를 제거
 			imageButtons.forEach(function(otherButton) {
 				if (otherButton !== button) {
 					otherButton.classList.remove('clicked');
@@ -62,6 +73,15 @@ document.addEventListener('DOMContentLoaded', function() {
 		});
 	});
 });
+
+function modalPosition(value) {
+	document.getElementById('positionModal').value = value;
+	// 클릭한 이미지 버튼의 클래스를 유지
+	var clickedButton = document.querySelector('.image-button.clicked');
+	if (clickedButton) {
+		clickedButton.classList.add('clicked');
+	}
+};
 
 function modalPosition(value) {
 	document.getElementById('positionModal').value = value;

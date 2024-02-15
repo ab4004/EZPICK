@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page import="java.time.LocalDateTime"%>
 <%@ page import="java.time.format.DateTimeFormatter"%>
 <!DOCTYPE html>
@@ -100,33 +101,33 @@
 					class="position-images d-flex justify-content-center align-items-center mt-3.5">
 					<input type="hidden" id="positionSelection" name="position"
 						value="" />
-					<button type="submit" class="image-button mx-2" type="button" value=""
-						onclick="selectPosition(this.value)">
+					<button type="submit" class="image-button mx-2" type="button"
+						value="" onclick="selectPosition(this.value)">
 						<img src="/img/position/fill.png"
 							style="width: 35px; height: 35px;">
 					</button>
-					<button type="submit" class="image-button mx-2" type="button" value="탑"
-						onclick="selectPosition(this.value)">
+					<button type="submit" class="image-button mx-2" type="button"
+						value="탑" onclick="selectPosition(this.value)">
 						<img src="/img/position/top.png"
 							style="width: 35px; height: 35px;">
 					</button>
-					<button type="submit" class="image-button mx-2" type="button" value="정글"
-						onclick="selectPosition(this.value)">
+					<button type="submit" class="image-button mx-2" type="button"
+						value="정글" onclick="selectPosition(this.value)">
 						<img src="/img/position/jgl.png"
 							style="width: 35px; height: 35px;">
 					</button>
-					<button type="submit" class="image-button mx-2" type="button" value="미드"
-						onclick="selectPosition(this.value)">
+					<button type="submit" class="image-button mx-2" type="button"
+						value="미드" onclick="selectPosition(this.value)">
 						<img src="/img/position/mid.png"
 							style="width: 35px; height: 35px;">
 					</button>
-					<button type="submit" class="image-button mx-2" type="button" value="원딜"
-						onclick="selectPosition(this.value)">
+					<button type="submit" class="image-button mx-2" type="button"
+						value="원딜" onclick="selectPosition(this.value)">
 						<img src="/img/position/bot.png"
 							style="width: 35px; height: 35px;">
 					</button>
-					<button type="submit" class="image-button mx-2" type="button" value="서폿"
-						onclick="selectPosition(this.value)">
+					<button type="submit" class="image-button mx-2" type="button"
+						value="서폿" onclick="selectPosition(this.value)">
 						<img src="/img/position/spt.png"
 							style="width: 35px; height: 35px;">
 					</button>
@@ -169,11 +170,14 @@
 											</select>
 										</div>
 									</div>
+								</div>
+								<div class="mb-3">
+									찾고 있는 포지션
 									<div
 										class="position-images d-flex justify-content-center align-items-center mt-3">
-										찾고 있는 포지션 <input type="hidden" id="positionModal" value="상관없이" />
-										<button class="image-button mx-2 clicked" type="button" value="상관없이"
-											onclick="modalPosition(this.value)">
+										<input type="hidden" id="positionModal" value="상관없이" />
+										<button class="image-button mx-2 clicked" type="button"
+											value="상관없이" onclick="modalPosition(this.value)">
 											<img src="/img/position/fill.png">
 										</button>
 										<button class="image-button mx-2" type="button" value="탑"
@@ -221,12 +225,14 @@
 			<hr>
 			<div class="card-container">
 				<c:forEach var="list" items="${duoList }">
+				<c:set var="nicknameParts" value="${fn:split(list.duoNickname, '#')}" /> <!-- #을 기준으로 나눠 nicknameParts 배열에 저장 -->
 					<div class="card">
 						<div class="card-header">${list.duoGameType }&nbsp${list.duoTier
 							} ${list.duoPosition } 구함</div>
 						<div class="card-body" style="height: 120px; display: flex">
 							${list.duoContent } <span
-								style="white-space: nowrap; margin-top: auto; margin-left: auto">${list.duoNickname }</span>
+								style="white-space: nowrap; margin-top: auto; margin-left: auto"><a
+								href="/summoner?gameName=${nicknameParts[0]}&tagLine=${nicknameParts[1]}">${list.duoNickname }</a></span>
 						</div>
 						<div class="card-footer" style="display: flex;">
 							<span>${list.duoWrtDate.format(DateTimeFormatter.ofPattern("HH:mm"))}</span>

@@ -1,7 +1,7 @@
 package com.ezpick.lol.dto;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,12 +12,11 @@ import lombok.NoArgsConstructor;
 public class DuoDTO {
 	
 	@NotBlank
+	@Pattern(regexp = "^[a-zA-Z가-힣0-9\\s]*#?[a-zA-Z가-힣0-9\\s]*$")
 	private String duoNickname;
 	
-	@Size(max = 80)
 	private String duoContent;
 	
-	@NotBlank
 	private String duoPosition;
 	
 	private String duoGameType;
