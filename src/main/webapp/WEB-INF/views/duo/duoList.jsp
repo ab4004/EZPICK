@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ page import="java.time.LocalDateTime"%>
 <%@ page import="java.time.format.DateTimeFormatter"%>
 <!DOCTYPE html>
@@ -29,6 +29,7 @@
 
 .card {
 	width: calc(33.33% - 20px);
+	min-height: 220px;
 	margin-bottom: 20px;
 	margin-right: 20px;
 }
@@ -68,7 +69,7 @@
 			<img alt="롤 이미지" src="/img/lol_logo_white.png" class="h-75">
 		</div>
 	</div>
-	<div class="container my-1 flex-grow-1">
+	<div class="container my-1 flex-grow-1" style="min-height: 1000px">
 		<form action="/duo/duoList">
 			<div class="d-flex">
 				<div class="dropdown me-3">
@@ -224,22 +225,37 @@
 			</div>
 			<hr>
 			<div class="card-container">
-				<c:forEach var="list" items="${duoList }">
-				<c:set var="nicknameParts" value="${fn:split(list.duoNickname, '#')}" /> <!-- #을 기준으로 나눠 nicknameParts 배열에 저장 -->
-					<div class="card">
-						<div class="card-header">${list.duoGameType }&nbsp${list.duoTier
-							} ${list.duoPosition } 구함</div>
-						<div class="card-body" style="height: 120px; display: flex">
-							${list.duoContent } <span
-								style="white-space: nowrap; margin-top: auto; margin-left: auto"><a
-								href="/summoner?gameName=${nicknameParts[0]}&tagLine=${nicknameParts[1]}">${list.duoNickname }</a></span>
-						</div>
-						<div class="card-footer" style="display: flex;">
-							<span>${list.duoWrtDate.format(DateTimeFormatter.ofPattern("HH:mm"))}</span>
-							<span style="margin-left: auto;">${list.duoReTime }분 후 만료</span>
-						</div>
-					</div>
-				</c:forEach>
+				<c:choose>
+					<c:when test="${empty duoList }">
+						<p style="font-weight: bold; font-size: 35px;">등록된 글이 없습니다.</p>
+					</c:when>
+					<c:otherwise>
+						<c:forEach var="list" items="${duoList }">
+							<c:set var="nicknameParts"
+								value="${fn:split(list.duoNickname, '#')}" />
+							<!-- #을 기준으로 나눠 nicknameParts 배열에 저장 -->
+							<div class="card">
+								<div class="card-header"
+									style="background-color: #FFFFFF; font-size: 16px;">${list.duoGameType }&nbsp${list.duoTier
+									} ${list.duoPosition } 구함</div>
+								<div class="card-body"
+									style="display: flex; align-items: flex-start; flex-direction: column; word-break: break-word; font-size: 15px;">
+									${list.duoContent } <span style="margin-top: auto;"><a
+										href="/summoner?gameName=${nicknameParts[0]}&tagLine=${nicknameParts[1]}"
+										style="color: black; text-decoration: none;"
+										onmouseover="this.style.color='#00ADB5'"
+										onmouseout="this.style.color='black'">${list.duoNickname }</a></span>
+								</div>
+								<div class="card-footer"
+									style="display: flex; background-color: #FFFFFF; font-size: 14px;">
+									<span>${list.duoWrtDate.format(DateTimeFormatter.ofPattern("HH:mm"))}</span>
+									<span style="margin-left: auto;">${list.duoReTime }분 후
+										만료</span>
+								</div>
+							</div>
+						</c:forEach>
+					</c:otherwise>
+				</c:choose>
 			</div>
 		</form>
 	</div>
