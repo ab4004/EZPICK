@@ -4,7 +4,7 @@ package com.ezpick.lol.domain;
 import java.time.LocalDateTime;
 
 import org.hibernate.annotations.ColumnDefault;
-import org.springframework.data.annotation.CreatedDate;
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import jakarta.persistence.Column;
@@ -38,14 +38,11 @@ public class Board {
 	@Column(name = "board_title", nullable = false, columnDefinition = "nvarchar(200)")
 	private String boardTitle; //제목
 	
-	@Column(name = "board_writer", nullable = false, columnDefinition = "nvarchar(20)")
-	private String boardWriter; //작성자
-	
 	@Lob
 	@Column(name = "board_content", nullable = false, columnDefinition = "nvarchar(2000)")
 	private String boardContent; //내용
 	
-	@CreatedDate //JPA에서 엔티티의 생성 시간을 처리
+	@CreationTimestamp //JPA에서 엔티티의 생성 시간을 처리
 	@Column(name = "board_wrt_date", updatable = false)
 	private LocalDateTime boardWrtDate; //작성일
 	
@@ -65,10 +62,11 @@ public class Board {
 	@Column(name = "board_hits")
 	private int boardHits;
 	
+	@ColumnDefault("1")
 	@Column(name = "category_no")
 	private int categoryNo;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "board_writer", referencedColumnName = "user_nickname", insertable = false, updatable = false)
+	@JoinColumn(name = "user_id")
 	private User user;
 }

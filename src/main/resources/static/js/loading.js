@@ -3,6 +3,10 @@ $(document).ready(function() {
 
 	// 링크 클릭 이벤트 처리
 	$('a').on('click', function(event) {
+		if ($(this).attr('id') === 'dropdown') {
+            return;
+        }
+		
 		// 기본 동작 중지 (링크 클릭 시 페이지 이동 방지)
 		event.preventDefault();
 
