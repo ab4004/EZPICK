@@ -3,7 +3,6 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
 <%@ page import="java.time.format.DateTimeFormatter"%>
 <%@ page import="java.time.LocalDateTime"%>
@@ -125,15 +124,8 @@
 				<c:forEach items="${book}" var="book" varStatus="loop">
 					<c:set var="dateTime" value="${book.date}" />
 
-					<%
-					// 가져온 데이터가 LocalDateTime 형식인데 실제로 JSP에서 나타낼 땐 Date 형식으로 바꿔줘야 해서 포맷팅 진행
-					DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 (E) HH:mm:ss");
-					LocalDateTime localDateTime = (LocalDateTime) pageContext.getAttribute("dateTime");
-					String fmtDate = formatter.format(localDateTime);
-					pageContext.setAttribute("matchDate", fmtDate);
-					%>
-					<fmt:parseDate var="parsedDate" value="${matchDate}"
-						pattern="yyyy년 MM월 dd일 (E) HH:mm:ss" />
+					<fmt:parseDate var="parsedDate" value="${dateTime}"
+						pattern="yyyy-MM-dd'T'HH:mm" />
 
 					<fmt:formatDate value="${parsedDate}" pattern="MM월 dd일 (E)"
 						var="date" />
