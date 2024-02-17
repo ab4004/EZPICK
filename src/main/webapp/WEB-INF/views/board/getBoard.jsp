@@ -16,16 +16,15 @@
 
 	<div class="container flex-grow-1 mt-3">
 		<div class="card mb-4">
+			<input type="hidden" id="boardSeq" value="${board.boardSeq}">
 			<c:if test="${user.userNickname eq board.user.userNickname}">
 				<div class="card-header">
-					<input type="hidden" id="id" value="${board.boardSeq}"> <a
-						class="btn btn-danger btn-sm float-end" id="delete-board"> <i
+					<a class="btn btn-danger btn-sm float-end" id="delete-board"> <i
 						class="bi bi-journal-x"></i> 삭제
 					</a> <a class="btn btn-warning btn-sm float-end me-3"
 						href="/board/updateBoard/${board.boardSeq}"> <i
 						class="bi bi-journal-arrow-up"></i> 수정
 					</a>
-
 				</div>
 			</c:if>
 			<div class="card-body">
@@ -81,8 +80,14 @@
 				</div>
 				<hr>
 				<div style="min-height: 200px;">${board.boardContent}</div>
-				<hr>
-				<div>${board.boardLikes}${board.boardHates}</div>
+				<div class="d-flex justify-content-center mt-3">
+					<button class="btn btn-primary btn-lg me-3" id="likeBtn">
+						<i class="bi bi-hand-thumbs-up"></i> ${board.boardLikes}
+					</button>
+					<button class="btn btn-danger btn-lg" id="hateBtn">
+						<i class="bi bi-hand-thumbs-down"></i> ${board.boardHates}
+					</button>
+				</div>
 
 			</div>
 		</div>

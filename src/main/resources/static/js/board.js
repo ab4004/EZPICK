@@ -6,13 +6,21 @@ let boardObject = {
 			_this.insertBoard();
 		});
 
-			$("#update-board").on("click", () => {
-				_this.updateBoard();
-			});
-			
-			$("#delete-board").on("click", () => {
-				_this.deleteBoard();
-			}); 
+		$("#update-board").on("click", () => {
+			_this.updateBoard();
+		});
+
+		$("#delete-board").on("click", () => {
+			_this.deleteBoard();
+		});
+
+		$("#likeBtn").on("click", () => {
+			_this.boardLike();
+		});
+		
+		$("#hateBtn").on("click", () => {
+			_this.boardHate();
+		});
 	},
 
 	insertBoard: function() {
@@ -35,19 +43,19 @@ let boardObject = {
 		});
 	},
 
-	 updateBoard : function() {
+	updateBoard: function() {
 		let updateInfo = {
-			boardSeq : $("#id").val(),
-			boardTitle : $("#title").val(),
-			boardContent : $("#content").val(),
+			boardSeq: $("#boardSeq").val(),
+			boardTitle: $("#title").val(),
+			boardContent: $("#content").val(),
 			categoryNo: $("#category").val(),
 		}
-		
+
 		$.ajax({
-			type : "PUT",
-			url : "/board/updateBoard",
-			data : JSON.stringify(updateInfo),
-			contentType : "application/json; charset=utf-8"
+			type: "PUT",
+			url: "/board/updateBoard",
+			data: JSON.stringify(updateInfo),
+			contentType: "application/json; charset=utf-8"
 		}).done(function(response) {
 			alert(response["data"]);
 			location.href = "/board/detail/" + updateInfo.boardSeq;
@@ -55,20 +63,42 @@ let boardObject = {
 			alert(error["data"]);
 		});
 	},
-	
-	deleteBoard : function() {
-		let boardSeq = $("#id").val();
-		
+
+	deleteBoard: function() {
+		let boardSeq = $("#boardSeq").val();
+
 		$.ajax({
-			type : "DELETE",
-			url : "/board/deleteBoard/" + boardSeq,
+			type: "DELETE",
+			url: "/board/deleteBoard/" + boardSeq,
 		}).done(function(response) {
 			alert(response["data"]);
 			location.href = "/board";
 		}).fail(function(error) {
-			alert("실패");
+			alert(error["data"]);
 		});
-	} 
+	},
+	
+	boardLike: function() {
+		let boardSeq = $("#boardSeq").val();
+		
+		$.ajax({
+			type: "PUT",
+			url: "/board/likeUp/" + boardSeq
+		}).done(function() {
+			location.reload();
+		})
+	},
+	
+	boardHate: function() {
+		let boardSeq = $("#boardSeq").val();
+		
+		$.ajax({
+			type: "PUT",
+			url: "/board/hateUp/" + boardSeq
+		}).done(function() {
+			location.reload();
+		})
+	},
 }
 
 boardObject.init();
