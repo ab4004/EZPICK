@@ -32,7 +32,7 @@ public class SummonerController {
 	 */
 	@GetMapping("/summoner")
 	public String getAccount(Model model, @RequestParam String gameName, @RequestParam String tagLine) {
-		if (tagLine.equals("") || tagLine == null) {
+		if (tagLine == null || tagLine.isEmpty()) {
 			tagLine = "KR1";
 		}
 		

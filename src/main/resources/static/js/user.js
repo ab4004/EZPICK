@@ -39,6 +39,11 @@ let userObject = {
 		$("#delete-user").on("click", function() {
 			_this.deleteUser();
 		});
+		
+		$(".btn-admin-deleteUser").on("click", function() {
+            let userId = $(this).data("userid");
+            _this.deleteByAdmin(userId);
+        });
 	},
 
 	validateForm: function() {
@@ -485,6 +490,20 @@ let userObject = {
 		}).fail(function(error) {
 			alert(error["data"]);
 		});
+	},
+	
+	deleteByAdmin: function(userId) {
+		$.ajax({
+            type: "DELETE",
+            url: "/admin/deleteUser",
+            data: JSON.stringify({userId: userId}),
+            contentType: "application/json; charset=UTF-8"
+        }).done(function(response) {
+            alert(response["data"]);
+            location.reload();
+        }).fail(function(error) {
+            alert(error["data"]);
+        });
 	},
 }
 $(document).ready(function() {

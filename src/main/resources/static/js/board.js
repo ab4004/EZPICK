@@ -6,68 +6,99 @@ let boardObject = {
 			_this.insertBoard();
 		});
 
-		/*	$("#update-board").on("click", () => {
-				_this.updateBoard();
-			});
-			
-			$("#delete-board").on("click", () => {
-				_this.deleteBoard();
-			}); */
+		$("#update-board").on("click", () => {
+			_this.updateBoard();
+		});
+
+		$("#delete-board").on("click", () => {
+			_this.deleteBoard();
+		});
+
+		$("#likeBtn").on("click", () => {
+			_this.boardLike();
+		});
+		
+		$("#hateBtn").on("click", () => {
+			_this.boardHate();
+		});
 	},
 
 	insertBoard: function() {
-		let insertBoard = {
+		let boardInfo = {
 			boardTitle: $("#title").val(),
 			boardContent: $("#content").val(),
+			categoryNo: $("#category").val(),
 		}
 
 		$.ajax({
 			type: "POST",
 			url: "/board/insertBoard",
-			data: JSON.stringify(insertBoard),
+			data: JSON.stringify(boardInfo),
 			contentType: "application/json; charset=utf-8"
 		}).done(function(response) {
 			alert(response["data"]);
-			location = "/";
+			location = "/board";
 		}).fail(function(error) {
 			alert(error["data"]);
 		});
 	},
 
-	/* updatePost : function() {
-		let updatePost = {
-			id : $("#id").val(),
-			title : $("#title").val(),
-			content : $("#content").val(),
+	updateBoard: function() {
+		let updateInfo = {
+			boardSeq: $("#boardSeq").val(),
+			boardTitle: $("#title").val(),
+			boardContent: $("#content").val(),
+			categoryNo: $("#category").val(),
 		}
-		
+
 		$.ajax({
-			type : "PUT",
-			url : "/post/updatePost",
-			data : JSON.stringify(updatePost),
-			contentType : "application/json; charset=utf-8"
+			type: "PUT",
+			url: "/board/updateBoard",
+			data: JSON.stringify(updateInfo),
+			contentType: "application/json; charset=utf-8"
 		}).done(function(response) {
 			alert(response["data"]);
-			location = "/";
+			location.href = "/board/detail/" + updateInfo.boardSeq;
+		}).fail(function(error) {
+			alert(error["data"]);
+		});
+	},
+
+	deleteBoard: function() {
+		let boardSeq = $("#boardSeq").val();
+
+		$.ajax({
+			type: "DELETE",
+			url: "/board/deleteBoard/" + boardSeq,
+		}).done(function(response) {
+			alert(response["data"]);
+			location.href = "/board";
 		}).fail(function(error) {
 			alert(error["data"]);
 		});
 	},
 	
-	deletePost : function() {
-		let deletePost = $("#id").val();
+	boardLike: function() {
+		let boardSeq = $("#boardSeq").val();
 		
 		$.ajax({
-			type : "DELETE",
-			url : "/post/deletePost/" + deletePost.id,
-		}).done(function(response) {
-			alert(response["data"]);
-			location = "/";
-		}).fail(function(error) {
-			alert("실패");
-				//error["data"]
-		});
-	} */
+			type: "PUT",
+			url: "/board/likeUp/" + boardSeq
+		}).done(function() {
+			location.reload();
+		})
+	},
+	
+	boardHate: function() {
+		let boardSeq = $("#boardSeq").val();
+		
+		$.ajax({
+			type: "PUT",
+			url: "/board/hateUp/" + boardSeq
+		}).done(function() {
+			location.reload();
+		})
+	},
 }
 
 boardObject.init();

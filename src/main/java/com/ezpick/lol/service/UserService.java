@@ -3,6 +3,8 @@ package com.ezpick.lol.service;
 import java.time.LocalDateTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -86,5 +88,11 @@ public class UserService {
 	@Transactional
 	public void deleteUser(String userId) {
 		userRepository.findById(userId).ifPresent(user -> userRepository.delete(user));
+	}
+	
+	// 유저 관리 페이지에서 보여줄 모든 유저 정보(페이징 사용)
+	@Transactional(readOnly = true)
+	public Page<User> getAllUser(Pageable pageable) {
+		return userRepository.findAll(pageable);
 	}
 }

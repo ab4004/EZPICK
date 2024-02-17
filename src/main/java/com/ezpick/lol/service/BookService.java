@@ -33,11 +33,43 @@ public class BookService {
 		LocalDateTime startOfNextMonth = yearMonth.plusMonths(1).atDay(1).atStartOfDay();
 
 		return bookRepository.findAllByMonthAndTeam(startOfMonth, startOfNextMonth, team);
-	}		
+	}
 	
-	// 경기 일정 데이터 삽입 ( 사용 )
+	// 경기 일정 데이터 삽입
 	@Transactional
 	public void insertBook(Book book) {
 		bookRepository.save(book);
+	}
+	
+	// 경기 일정 데이터 수정
+	@Transactional
+	public void updateBook(int id, Book book) {
+		Book findBook = bookRepository.findById(id).orElse(new Book());
+		if (findBook.getStatus() != null) {
+			findBook.setAwayScore(book.getAwayScore());
+			findBook.setAwayTeam(book.getAwayTeam());
+			findBook.setHomeTeam(book.getHomeTeam());
+			findBook.setHomeScore(book.getHomeScore());
+			findBook.setStadium(book.getStadium());
+			findBook.setStatus(book.getStatus());
+			findBook.setDate(book.getDate());
+			findBook.setLink(book.getLink());
+			findBook.setRound(book.getRound());
+			findBook.setVersus(book.getVersus());
+			
+			bookRepository.save(findBook);
+		}
+	}
+	
+	// 경기 일정 데이터 삭제
+	@Transactional
+	public void deleteBook(int id) {
+		bookRepository.deleteById(id);
+	}
+	
+	// 해당 일정이 맞는지 체크하는 메소드
+	@Transactional(readOnly = true) 
+	public boolean existsByBookId(int id) {
+		return bookRepository.existsById(id);
 	}
 }

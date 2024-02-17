@@ -41,23 +41,4 @@ public class NewsController {
         
         return "news/lolNews";
 	}
-	
-	// 다음 페이지 보기
-    @GetMapping("/news/next")
-    public String getNextNewsPage(@RequestParam(defaultValue = "0") int currentPage,
-                                  Model model) {
-        // 현재 페이지 번호 + 1
-        int nextPage = currentPage + 1;
-        return "redirect:/news?page=" + nextPage;
-    }
-
-    // 이전 페이지 보기
-    @GetMapping("/news/prev")
-    public String getPrevNewsPage(@RequestParam(defaultValue = "0") int currentPage,
-                                  Model model) {
-        // 현재 페이지 번호 - 1, 최소값은 0
-        int prevPage = Math.max(currentPage - 1, 0);
-        return "redirect:/news?page=" + prevPage;
-    }
-	
 }

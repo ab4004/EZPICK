@@ -28,68 +28,81 @@
 	href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap"
 	rel="stylesheet">
 
+<!-- jQuery -->
 <script src="/webjars/jquery/3.6.0/dist/jquery.min.js"></script>
+
 <!-- summernote 시작 -->
 <link href="/webjars/summernote/0.8.10/summernote-bs4.css"
 	rel="stylesheet">
 <script src="/webjars/summernote/0.8.10/summernote-bs4.min.js"></script>
 <!-- summernate  종료 -->
-
+<script src="/js/loading.js"></script>
 </head>
 <body style="font-family: 'Noto Sans KR', sans-serif;">
+	<div class="loader"></div>
 	<nav class="navbar navbar-light bg-light sticky-top border-bottom"
 		style="background-color: #EEEEEE">
 
-		<!-- 메인 아이콘 -->
 		<div class="container-fluid px-5">
-			<a class="navbar-brand" href="/"><img
-				src="/img/ezpick_nav_icon.png"></a>
+			<!-- 메인 아이콘 -->
+			<div class="w-25">
+				<a class="navbar-brand" href="/"><img
+					src="/img/ezpick_nav_icon.png"></a>
+			</div>
 
 			<!-- 메뉴 목록 -->
 			<div class="d-flex justify-content-center">
 				<div class="btn-group nav_menu">
-					<a class="navbar-brand mx-3" href="/duo/duoList">듀오찾기</a> <a
-						class="navbar-brand mx-3" href="/board/boardList">커뮤니티</a> <a
+					<a class="navbar-brand mx-3" href="/duo/duoList">듀오찾기</a>
+					<a class="navbar-brand mx-3" href="#">패치노트</a> <a
+						class="navbar-brand mx-3" href="/board">커뮤니티</a> <a
 						class="navbar-brand mx-3" href="/match">경기 & 예매</a> <a
 						class="navbar-brand mx-3" href="#">승부 예측</a> <a
 						class="navbar-brand mx-3" href="/news">뉴스</a>
 				</div>
 			</div>
-			<c:choose>
-				<c:when test="${empty user }">
-					<!-- 로그인 영역 -->
-					<a class="navbar-brand nav_sign" href="/auth/login"><i
-						class="bi bi-person-circle"></i> 로그인</a>
-				</c:when>
-				<c:otherwise>
-					<c:if test="${user.userRole eq 'ADMIN' }">
-						<div class="dropdown dropstart">
-							<a class="navbar-brand nav_sign btn dropdown-toggle"
-								data-bs-toggle="dropdown" aria-expanded="false"> <i
-								class="bi bi-person-square"></i> ${user.userNickname}
-							</a>
-							<ul class="dropdown-menu text-center">
-								<li><a class="dropdown-item" href="/admin/page">관리자 페이지</a></li>
-								<li><a class="dropdown-item" href="/auth/logout">로그아웃</a></li>
-							</ul>
-						</div>
-					</c:if>
-					<c:if test="${user.userRole ne 'ADMIN' }">
-						<div class="dropdown dropstart">
-							<a class="navbar-brand nav_sign btn dropdown-toggle"
-								data-bs-toggle="dropdown" aria-expanded="false"> <i
-								class="bi bi-person-square"></i> ${user.userNickname}
-							</a>
-							<ul class="dropdown-menu text-center">
-								<li><span class="dropdown-item-text">환영합니다</span></li>
-								<li><hr class="dropdown-divider"></li>
-								<li><a class="dropdown-item" href="/auth/myPage">내 정보</a></li>
-								<li><a class="dropdown-item" href="/auth/logout">로그아웃</a></li>
-							</ul>
-						</div>
-					</c:if>
-				</c:otherwise>
-			</c:choose>
+
+			<!-- 사용자 관련 -->
+			<div class="w-25 d-flex justify-content-end">
+				<c:choose>
+					<c:when test="${empty user }">
+						<!-- 로그인 영역 -->
+						<a class="navbar-brand nav_sign" href="/auth/login"><i
+							class="bi bi-person-circle"></i> 로그인</a>
+					</c:when>
+					<c:otherwise>
+						<c:if test="${user.userRole eq 'ADMIN' }">
+							<div class="dropdown dropstart">
+								<a id="dropdown"
+									class="navbar-brand nav_sign btn dropdown-toggle"
+									data-bs-toggle="dropdown" aria-expanded="false"> <i
+									class="bi bi-person-square"></i> ${user.userNickname}
+								</a>
+								<ul class="dropdown-menu text-center">
+									<li><a class="dropdown-item" href="/admin/page">관리자
+											페이지</a></li>
+									<li><a class="dropdown-item" href="/auth/logout">로그아웃</a></li>
+								</ul>
+							</div>
+						</c:if>
+						<c:if test="${user.userRole ne 'ADMIN' }">
+							<div class="dropdown dropstart">
+								<a id="dropdown"
+									class="navbar-brand nav_sign btn dropdown-toggle"
+									data-bs-toggle="dropdown" aria-expanded="false"> <i
+									class="bi bi-person-square"></i> ${user.userNickname}
+								</a>
+								<ul class="dropdown-menu text-center">
+									<li><span class="dropdown-item-text">환영합니다</span></li>
+									<li><hr class="dropdown-divider"></li>
+									<li><a class="dropdown-item" href="/auth/myPage">내 정보</a></li>
+									<li><a class="dropdown-item" href="/auth/logout">로그아웃</a></li>
+								</ul>
+							</div>
+						</c:if>
+					</c:otherwise>
+				</c:choose>
+			</div>
 		</div>
 	</nav>
 

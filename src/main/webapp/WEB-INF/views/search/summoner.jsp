@@ -23,7 +23,7 @@
 				<!-- 소환사 정보1 (프로필, 레벨) -->
 				<div class="my-2 text-center">
 					<img
-						src="https://ddragon.leagueoflegends.com/cdn/14.1.1/img/profileicon/${summoner.profileIconId}.png"
+						src="https://ddragon.leagueoflegends.com/cdn/14.3.1/img/profileicon/${summoner.profileIconId}.png"
 						class="summoner_icon" onerror=this.src=
 						"/img/minion.png" alt="소환사 프로필" width="100px" height="100px">
 					<div>
@@ -247,7 +247,7 @@
 					<div class="d-flex">
 						<!-- 사용한 챔피언 -->
 						<img
-							src="https://ddragon.leagueoflegends.com/cdn/14.2.1/img/champion/${participant.championName}.png"
+							src="https://ddragon.leagueoflegends.com/cdn/14.3.1/img/champion/${participant.championName}.png"
 							onerror="this.onerror=null; this.src='/img/champion/${participant.championId}.png';"
 							width="72px" height="72px" />
 
@@ -299,25 +299,25 @@
 						<div class="d-flex flex-column">
 							<div class="d-flex">
 								<img class="mx-2"
-									src="https://ddragon.leagueoflegends.com/cdn/14.2.1/img/item/${participant.item0}.png"
+									src="https://ddragon.leagueoflegends.com/cdn/14.3.1/img/item/${participant.item0}.png"
 									onerror="this.onerror=null; this.src='default-image.png'; this.alt='아이템'"
 									width="32px" height="32px"> <img class="mx-2"
-									src="https://ddragon.leagueoflegends.com/cdn/14.2.1/img/item/${participant.item1}.png"
+									src="https://ddragon.leagueoflegends.com/cdn/14.3.1/img/item/${participant.item1}.png"
 									onerror="this.onerror=null; this.src='default-image.png'; this.alt='아이템'"
 									width="32px" height="32px"> <img class="mx-2"
-									src="https://ddragon.leagueoflegends.com/cdn/14.2.1/img/item/${participant.item2}.png"
+									src="https://ddragon.leagueoflegends.com/cdn/14.3.1/img/item/${participant.item2}.png"
 									onerror="this.onerror=null; this.src='default-image.png'; this.alt='아이템'"
 									width="32px" height="32px"> <img class="mx-2"
-									src="https://ddragon.leagueoflegends.com/cdn/14.2.1/img/item/${participant.item3}.png"
+									src="https://ddragon.leagueoflegends.com/cdn/14.3.1/img/item/${participant.item3}.png"
 									onerror="this.onerror=null; this.src='default-image.png'; this.alt='아이템'"
 									width="32px" height="32px"> <img class="mx-2"
-									src="https://ddragon.leagueoflegends.com/cdn/14.2.1/img/item/${participant.item4}.png"
+									src="https://ddragon.leagueoflegends.com/cdn/14.3.1/img/item/${participant.item4}.png"
 									onerror="this.onerror=null; this.src='default-image.png'; this.alt='아이템'"
 									width="32px" height="32px"> <img class="mx-2"
-									src="https://ddragon.leagueoflegends.com/cdn/14.2.1/img/item/${participant.item5}.png"
+									src="https://ddragon.leagueoflegends.com/cdn/14.3.1/img/item/${participant.item5}.png"
 									onerror="this.onerror=null; this.src='default-image.png'; this.alt='아이템'"
 									width="32px" height="32px"> <img class="mx-2"
-									src="https://ddragon.leagueoflegends.com/cdn/14.2.1/img/item/${participant.item6}.png"
+									src="https://ddragon.leagueoflegends.com/cdn/14.3.1/img/item/${participant.item6}.png"
 									onerror="this.onerror=null; this.src='default-image.png'; this.alt='아이템'"
 									width="32px" height="32px">
 							</div>
@@ -350,7 +350,7 @@
 								<c:if test="${status.count < 6 }">
 									<div class="d-flex mx-1 align-items-center">
 										<img
-											src="https://ddragon.leagueoflegends.com/cdn/14.2.1/img/champion/${partyMember.championName}.png"
+											src="https://ddragon.leagueoflegends.com/cdn/14.3.1/img/champion/${partyMember.championName}.png"
 											onerror="this.onerror=null; this.src='/img/champion/${partyMember.championId}.png';"
 											width="16" height="16" />
 										<div class="mx-1"
@@ -376,7 +376,7 @@
 								<c:if test="${status.count >= 6 }">
 									<div class="d-flex mx-1 align-items-center">
 										<img
-											src="https://ddragon.leagueoflegends.com/cdn/14.2.1/img/champion/${partyMember.championName}.png"
+											src="https://ddragon.leagueoflegends.com/cdn/14.3.1/img/champion/${partyMember.championName}.png"
 											onerror="this.onerror=null; this.src='/img/champion/${partyMember.championId}.png';"
 											width="16" height="16" />
 										<div class="mx-1"
@@ -443,7 +443,7 @@
 						style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis; font-size: 12px; background-color: #f9fbfd">
 						<div>
 							<img class="rounded-circle" alt="파티원챔피언"
-								src="https://ddragon.leagueoflegends.com/cdn/14.2.1/img/champion/${partyEach.championName}.png"
+								src="https://ddragon.leagueoflegends.com/cdn/14.3.1/img/champion/${partyEach.championName}.png"
 								onerror="this.onerror=null; this.src='/img/champion/${partyEach.championId}.png';"
 								width="30px" height="30px" />
 						</div>
@@ -496,25 +496,25 @@
 						</div>
 						<div class="d-flex flex-grow-1 justify-content-end mx-2">
 							<img class="rounded me-1"
-								src="https://ddragon.leagueoflegends.com/cdn/14.2.1/img/item/${partyEach.item0}.png"
+								src="https://ddragon.leagueoflegends.com/cdn/14.3.1/img/item/${partyEach.item0}.png"
 								onerror="this.onerror=null; this.src='default-image.png'; this.alt='아이템'"
 								width="28px" height="28px"> <img class="rounded me-1"
-								src="https://ddragon.leagueoflegends.com/cdn/14.2.1/img/item/${partyEach.item1}.png"
+								src="https://ddragon.leagueoflegends.com/cdn/14.3.1/img/item/${partyEach.item1}.png"
 								onerror="this.onerror=null; this.src='default-image.png'; this.alt='아이템'"
 								width="28px" height="28px"> <img class="rounded me-1"
-								src="https://ddragon.leagueoflegends.com/cdn/14.2.1/img/item/${partyEach.item2}.png"
+								src="https://ddragon.leagueoflegends.com/cdn/14.3.1/img/item/${partyEach.item2}.png"
 								onerror="this.onerror=null; this.src='default-image.png'; this.alt='아이템'"
 								width="28px" height="28px"> <img class="rounded me-1"
-								src="https://ddragon.leagueoflegends.com/cdn/14.2.1/img/item/${partyEach.item3}.png"
+								src="https://ddragon.leagueoflegends.com/cdn/14.3.1/img/item/${partyEach.item3}.png"
 								onerror="this.onerror=null; this.src='default-image.png'; this.alt='아이템'"
 								width="28px" height="28px"> <img class="rounded me-1"
-								src="https://ddragon.leagueoflegends.com/cdn/14.2.1/img/item/${partyEach.item4}.png"
+								src="https://ddragon.leagueoflegends.com/cdn/14.3.1/img/item/${partyEach.item4}.png"
 								onerror="this.onerror=null; this.src='default-image.png'; this.alt='아이템'"
 								width="28px" height="28px"> <img class="rounded me-1"
-								src="https://ddragon.leagueoflegends.com/cdn/14.2.1/img/item/${partyEach.item5}.png"
+								src="https://ddragon.leagueoflegends.com/cdn/14.3.1/img/item/${partyEach.item5}.png"
 								onerror="this.onerror=null; this.src='default-image.png'; this.alt='아이템'"
 								width="28px" height="28px"> <img class="rounded me-1"
-								src="https://ddragon.leagueoflegends.com/cdn/14.2.1/img/item/${partyEach.item6}.png"
+								src="https://ddragon.leagueoflegends.com/cdn/14.3.1/img/item/${partyEach.item6}.png"
 								onerror="this.onerror=null; this.src='default-image.png'; this.alt='아이템'"
 								width="28px" height="28px">
 						</div>
@@ -536,7 +536,7 @@
 						style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis; font-size: 12px; background-color: #fef9f9">
 						<div>
 							<img class="rounded-circle" alt="파티원챔피언"
-								src="https://ddragon.leagueoflegends.com/cdn/14.2.1/img/champion/${partyEach.championName}.png"
+								src="https://ddragon.leagueoflegends.com/cdn/14.3.1/img/champion/${partyEach.championName}.png"
 								onerror="this.onerror=null; this.src='/img/champion/${partyEach.championId}.png';"
 								width="30px" height="30px" />
 						</div>
@@ -589,25 +589,25 @@
 						</div>
 						<div class="d-flex flex-grow-1 justify-content-end mx-2">
 							<img class="rounded me-1"
-								src="https://ddragon.leagueoflegends.com/cdn/14.2.1/img/item/${partyEach.item0}.png"
+								src="https://ddragon.leagueoflegends.com/cdn/14.3.1/img/item/${partyEach.item0}.png"
 								onerror="this.onerror=null; this.src='default-image.png'; this.alt='아이템'"
 								width="28px" height="28px"> <img class="rounded me-1"
-								src="https://ddragon.leagueoflegends.com/cdn/14.2.1/img/item/${partyEach.item1}.png"
+								src="https://ddragon.leagueoflegends.com/cdn/14.3.1/img/item/${partyEach.item1}.png"
 								onerror="this.onerror=null; this.src='default-image.png'; this.alt='아이템'"
 								width="28px" height="28px"> <img class="rounded me-1"
-								src="https://ddragon.leagueoflegends.com/cdn/14.2.1/img/item/${partyEach.item2}.png"
+								src="https://ddragon.leagueoflegends.com/cdn/14.3.1/img/item/${partyEach.item2}.png"
 								onerror="this.onerror=null; this.src='default-image.png'; this.alt='아이템'"
 								width="28px" height="28px"> <img class="rounded me-1"
-								src="https://ddragon.leagueoflegends.com/cdn/14.2.1/img/item/${partyEach.item3}.png"
+								src="https://ddragon.leagueoflegends.com/cdn/14.3.1/img/item/${partyEach.item3}.png"
 								onerror="this.onerror=null; this.src='default-image.png'; this.alt='아이템'"
 								width="28px" height="28px"> <img class="rounded me-1"
-								src="https://ddragon.leagueoflegends.com/cdn/14.2.1/img/item/${partyEach.item4}.png"
+								src="https://ddragon.leagueoflegends.com/cdn/14.3.1/img/item/${partyEach.item4}.png"
 								onerror="this.onerror=null; this.src='default-image.png'; this.alt='아이템'"
 								width="28px" height="28px"> <img class="rounded me-1"
-								src="https://ddragon.leagueoflegends.com/cdn/14.2.1/img/item/${partyEach.item5}.png"
+								src="https://ddragon.leagueoflegends.com/cdn/14.3.1/img/item/${partyEach.item5}.png"
 								onerror="this.onerror=null; this.src='default-image.png'; this.alt='아이템'"
 								width="28px" height="28px"> <img class="rounded me-1"
-								src="https://ddragon.leagueoflegends.com/cdn/14.2.1/img/item/${partyEach.item6}.png"
+								src="https://ddragon.leagueoflegends.com/cdn/14.3.1/img/item/${partyEach.item6}.png"
 								onerror="this.onerror=null; this.src='default-image.png'; this.alt='아이템'"
 								width="28px" height="28px">
 						</div>
