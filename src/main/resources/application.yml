@@ -32,4 +32,17 @@ spring:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
       ddl-auto: update
     properties:
-      hibernate.format_sql: true 
+      hibernate.format_sql: true
+      
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: jsy960822@gmail.com
+    password: wbrx gdep yecf bqgs
+    properties:
+      mail:
+        smtp:
+          auth: true
+          timeout: 5000
+          starttls:
+            enable: true    

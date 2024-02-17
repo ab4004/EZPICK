@@ -84,7 +84,10 @@ public class ParticipantDTO {
 	private int profileIcon;
 	private String puuid;
 	private int quadraKills;
-	private String riotIdName;
+	
+	@JsonProperty("riotIdGameName")
+	private String riotIdGameName; // riotIdName에서 riotIdGameName으로 변경됨(23.11월)
+	
 	private String riotIdTagline;
 	private String role;
 	private int sightWardsBoughtInGame;

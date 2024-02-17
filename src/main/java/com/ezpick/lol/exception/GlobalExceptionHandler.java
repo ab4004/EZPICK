@@ -9,9 +9,27 @@ import org.springframework.web.client.HttpClientErrorException;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
+	// 소환사 데이터를 찾을 수 없을 경우 에러 처리
 	@ExceptionHandler(HttpClientErrorException.NotFound.class)
 	@ResponseStatus(HttpStatus.NOT_FOUND)
 	public String handleNotFound(HttpClientErrorException.NotFound ex, Model model) {
-        return "error/summonerNotFound";
+		System.err.println(ex.getMessage());
+		return "error/summonerNotFound";
+	}
+
+	// API가 만료되었을 경우 에러 처리
+	@ExceptionHandler(HttpClientErrorException.Forbidden.class)
+	@ResponseStatus(HttpStatus.FORBIDDEN)
+	public String handleForbidden(HttpClientErrorException.Forbidden ex, Model model) {
+		System.err.println(ex.getMessage());
+		return "error/summonerForbidden";
+	}
+
+	// API가 만료되었을 경우 에러 처리
+	@ExceptionHandler(HttpClientErrorException.TooManyRequests.class)
+	@ResponseStatus(HttpStatus.TOO_MANY_REQUESTS)
+	public String handleForbidden(HttpClientErrorException.TooManyRequests ex, Model model) {
+		System.err.println(ex.getMessage());
+		return "error/summonerTooManyRequests";
 	}
 }

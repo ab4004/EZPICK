@@ -28,6 +28,10 @@ public class InfoDTO {
 	private List<ParticipantDTO> participants;
 	private String platformId;
 	private int queueId;
+	
+	
+	@JsonProperty("teams")
 	private List<TeamDTO> teams;
+	
 	private String tournamentCode;
 }
