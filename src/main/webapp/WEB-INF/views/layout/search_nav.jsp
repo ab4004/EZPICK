@@ -40,13 +40,16 @@
 </head>
 <body>
 	<div class="loader"></div>
-	<nav class="sticky-top" style="font-family: 'Noto Sans KR', sans-serif;">
+	<nav class="sticky-top"
+		style="font-family: 'Noto Sans KR', sans-serif;">
 
-		<!-- 메인 아이콘 -->
-		<div class="container-fluid navbar navbar-light bg-light px-5 border-bottom">
-			<a class="navbar-brand" href="/"><img
-				src="/img/ezpick_nav_icon.png"></a>
-
+		<div
+			class="container-fluid navbar navbar-light bg-light px-5 border-bottom">
+			<!-- 메인 아이콘 -->
+			<div class="w-25">
+				<a class="navbar-brand" href="/"><img
+					src="/img/ezpick_nav_icon.png"></a>
+			</div>
 			<!-- 메뉴 목록 -->
 			<div class="d-flex justify-content-center">
 				<div class="btn-group nav_menu">
@@ -57,54 +60,64 @@
 						class="navbar-brand mx-3" href="/news">뉴스</a>
 				</div>
 			</div>
-			<c:choose>
-				<c:when test="${empty user }">
-					<!-- 로그인 영역 -->
-					<a class="navbar-brand nav_sign" href="/auth/login"><i
-						class="bi bi-person-circle"></i> 로그인</a>
-				</c:when>
-				<c:otherwise>
-					<c:if test="${user.userRole eq 'ADMIN' }">
-						<div class="dropdown dropstart">
-							<a id="dropdown" class="navbar-brand nav_sign btn dropdown-toggle"
-								data-bs-toggle="dropdown" aria-expanded="false"> <i
-								class="bi bi-person-square"></i> ${user.userNickname}
-							</a>
-							<ul class="dropdown-menu text-center">
-								<li><a class="dropdown-item" href="/admin/page">관리자 페이지</a></li>
-								<li><a class="dropdown-item" href="/auth/logout">로그아웃</a></li>
-							</ul>
-						</div>
-					</c:if>
-					<c:if test="${user.userRole ne 'ADMIN' }">
-						<div class="dropdown dropstart">
-							<a id="dropdown" class="navbar-brand nav_sign btn dropdown-toggle"
-								data-bs-toggle="dropdown" aria-expanded="false"> <i
-								class="bi bi-person-square"></i> ${user.userNickname}
-							</a>
-							<ul class="dropdown-menu text-center">
-								<li><span class="dropdown-item-text">환영합니다</span></li>
-								<li><hr class="dropdown-divider"></li>
-								<li><a class="dropdown-item" href="/auth/myPage">내 정보</a></li>
-								<li><a class="dropdown-item" href="/auth/logout">로그아웃</a></li>
-							</ul>
-						</div>
-					</c:if>
-				</c:otherwise>
-			</c:choose>
+
+			<!-- 사용자 관련 -->
+			<div class="w-25 d-flex justify-content-end">
+				<c:choose>
+					<c:when test="${empty user }">
+						<!-- 로그인 영역 -->
+						<a class="navbar-brand nav_sign" href="/auth/login"><i
+							class="bi bi-person-circle"></i> 로그인</a>
+					</c:when>
+					<c:otherwise>
+						<c:if test="${user.userRole eq 'ADMIN' }">
+							<div class="dropdown dropstart">
+								<a id="dropdown"
+									class="navbar-brand nav_sign btn dropdown-toggle"
+									data-bs-toggle="dropdown" aria-expanded="false"> <i
+									class="bi bi-person-square"></i> ${user.userNickname}
+								</a>
+								<ul class="dropdown-menu text-center">
+									<li><a class="dropdown-item" href="/admin/page">관리자
+											페이지</a></li>
+									<li><a class="dropdown-item" href="/auth/logout">로그아웃</a></li>
+								</ul>
+							</div>
+						</c:if>
+						<c:if test="${user.userRole ne 'ADMIN' }">
+							<div class="dropdown dropstart">
+								<a id="dropdown"
+									class="navbar-brand nav_sign btn dropdown-toggle"
+									data-bs-toggle="dropdown" aria-expanded="false"> <i
+									class="bi bi-person-square"></i> ${user.userNickname}
+								</a>
+								<ul class="dropdown-menu text-center">
+									<li><span class="dropdown-item-text">환영합니다</span></li>
+									<li><hr class="dropdown-divider"></li>
+									<li><a class="dropdown-item" href="/auth/myPage">내 정보</a></li>
+									<li><a class="dropdown-item" href="/auth/logout">로그아웃</a></li>
+								</ul>
+							</div>
+						</c:if>
+					</c:otherwise>
+				</c:choose>
+			</div>
 		</div>
-		
+
 		<!-- 네비게이션 소환사 검색 영역 -->
-		<div class="container" style="background-color: #EEEEEE; border-radius: 0 0 25px 25px; max-width: 30%; min-width: 300px">
-			<form class="form-subscribe d-flex justify-content-center" id="summoner_search" action="/summoner" method="GET">
+		<div class="container"
+			style="background-color: #EEEEEE; border-radius: 0 0 25px 25px; max-width: 30%; min-width: 300px">
+			<form class="form-subscribe d-flex justify-content-center"
+				id="summoner_search" action="/summoner" method="GET">
 				<div class="input-group w-75 p-2">
-					<input type="text" class="form-control form-control-sm input-search"
-						id="gameName" name="gameName" placeholder="소환사 이름">
+					<input type="text"
+						class="form-control form-control-sm input-search" id="gameName"
+						name="gameName" placeholder="소환사 이름"> <input type="text"
+						class="form-control form-control-sm input-search" id="tagLine"
+						name="tagLine" placeholder="태그">
 
-					<input type="text" class="form-control form-control-sm input-search"
-						id="tagLine" name="tagLine" placeholder="태그">
-
-					<button class="btn btn-sm" id="submitButton" type="submit" style="background-color: #99dee1">
+					<button class="btn btn-sm" id="submitButton" type="submit"
+						style="background-color: #99dee1">
 						<i class="bi bi-search" style="color: #00ADB5"></i>
 					</button>
 				</div>

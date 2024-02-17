@@ -14,7 +14,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -38,8 +37,7 @@ public class Board {
 	@Column(name = "board_title", nullable = false, columnDefinition = "nvarchar(200)")
 	private String boardTitle; //제목
 	
-	@Lob
-	@Column(name = "board_content", nullable = false, columnDefinition = "nvarchar(2000)")
+	@Column(name = "board_content", nullable = false, columnDefinition = "TEXT")
 	private String boardContent; //내용
 	
 	@CreationTimestamp //JPA에서 엔티티의 생성 시간을 처리

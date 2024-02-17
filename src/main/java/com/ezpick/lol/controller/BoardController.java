@@ -32,6 +32,7 @@ public class BoardController {
 	@Autowired
 	private BoardService boardService;
 
+	// 커뮤니티 메인화면
 	@GetMapping("/board")
 	public String getBoardList(Model model, @RequestParam(defaultValue = "0") int page) {
 		Pageable pageable = PageRequest.of(page, 10, Sort.by("boardSeq").descending());
@@ -40,50 +41,77 @@ public class BoardController {
 		model.addAttribute("boardList", boardList);
 		model.addAttribute("currentNumber", boardPage.getNumber());
 		model.addAttribute("totalPages", boardPage.getTotalPages());
+		model.addAttribute("topTen", boardService.getTopTen());
 		return "board/boardList";
 	}
-
+	
+	// 게시글 작성 페이지
 	@GetMapping("/board/insertBoard")
 	public String insertBoard() {
 		return "board/insertBoard";
 	}
 
+	// 상세 게시글 페이지
 	@GetMapping("/board/detail/{boardSeq}")
 	public String getBoard(@PathVariable int boardSeq, Model model) {
 		model.addAttribute("board", boardService.getBoard(boardSeq));
 		return "board/getBoard";
 	}
-
+	
+	// 게시글 수정 페이지
 	@GetMapping("/board/updateBoard/{boardSeq}")
 	public String updateBoard(@PathVariable int boardSeq, Model model) {
 		model.addAttribute("board", boardService.getBoard(boardSeq));
 		return "board/updateBoard";
 	}
-	
+
+	// 게시글 삽입
 	@PostMapping("/board/insertBoard")
 	public @ResponseBody ResponseDTO<?> insertBoard(@RequestBody Board board, HttpSession session) {
-		
 		User user = (User) session.getAttribute("user");
 		if (user != null && !board.getBoardTitle().trim().equals("") && !board.getBoardContent().trim().equals("")) {
 			board.setUser(user);
-			
+
 			boardService.insertBoard(board);
-			
+
 			return new ResponseDTO<>(HttpStatus.OK.value(), "글 작성이 완료되었습니다.");
 		}
 		return new ResponseDTO<>(HttpStatus.BAD_REQUEST.value(), "글 작성 실패.");
-		
-	} 
 
-	@PutMapping("/board/updateBoard")
-	public @ResponseBody ResponseDTO<?> updateBoard(@RequestBody Board board) {
-		boardService.updateBoard(board);
-		return new ResponseDTO<>(HttpStatus.OK.value(), board.getBoardSeq() + " 뭘 수정함?");
 	}
 
+	// 게시글 수정
+	@PutMapping("/board/updateBoard")
+	public @ResponseBody ResponseDTO<?> updateBoard(@RequestBody Board board) {
+		if (boardService.getBoard(board.getBoardSeq()) != null) {
+			boardService.updateBoard(board);
+			return new ResponseDTO<>(HttpStatus.OK.value(), "글이 수정되었습니다.");
+		}
+
+		return new ResponseDTO<>(HttpStatus.BAD_REQUEST.value(), "현재 수정 중이거나, 수정할 수 없습니다.");
+	}
+
+	// 게시글 삭제
 	@DeleteMapping("/board/deleteBoard/{boardSeq}")
 	public @ResponseBody ResponseDTO<?> deleteBoard(@PathVariable int boardSeq) {
-		boardService.deleteBoard(boardSeq);
-		return new ResponseDTO<>(HttpStatus.OK.value(), boardSeq + "뭐가 삭제됨??");
+		if (boardService.getBoard(boardSeq) != null) {
+			boardService.deleteBoard(boardSeq);
+			return new ResponseDTO<>(HttpStatus.OK.value(), "해당 글이 삭제되었습니다. \n글번호 : " + boardSeq);
+		}
+		return new ResponseDTO<>(HttpStatus.BAD_REQUEST.value(), "이미 삭제되었거나, 삭제할 수 없습니다.");
+	}
+	
+	// 게시글 좋아요 증가
+	@PutMapping("/board/likeUp/{boardSeq}")
+	public @ResponseBody ResponseDTO<?> likeUp(@PathVariable int boardSeq) {
+		boardService.likeUp(boardSeq);
+		return new ResponseDTO<>(HttpStatus.OK.value(), "");
+	}
+	
+	// 게시글 싫어요 증가
+	@PutMapping("/board/hateUp/{boardSeq}")
+	public @ResponseBody ResponseDTO<?> hateUp(@PathVariable int boardSeq) {
+		boardService.hateUp(boardSeq);
+		return new ResponseDTO<>(HttpStatus.OK.value(), "");
 	}
 }

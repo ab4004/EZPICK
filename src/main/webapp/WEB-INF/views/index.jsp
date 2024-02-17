@@ -24,7 +24,7 @@
 						<!-- 전적 검색 창 -->
 						<form class="form-subscribe" id="summoner_search" action="/summoner" method="GET">
 							<div class="row">
-								<div class="col">
+								<div class="col" style="min-width: 300px">
 									<div class="input-group mb-3">
 										<input type="text"
 											class="form-control form-control-lg input-search"

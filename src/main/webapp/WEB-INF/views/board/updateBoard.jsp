@@ -14,7 +14,7 @@
 
 			<div class="d-flex">
 				<div class="w-25 me-3">
-					<input type="hidden" id="id" value="${board.boardSeq}"> <select class="form-select"
+					<input type="hidden" id="boardSeq" value="${board.boardSeq}"> <select class="form-select"
 						id="category" name="category">
 
 						<option value="${board.categoryNo}">-------</option>
