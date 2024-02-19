@@ -11035,3 +11035,11 @@ body.loading-overlay-active::before {
   backdrop-filter: blur(5px); /* 배경 흐림 효과 */
   z-index: 9998; /* 로딩 창보다 아래에 위치하도록 설정 */
 }
+
+.boardList_a {
+	text-decoration: none; color: black;
+}
+
+.boardList_a:hover {
+	color: #99dee1;
+}

@@ -30,7 +30,7 @@ public class RiotService {
 	 * 단 하루 24시간만 이용 가능하니 만료되었을 경우 해당 페이지(https://developer.riotgames.com/)에서 생성 또는 갱신해주세요.
 	 */
 
-	private static final String API_KEY = "RGAPI-bfb5d8fb-94a0-4ec0-9294-b90dc22e2aa7";
+	private static final String API_KEY = "RGAPI-9b619d04-a713-4a88-a5b7-0c3957f47080";
 	
 	/*
 	 * [NAME_TAG_URL]

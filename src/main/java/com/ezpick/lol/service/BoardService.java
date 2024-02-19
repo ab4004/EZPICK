@@ -69,9 +69,15 @@ public class BoardService {
 		findBoard.setBoardHates(findBoard.getBoardHates() + 1);
 	}
 	
-	// 인기글
+	// 인기글 TOP10
 	@Transactional(readOnly = true)
 	public List<Board> getTopTen() {
 		return boardRepository.findTop10ByOrderByBoardLikesDescBoardHitsDesc();
+	}
+	
+	// 카테고리 기준 정렬
+	@Transactional(readOnly = true)
+	public Page<Board> getCategoryBoard(int categoryNo, Pageable pageable) {
+		return boardRepository.findByCategoryNo(categoryNo, pageable);
 	}
 }
