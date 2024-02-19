@@ -36,7 +36,8 @@
 	rel="stylesheet">
 <script src="/webjars/summernote/0.8.10/summernote-bs4.min.js"></script>
 <!-- summernate  종료 -->
-<script src="/js/loading.js"></script>
+
+<!-- 로딩창 <script src="/js/loading.js"></script> -->
 </head>
 <body>
 	<div class="loader"></div>

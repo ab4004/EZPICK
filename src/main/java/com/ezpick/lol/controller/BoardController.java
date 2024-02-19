@@ -34,14 +34,38 @@ public class BoardController {
 
 	// 커뮤니티 메인화면
 	@GetMapping("/board")
-	public String getBoardList(Model model, @RequestParam(defaultValue = "0") int page) {
-		Pageable pageable = PageRequest.of(page, 10, Sort.by("boardSeq").descending());
-		Page<Board> boardPage = boardService.getBoardList(pageable);
+	public String getBoardList(Model model, @RequestParam(defaultValue = "all") String category, @RequestParam(defaultValue = "latest") String sort, @RequestParam(defaultValue = "0") int page) {
+		Pageable pageable;
+		
+		if (sort.equals("popular")) {
+			pageable = PageRequest.of(page, 15, Sort.by("boardLikes").descending());
+		} else {
+			pageable = PageRequest.of(page, 15, Sort.by("boardWrtDate").descending());
+		}
+		
+		Page<Board> boardPage;
+		
+		if (category.equals("자유")) {
+			boardPage = boardService.getCategoryBoard(1, pageable);
+		} else if (category.equals("유머")) {
+			boardPage = boardService.getCategoryBoard(2, pageable);
+		} else if (category.equals("사건")) {
+			boardPage = boardService.getCategoryBoard(3, pageable);
+		} else if (category.equals("정보")) {
+			boardPage = boardService.getCategoryBoard(4, pageable);
+		} else {
+			boardPage = boardService.getBoardList(pageable);
+		}
+		
 		List<Board> boardList = boardPage.getContent();
+		
 		model.addAttribute("boardList", boardList);
 		model.addAttribute("currentNumber", boardPage.getNumber());
 		model.addAttribute("totalPages", boardPage.getTotalPages());
 		model.addAttribute("topTen", boardService.getTopTen());
+		model.addAttribute("sort", sort);
+		model.addAttribute("category", category);
+		
 		return "board/boardList";
 	}
 	
@@ -103,14 +127,20 @@ public class BoardController {
 	
 	// 게시글 좋아요 증가
 	@PutMapping("/board/likeUp/{boardSeq}")
-	public @ResponseBody ResponseDTO<?> likeUp(@PathVariable int boardSeq) {
+	public @ResponseBody ResponseDTO<?> likeUp(@PathVariable int boardSeq, HttpSession session) {
+		if (session.getAttribute("user") == null) {
+			return new ResponseDTO<>(HttpStatus.BAD_REQUEST.value(), "");
+		}
 		boardService.likeUp(boardSeq);
 		return new ResponseDTO<>(HttpStatus.OK.value(), "");
 	}
 	
 	// 게시글 싫어요 증가
 	@PutMapping("/board/hateUp/{boardSeq}")
-	public @ResponseBody ResponseDTO<?> hateUp(@PathVariable int boardSeq) {
+	public @ResponseBody ResponseDTO<?> hateUp(@PathVariable int boardSeq, HttpSession session) {
+		if (session.getAttribute("user") == null) {
+			return new ResponseDTO<>(HttpStatus.BAD_REQUEST.value(), "");
+		}
 		boardService.hateUp(boardSeq);
 		return new ResponseDTO<>(HttpStatus.OK.value(), "");
 	}

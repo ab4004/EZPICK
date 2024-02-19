@@ -36,7 +36,8 @@
 	rel="stylesheet">
 <script src="/webjars/summernote/0.8.10/summernote-bs4.min.js"></script>
 <!-- summernate  종료 -->
-<script src="/js/loading.js"></script>
+
+<!-- 로딩창 <script src="/js/loading.js"></script> -->
 </head>
 <body style="font-family: 'Noto Sans KR', sans-serif;">
 	<div class="loader"></div>
@@ -53,8 +54,7 @@
 			<!-- 메뉴 목록 -->
 			<div class="d-flex justify-content-center">
 				<div class="btn-group nav_menu">
-					<a class="navbar-brand mx-3" href="/duo/duoList">듀오찾기</a>
-					<a class="navbar-brand mx-3" href="#">패치노트</a> <a
+					<a class="navbar-brand mx-3" href="/duo/duoList">듀오찾기</a> <a
 						class="navbar-brand mx-3" href="/board">커뮤니티</a> <a
 						class="navbar-brand mx-3" href="/match">경기 & 예매</a> <a
 						class="navbar-brand mx-3" href="#">승부 예측</a> <a

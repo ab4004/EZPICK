@@ -1,6 +1,7 @@
 $(document).ready(function() {
 	var loadingTimeout;
-
+	
+	/*
 	// 링크 클릭 이벤트 처리
 	$('a').on('click', function(event) {
 		// 링크에 summoner가 포함되어 있지 않으면 기본 동작을 유지하고 종료
@@ -30,6 +31,7 @@ $(document).ready(function() {
 			location.reload();
 		}, 3000);
 	});
+	*/
 
 	$('#summoner_search').submit(function(event) {
 		// 폼 전송을 중지하여 페이지 이동 방지
