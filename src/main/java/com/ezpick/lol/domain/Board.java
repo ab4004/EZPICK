@@ -2,11 +2,13 @@ package com.ezpick.lol.domain;
 
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.LastModifiedDate;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -15,6 +17,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -34,7 +37,7 @@ public class Board {
 	@Column(name = "board_seq", nullable = false)
 	private int boardSeq; //게시글 번호
 	
-	@Column(name = "board_title", nullable = false, columnDefinition = "nvarchar(200)")
+	@Column(name = "board_title", nullable = false, columnDefinition = "nvarchar(100)")
 	private String boardTitle; //제목
 	
 	@Column(name = "board_content", nullable = false, columnDefinition = "TEXT")
@@ -67,4 +70,7 @@ public class Board {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "user_id")
 	private User user;
+	
+	@OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
+	private List<Reply> reply;
 }

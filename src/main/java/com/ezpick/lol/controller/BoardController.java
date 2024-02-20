@@ -23,6 +23,7 @@ import com.ezpick.lol.domain.Board;
 import com.ezpick.lol.domain.User;
 import com.ezpick.lol.dto.ResponseDTO;
 import com.ezpick.lol.service.BoardService;
+import com.ezpick.lol.service.ReplyService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -32,19 +33,23 @@ public class BoardController {
 	@Autowired
 	private BoardService boardService;
 
+	@Autowired
+	private ReplyService replyService;
+
 	// 커뮤니티 메인화면
 	@GetMapping("/board")
-	public String getBoardList(Model model, @RequestParam(defaultValue = "all") String category, @RequestParam(defaultValue = "latest") String sort, @RequestParam(defaultValue = "0") int page) {
+	public String getBoardList(Model model, @RequestParam(defaultValue = "all") String category,
+			@RequestParam(defaultValue = "latest") String sort, @RequestParam(defaultValue = "0") int page) {
 		Pageable pageable;
-		
+
 		if (sort.equals("popular")) {
 			pageable = PageRequest.of(page, 15, Sort.by("boardLikes").descending());
 		} else {
 			pageable = PageRequest.of(page, 15, Sort.by("boardWrtDate").descending());
 		}
-		
+
 		Page<Board> boardPage;
-		
+
 		if (category.equals("자유")) {
 			boardPage = boardService.getCategoryBoard(1, pageable);
 		} else if (category.equals("유머")) {
@@ -56,36 +61,45 @@ public class BoardController {
 		} else {
 			boardPage = boardService.getBoardList(pageable);
 		}
-		
+
 		List<Board> boardList = boardPage.getContent();
-		
+
 		model.addAttribute("boardList", boardList);
 		model.addAttribute("currentNumber", boardPage.getNumber());
 		model.addAttribute("totalPages", boardPage.getTotalPages());
 		model.addAttribute("topTen", boardService.getTopTen());
 		model.addAttribute("sort", sort);
 		model.addAttribute("category", category);
-		
+
 		return "board/boardList";
 	}
-	
+
 	// 게시글 작성 페이지
 	@GetMapping("/board/insertBoard")
-	public String insertBoard() {
+	public String insertBoard(Model model) {
+		model.addAttribute("topTen", boardService.getTopTen());
 		return "board/insertBoard";
 	}
 
-	// 상세 게시글 페이지
+	// 상세 게시글 페이지 + 댓글 포함
 	@GetMapping("/board/detail/{boardSeq}")
 	public String getBoard(@PathVariable int boardSeq, Model model) {
-		model.addAttribute("board", boardService.getBoard(boardSeq));
+		Board board = boardService.getBoard(boardSeq);
+
+		if (board != null) {
+			model.addAttribute("board", board);
+			model.addAttribute("topTen", boardService.getTopTen());
+			model.addAttribute("replies", replyService.getReplyList(board));
+		}
+		
 		return "board/getBoard";
 	}
-	
+
 	// 게시글 수정 페이지
 	@GetMapping("/board/updateBoard/{boardSeq}")
 	public String updateBoard(@PathVariable int boardSeq, Model model) {
 		model.addAttribute("board", boardService.getBoard(boardSeq));
+		model.addAttribute("topTen", boardService.getTopTen());
 		return "board/updateBoard";
 	}
 
@@ -124,7 +138,7 @@ public class BoardController {
 		}
 		return new ResponseDTO<>(HttpStatus.BAD_REQUEST.value(), "이미 삭제되었거나, 삭제할 수 없습니다.");
 	}
-	
+
 	// 게시글 좋아요 증가
 	@PutMapping("/board/likeUp/{boardSeq}")
 	public @ResponseBody ResponseDTO<?> likeUp(@PathVariable int boardSeq, HttpSession session) {
@@ -134,7 +148,7 @@ public class BoardController {
 		boardService.likeUp(boardSeq);
 		return new ResponseDTO<>(HttpStatus.OK.value(), "");
 	}
-	
+
 	// 게시글 싫어요 증가
 	@PutMapping("/board/hateUp/{boardSeq}")
 	public @ResponseBody ResponseDTO<?> hateUp(@PathVariable int boardSeq, HttpSession session) {
