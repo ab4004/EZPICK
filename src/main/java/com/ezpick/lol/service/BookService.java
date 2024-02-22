@@ -35,10 +35,22 @@ public class BookService {
 		return bookRepository.findAllByMonthAndTeam(startOfMonth, startOfNextMonth, team);
 	}
 	
-	// 경기 일정 데이터 삽입
+	// 모든 일정 리스트
+	@Transactional
+	public List<Book> bookList() {
+		return bookRepository.findAll();
+	}
+	
+	// 경기 일정 데이터 삽입 ( 사용 )
 	@Transactional
 	public void insertBook(Book book) {
 		bookRepository.save(book);
+	}
+	
+	// 매치 총수
+	@Transactional(readOnly = true)
+	public int getTotalMatch() {
+		return bookRepository.countByBookstatus();
 	}
 	
 	// 경기 일정 데이터 수정
@@ -56,8 +68,7 @@ public class BookService {
 			findBook.setLink(book.getLink());
 			findBook.setRound(book.getRound());
 			findBook.setVersus(book.getVersus());
-			
-			bookRepository.save(findBook);
+			findBook.setResult(book.getResult());
 		}
 	}
 	

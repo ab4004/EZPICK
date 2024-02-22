@@ -11043,3 +11043,11 @@ body.loading-overlay-active::before {
 .boardList_a:hover {
 	color: #99dee1;
 }
+
+ #choice-btn:hover {
+ 	color: #99dee1;
+ }
+ 
+ .disabled#choice-btn {
+ 	border: none;
+ }

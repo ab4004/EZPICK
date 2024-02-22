@@ -120,6 +120,7 @@
 				<span class="me-2">원정팀</span>
 				<span class="me-2">링크</span>
 				<span class="me-2">장소</span>
+				<span class="me-2">[1 (홈) | 2 (원정)]</span>
 			</div>
 			
 			<hr>
@@ -168,15 +169,21 @@
 
 								<td width="30"
 									style="text-align: right; font-weight: bold; font-size: 18px;"><input type="text" value="${book.homeScore}" id="homeScore" style="width: 20px;"></td>
+									
 								<td width="10" style="text-align: center; color: gray;"><input type="text" value="${book.versus}" id="versus" style="width: 30px;"></td>
+								
 								<td width="30"
 									style="text-align: left; font-weight: bold; font-size: 18px;"><input type="text" value="${book.awayScore}" id="awayScore" style="width: 20px;"></td>
 
 								<td width="100" style="text-align: left; font-size: 17px;"><input type="text" value="${book.awayTeam}" id="awayTeam" style="width: 100px;"></td>
 
-								<td width="150" style="text-align: right"><input type="text" value="${book.link}" id="link" style="width: 100px;"></td>
-								<td width="200"
+								<td width="100" style="text-align: right"><input type="text" value="${book.link}" id="link" style="width: 100px;"></td>
+								
+								<td width="100"
 									style="text-align: center; color: gray; font-size: 15px;"><input type="text" value="${book.stadium}" id="stadium" style="width: 100px;"></td>
+								
+								<td width="100"><input type="text" value="${book.result}" id="result" style="width: 50px;"></td>
+								
 								<td>
 									<button class="btn btn-warning btn-updateBook" data-updateid="${book.id}" style="white-space: nowrap;">수정</button>
 								</td>
