@@ -24,22 +24,13 @@ public class ReplyService {
 	// 해당 게시글에 달린 댓글들을 모두 보여주는 리스트
 	@Transactional(readOnly = true)
 	public List<Reply> getReplyList(Board board) {
-		return replyRepository.findByBoardOrderByLike(board);
+		return replyRepository.findByBoardOrderByLikeDesc(board);
 	}
 
 	// 댓글 작성
 	@Transactional
 	public void addReply(Reply reply) {
 		replyRepository.save(reply);
-	}
-
-	// 댓글 수정
-	@Transactional
-	public void updateReply(Reply reply) {
-		Reply findReply = replyRepository.findById(reply.getId()).get();
-
-		if (findReply != null)
-			findReply.setBoard(reply.getBoard());
 	}
 
 	// 댓글 삭제
