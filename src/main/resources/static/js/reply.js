@@ -5,13 +5,20 @@ let replyObject = {
 		$("#reply_btn").on("click", () => {
 			_this.addReply();
 		});
-		
-		$("#reply_like_btn").on("click", () => {
-			_this.replyLike();
+
+		$(".reply_delete_btn").on("click", function() {
+			let id = $(this).closest(".comment").data("reply-id");
+			_this.deleteReply(id);
 		});
-		
-		$("#reply_hate_btn").on("click", () => {
-			_this.replyHate();
+
+		$(".reply_like_btn").on("click", function() {
+			let id = $(this).closest(".comment").data("reply-id");
+			_this.replyLike(id);
+		});
+
+		$(".reply_hate_btn").on("click", function() {
+			let id = $(this).closest(".comment").data("reply-id");
+			_this.replyHate(id);
 		});
 	},
 
@@ -22,77 +29,63 @@ let replyObject = {
 		$.ajax({
 			type: "POST",
 			url: "/addReply/" + board_id,
-			data: {content : replyContent},
+			data: { content: replyContent },
 		}).done(function(response) {
 			alert(response["data"]);
 			location.reload();
 		}).fail(function(error) {
 			alert(error["data"]);
-			location.href="/auth/login"
+			location.href = "/auth/login"
 		});
 	},
 
-	updateBoard: function() {
-		let updateInfo = {
-			boardSeq: $("#boardSeq").val(),
-			boardTitle: $("#title").val(),
-			boardContent: $("#content").val(),
-			categoryNo: $("#category").val(),
-		}
-
-		$.ajax({
-			type: "PUT",
-			url: "/board/updateBoard",
-			data: JSON.stringify(updateInfo),
-			contentType: "application/json; charset=utf-8"
-		}).done(function(response) {
-			alert(response["data"]);
-			location.href = "/board/detail/" + updateInfo.boardSeq;
-		}).fail(function(error) {
-			alert(error["data"]);
-		});
-	},
-
-	deleteBoard: function() {
-		let boardSeq = $("#boardSeq").val();
-
+	deleteReply: function(id) {
+		let board_id = $("#boardSeq").val();
+		
 		$.ajax({
 			type: "DELETE",
-			url: "/board/deleteBoard/" + boardSeq,
+			url: "/deleteReply/" + id,
 		}).done(function(response) {
-			alert(response["data"]);
-			location.href = "/board";
+			if (response.status === 200) {
+				alert(response["data"]);
+				location.href = "/board/detail/" + board_id;
+			} else {
+				alert(response["data"]);
+			}
 		}).fail(function(error) {
 			alert(error["data"]);
 		});
 	},
-	
-	replyLike: function() {
-		let id = $("#reply_id").val();
-		
+
+	replyLike: function(id) {
 		$.ajax({
 			type: "PUT",
-			url: "/replyLike/" + id
-		}).done(function() {
-			location.reload();
+			url: "/replyLike/" + id,
+			cache: false
+		}).done(function(response) {
+			if (response.status === 200) {
+				location.reload();
+			} else {
+				alert(response["data"]);
+			}
 		}).fail(function(error) {
 			alert(error["data"]);
-			location.href="/auth/login";
-		})
+		});
 	},
-	
-	replyHate: function() {
-		let id = $("#reply_id").val();
-		
+
+	replyHate: function(id) {
 		$.ajax({
 			type: "PUT",
 			url: "/replyHate/" + id
-		}).done(function() {
-			location.reload();
+		}).done(function(response) {
+			if (response.status === 200) {
+				location.reload();
+			} else {
+				alert(response["data"]);
+			}
 		}).fail(function(error) {
 			alert(error["data"]);
-			location.href="/auth/login";
-		})
+		});
 	},
 }
 

@@ -29,33 +29,17 @@ public class ReplyController {
 	@PostMapping("/addReply/{board_id}")
 	public ResponseDTO<?> addReply(@PathVariable int board_id, Reply reply, HttpSession session) {
 		if (session.getAttribute("user") != null) {
-			reply.setBoard(boardService.getBoard(board_id));
-			reply.setUser((User) session.getAttribute("user"));
-			replyService.addReply(reply);
-			return new ResponseDTO<>(HttpStatus.OK.value(), "댓글이 등록되었습니다.");
-		}
-
-		return new ResponseDTO<>(HttpStatus.BAD_REQUEST.value(), "로그인이 필요합니다.");
-	}
-
-	// 댓글 수정
-	@PutMapping("/updateReply")
-	public ResponseDTO<?> updateReply(Reply reply, HttpSession session) {
-		User user = (User) session.getAttribute("user");
-
-		if (user != null) {
-			Reply findReply = replyService.getReply(reply.getId());
-
-			if (findReply != null) {
-				findReply.setContent(reply.getContent());
-				replyService.updateReply(findReply);
-				return new ResponseDTO<>(HttpStatus.OK.value(), "댓글이 수정되었습니다.");
+			if (reply.getContent().length() > 0) {
+				reply.setBoard(boardService.getBoard(board_id));
+				reply.setUser((User) session.getAttribute("user"));
+				replyService.addReply(reply);
+				return new ResponseDTO<>(HttpStatus.OK.value(), "댓글이 등록되었습니다.");
 			}
-
-			return new ResponseDTO<>(HttpStatus.BAD_REQUEST.value(), "작성자가 다릅니다.");
+			
+			return new ResponseDTO<>(HttpStatus.BAD_REQUEST.value(), "1 ~ 200자 사이로 입력해주세요.");
 		}
 
-		return new ResponseDTO<>(HttpStatus.BAD_REQUEST.value(), "로그인이 필요합니다.");
+		return new ResponseDTO<>(HttpStatus.UNAUTHORIZED.value(), "로그인이 필요합니다.");
 	}
 
 	// 댓글 삭제
@@ -70,37 +54,40 @@ public class ReplyController {
 			return new ResponseDTO<>(HttpStatus.BAD_REQUEST.value(), "작성자가 다릅니다.");
 		}
 
-		return new ResponseDTO<>(HttpStatus.BAD_REQUEST.value(), "로그인이 필요합니다.");
+		return new ResponseDTO<>(HttpStatus.UNAUTHORIZED.value(), "로그인이 필요합니다.");
 	}
 
 	// 댓글 좋아요
 	@PutMapping("replyLike/{id}")
 	public ResponseDTO<?> replyLikeUp(@PathVariable int id, HttpSession session) {
-		User user = (User)session.getAttribute("user");
+		User user = (User) session.getAttribute("user");
 		if (user != null) {
 			if (replyService.getReply(id) != null) {
+				System.out.println("로그인 완료. 댓글 찾음");
+
 				replyService.replyLikeUp(id);
 				return new ResponseDTO<>(HttpStatus.OK.value(), "좋아요 증가");
 			}
-
+			System.out.println("로그인 완료. 댓글 못찾음");
 			return new ResponseDTO<>(HttpStatus.BAD_REQUEST.value(), "댓글을 찾을 수 없습니다.");
+		} else {
+			System.out.println("로그인 필요");
+			return new ResponseDTO<>(HttpStatus.UNAUTHORIZED.value(), "로그인이 필요합니다.");
 		}
-
-		return new ResponseDTO<>(HttpStatus.BAD_REQUEST.value(), "로그인이 필요합니다.");
 	}
 
 	// 댓글 싫어요
 	@PutMapping("replyHate/{id}")
 	public ResponseDTO<?> replyHateUp(@PathVariable int id, HttpSession session) {
-		if (session.getAttribute("user") != null) {
+		User user = (User) session.getAttribute("user");
+		if (user != null) {
 			if (replyService.getReply(id) != null) {
 				replyService.replyHateUp(id);
 				return new ResponseDTO<>(HttpStatus.OK.value(), "싫어요 증가");
 			}
-
 			return new ResponseDTO<>(HttpStatus.BAD_REQUEST.value(), "댓글을 찾을 수 없습니다.");
+		} else {
+			return new ResponseDTO<>(HttpStatus.UNAUTHORIZED.value(), "로그인이 필요합니다.");
 		}
-
-		return new ResponseDTO<>(HttpStatus.BAD_REQUEST.value(), "로그인이 필요합니다.");
 	}
 }

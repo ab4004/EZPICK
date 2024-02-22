@@ -98,30 +98,46 @@
 				<div class="card-header">
 					<div class="d-flex">
 						<h4 class="my-2" style="margin-bottom: 0">댓글</h4>
-						<span class="d-flex align-items-center ms-3">총 ${replies.size()}개</span>
+						<span class="d-flex align-items-center ms-3">총
+							${replies.size()}개</span>
 					</div>
 				</div>
 				<div class="card-body mb-3" style="background-color: #CAF0F0">
 					<div class="d-flex">
-						<textarea class="w-100 me-2 rounded-3 p-3" id="reply_content" rows="2" maxlength="200" placeholder="댓글을 입력하세요." style="border: none; resize: none;"></textarea>
-						<button class="btn btn-lg btn-primary" id="reply_btn" style="white-space: nowrap;">입력</button>
+						<textarea class="w-100 me-2 rounded-3 p-3" id="reply_content"
+							rows="2" maxlength="200" placeholder="댓글을 입력하세요."
+							style="border: none; resize: none;"></textarea>
+						<button class="btn btn-lg btn-primary" id="reply_btn"
+							style="white-space: nowrap;">입력</button>
 					</div>
 				</div>
 				<c:forEach var="reply" items="${replies}">
-				<div class="card-body mb-3">
-					<input type="hidden" id="reply_id" value="${reply.id}">
-					<div class="d-flex mb-2">
-						<span class="flex-grow-1 fw-bold">${reply.user.userNickname}</span>
-						<span class="ms-3 text-black-50">${reply.replyCrtDate}</span>
-					</div>
-					<div class="d-flex">
-						<span class="flex-grow-1">${reply.content}</span>
-						<div class="d-flex">
-							<button class="btn btn-sm btn-white me-2" id="reply_like_btn"><i class="bi bi-hand-thumbs-up text-primary"></i> ${reply.like}</button>
-							<button class="btn btn-sm btn-white" id="reply_hate_btn"><i class="bi bi-hand-thumbs-down text-danger"></i> ${reply.hate}</button>
+					<div class="comment" data-reply-id="${reply.id}">
+						<div class="card-body mb-3">
+							<div class="d-flex mb-2">
+								<c:if test="${reply.user eq user}">
+									<span class="flex-grow-1 fw-bold">${reply.user.userNickname} <button class="btn btn-danger btn-sm text-center px-1 reply_delete_btn" style="padding: 0;"><i class="bi bi-x-square"></i></button></span>
+								</c:if>
+								<c:if test="${reply.user ne user}">
+									<span class="flex-grow-1 fw-bold">${reply.user.userNickname}</span>
+								</c:if>
+								<span class="ms-3 text-black-50"><fmt:formatDate value="${reply.replyCrtDate}" pattern="yy-MM-dd HH:mm:ss"/></span>
+							</div>
+							<div class="d-flex">
+								<span class="flex-grow-1">${reply.content}</span>
+								<div class="d-flex">
+									<button class="btn btn-sm btn-white me-2 reply_like_btn">
+										<i class="bi bi-hand-thumbs-up text-primary"></i>
+										${reply.like}
+									</button>
+									<button class="btn btn-sm btn-white reply_hate_btn">
+										<i class="bi bi-hand-thumbs-down text-danger"></i>
+										${reply.hate}
+									</button>
+								</div>
+							</div>
 						</div>
 					</div>
-				</div>
 				</c:forEach>
 			</div>
 		</div>

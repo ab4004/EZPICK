@@ -8,5 +8,5 @@ import com.ezpick.lol.domain.Board;
 import com.ezpick.lol.domain.Reply;
 
 public interface ReplyRepository extends JpaRepository<Reply, Integer> {
-	List<Reply> findByBoardOrderByLike(Board board);
+	List<Reply> findByBoardOrderByLikeDesc(Board board);
 }
