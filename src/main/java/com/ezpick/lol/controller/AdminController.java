@@ -25,6 +25,7 @@ import com.ezpick.lol.domain.Book;
 import com.ezpick.lol.domain.User;
 import com.ezpick.lol.dto.ResponseDTO;
 import com.ezpick.lol.service.BookService;
+import com.ezpick.lol.service.PredService;
 import com.ezpick.lol.service.UserService;
 
 @Controller
@@ -35,6 +36,9 @@ public class AdminController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private PredService predService;
 
 	// 관리자 페이지
 	@GetMapping("/admin/page")
@@ -107,6 +111,7 @@ public class AdminController {
 	public @ResponseBody ResponseDTO<?> updateBook(@PathVariable int id, @RequestBody Book book) {
 		if (bookService.existsByBookId(id)) {
 			bookService.updateBook(id, book);
+			predService.updateHits();
 			return new ResponseDTO<>(HttpStatus.OK.value(), "경기 일정 데이터 수정 성공");
 		}
 

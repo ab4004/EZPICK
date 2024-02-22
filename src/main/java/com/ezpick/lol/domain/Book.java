@@ -2,6 +2,8 @@ package com.ezpick.lol.domain;
 
 import java.time.LocalDateTime;
 
+import org.hibernate.annotations.ColumnDefault;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -54,5 +56,8 @@ public class Book {
 
 	   @Column(length = 50)
 	   private String stadium;
-
+	   
+	   @ColumnDefault(value = "0")
+	   @Column(nullable = true)
+	   private int result;
 }
