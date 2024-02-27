@@ -39,9 +39,11 @@ public class BoardController {
 	// 커뮤니티 메인화면
 	@GetMapping("/board")
 	public String getBoardList(Model model, @RequestParam(defaultValue = "all") String category,
-			@RequestParam(defaultValue = "latest") String sort, @RequestParam(defaultValue = "0") int page) {
+			@RequestParam(defaultValue = "latest") String sort, @RequestParam(defaultValue = "0") int page,
+			@RequestParam(required = false) String condition, @RequestParam(required = false) String keyword) {
 		Pageable pageable;
 
+		// 인기순 정렬과 최신순 정렬
 		if (sort.equals("popular")) {
 			pageable = PageRequest.of(page, 15, Sort.by("boardLikes").descending());
 		} else {
@@ -50,16 +52,30 @@ public class BoardController {
 
 		Page<Board> boardPage;
 
-		if (category.equals("자유")) {
-			boardPage = boardService.getCategoryBoard(1, pageable);
-		} else if (category.equals("유머")) {
-			boardPage = boardService.getCategoryBoard(2, pageable);
-		} else if (category.equals("사건")) {
-			boardPage = boardService.getCategoryBoard(3, pageable);
-		} else if (category.equals("정보")) {
-			boardPage = boardService.getCategoryBoard(4, pageable);
+		// 게시판에서 검색 내역 확인(없으면 카테고리별 리스트)
+		if (condition != null && keyword != null && !keyword.isEmpty()) {
+			if (condition.equals("titleAndContent")) {
+				boardPage = boardService.getTitleAndContent(keyword, pageable);
+				model.addAttribute("condition", condition);
+				model.addAttribute("keyword", keyword);
+			} else {
+				boardPage = boardService.getWriter(keyword, pageable);
+				model.addAttribute("condition", condition);
+				model.addAttribute("keyword", keyword);
+			}
 		} else {
-			boardPage = boardService.getBoardList(pageable);
+			// 카테고리별 페이지 리스트
+			if (category.equals("자유")) {
+				boardPage = boardService.getCategoryBoard(1, pageable);
+			} else if (category.equals("유머")) {
+				boardPage = boardService.getCategoryBoard(2, pageable);
+			} else if (category.equals("사건")) {
+				boardPage = boardService.getCategoryBoard(3, pageable);
+			} else if (category.equals("정보")) {
+				boardPage = boardService.getCategoryBoard(4, pageable);
+			} else {
+				boardPage = boardService.getBoardList(pageable);
+			}
 		}
 
 		List<Board> boardList = boardPage.getContent();
@@ -91,7 +107,6 @@ public class BoardController {
 			model.addAttribute("topTen", boardService.getTopTen());
 			model.addAttribute("replies", replyService.getReplyList(board));
 		}
-		
 		return "board/getBoard";
 	}
 
@@ -115,7 +130,6 @@ public class BoardController {
 			return new ResponseDTO<>(HttpStatus.OK.value(), "글 작성이 완료되었습니다.");
 		}
 		return new ResponseDTO<>(HttpStatus.BAD_REQUEST.value(), "글 작성 실패.");
-
 	}
 
 	// 게시글 수정
@@ -125,7 +139,6 @@ public class BoardController {
 			boardService.updateBoard(board);
 			return new ResponseDTO<>(HttpStatus.OK.value(), "글이 수정되었습니다.");
 		}
-
 		return new ResponseDTO<>(HttpStatus.BAD_REQUEST.value(), "현재 수정 중이거나, 수정할 수 없습니다.");
 	}
 

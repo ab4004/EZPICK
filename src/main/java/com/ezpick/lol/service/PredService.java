@@ -25,8 +25,6 @@ public class PredService {
 	@Autowired
 	private BookRepository bookRepository;
 
-// ----------------------------------------------------------------------------
-
 	// 홈 팀 승리 예측 버튼 클릭 시 DB에 저장
 	@Transactional
 	public void pickHome(Pdb pdb) {
@@ -43,33 +41,6 @@ public class PredService {
 
 	}
 
-	// Book 에서 id 기준으로 조회
-	@Transactional(readOnly = true)
-	public Book getBook(int id) {
-
-		Book findBook = bookRepository.findById(id).orElseGet(() -> {
-			return new Book();
-		});
-
-		return findBook;
-	}
-
-	// ADMIN이 변경한 결과값을 pdbList와 비교하기 위함
-	@Transactional(readOnly = true)
-	public List<Pdb> pdbList() {
-
-		return pdbRepository.findAll();
-	}
-
-	//
-	@Transactional(readOnly = true)
-	public List<Pdb> findByBook(Book book) {
-
-		return pdbRepository.findByBook(book);
-	}
-
-//--------------------- 가능 / 불가능 ------------------------------------------------------------
-
 	// 경기 일정(Book)을 가져와서 주차의 시작 날짜와 마지막 날짜를 기준으로 리스트 가져오기
 	@Transactional(readOnly = true)
 	public List<Book> date(LocalDateTime startDate, LocalDateTime endDate) {
@@ -82,27 +53,11 @@ public class PredService {
 				.collect(Collectors.toList());
 	}
 
-//----------------------------------------------------------------------------------------------------------
-
-	@Transactional(readOnly = true)
-	public List<Pdb> pdb() {
-		return pdbRepository.findAll(Sort.by(Sort.Direction.DESC, "hits"));
-	}
-
 	// Pdb 에서 UserId & Book 기준으로 리스트 조회
 	@Transactional(readOnly = true)
 	public List<Pdb> getPdbByUserIdAndBook(User userId, Book book) {
 
 		List<Pdb> findPdb = pdbRepository.findByUserIdAndBook(userId, book);
-
-		return findPdb;
-	}
-
-	// Pdb 에서 UserId 기준으로 리스트 조회
-	@Transactional(readOnly = true)
-	public List<Pdb> getPdbByUserId(User userId) {
-
-		List<Pdb> findPdb = pdbRepository.findByUserId(userId);
 
 		return findPdb;
 	}

@@ -23,7 +23,7 @@
 		<div class="d-flex-column flex-grow-1">
 			<div class="card mb-4">
 				<input type="hidden" id="boardSeq" value="${board.boardSeq}">
-				<c:if test="${user.userNickname eq board.user.userNickname}">
+				<c:if test="${user.userNickname eq board.user.userNickname or user.userRole eq 'ADMIN'}">
 					<div class="card-header">
 						<a class="btn btn-danger btn-sm float-end" id="delete-board">
 							<i class="bi bi-journal-x"></i> 삭제
@@ -34,8 +34,8 @@
 					</div>
 				</c:if>
 				<div class="card-body">
-					<div style="word-wrap: break-word;">
-						<h3 style="word-wrap: break-word;">
+					<div style="max-width: 954px">
+						<h3>
 							<c:if test="${board.categoryNo eq 1}">
 								<span class="badge bg-warning me-2">자유</span>
 							</c:if>
@@ -48,7 +48,7 @@
 							<c:if test="${board.categoryNo eq 4}">
 								<span class="badge bg-info me-2">정보</span>
 							</c:if>
-							<span> ${board.boardTitle} </span>
+							<div style="display: block;">${board.boardTitle}</div>
 						</h3>
 					</div>
 
@@ -115,13 +115,20 @@
 					<div class="comment" data-reply-id="${reply.id}">
 						<div class="card-body mb-3">
 							<div class="d-flex mb-2">
-								<c:if test="${reply.user eq user}">
-									<span class="flex-grow-1 fw-bold">${reply.user.userNickname} <button class="btn btn-danger btn-sm text-center px-1 reply_delete_btn" style="padding: 0;"><i class="bi bi-x-square"></i></button></span>
+								<c:if test="${reply.user eq user or user.userRole eq 'ADMIN'}">
+									<span class="flex-grow-1 fw-bold">${reply.user.userNickname}
+										<button
+											class="btn btn-danger btn-sm text-center px-1 reply_delete_btn"
+											style="padding: 0;">
+											<i class="bi bi-x-square"></i>
+										</button>
+									</span>
 								</c:if>
-								<c:if test="${reply.user ne user}">
+								<c:if test="${reply.user ne user and user.userRole ne 'ADMIN'}">
 									<span class="flex-grow-1 fw-bold">${reply.user.userNickname}</span>
 								</c:if>
-								<span class="ms-3 text-black-50"><fmt:formatDate value="${reply.replyCrtDate}" pattern="yy-MM-dd HH:mm:ss"/></span>
+								<span class="ms-3 text-black-50"><fmt:formatDate
+										value="${reply.replyCrtDate}" pattern="yy-MM-dd HH:mm:ss" /></span>
 							</div>
 							<div class="d-flex">
 								<span class="flex-grow-1">${reply.content}</span>

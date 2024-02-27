@@ -117,7 +117,7 @@
 
 			<c:if test="${empty book}">
 				<div class="mt-5 text-center">
-					<h2>현재 잡혀있는 일정이 없습니다.</h2>
+					<h2>현재 경기 일정이 존재하지 않습니다.</h2>
 				</div>
 			</c:if>
 			<c:if test="${!empty book}">
@@ -208,7 +208,7 @@
 										</c:when>
 										<c:otherwise>
 											<button class="btn btn-dark" id="btn-book">
-												<a href="${book.link}"
+												<a href="${book.link}" target="_blank"
 													style="text-decoration: none; color: #0d6efd; font-size: 14px;">
 													<input type="hidden" value="${book.link}" />예매
 												</a>

@@ -36,47 +36,47 @@
 	<div class="container mt-3 flex-grow-1">
 		<div class="container mt-3 text-center">
 			<a class="btn btn-outline-secondary me-1"
-				href="/pred?startDate=2024-01-17T00:00:00&endDate=2024-01-21T00:00:00">
+				href="/pred?startDate=2024-01-17T00:00:00&endDate=2024-01-21T23:59:59">
 				<span class="small">종료</span><br> <span
 				style="text-decoration: none; color: #212529; font-size: 16px;"><span
 					style="font-size: 20px;">1</span>주차</span>
 			</a> <a class="btn btn-outline-secondary me-1"
-				href="/pred?startDate=2024-01-24T00:00:00&endDate=2024-01-28T00:00:00">
+				href="/pred?startDate=2024-01-24T00:00:00&endDate=2024-01-28T23:59:59">
 				<span class="small">종료</span><br> <span
 				style="text-decoration: none; color: #212529; font-size: 16px;"><span
 					style="font-size: 20px;">2</span>주차</span>
 			</a> <a class="btn btn-outline-secondary me-1"
-				href="/pred?startDate=2024-01-31T00:00:00&endDate=2024-02-04T00:00:00">
+				href="/pred?startDate=2024-01-31T00:00:00&endDate=2024-02-04T23:59:59">
 				<span class="small">종료</span><br> <span
 				style="text-decoration: none; color: #212529; font-size: 16px;"><span
 					style="font-size: 20px;">3</span>주차</span>
 			</a> <a class="btn btn-outline-secondary me-1"
-				href="/pred?startDate=2024-02-14T00:00:00&endDate=2024-02-18T00:00:00">
+				href="/pred?startDate=2024-02-14T00:00:00&endDate=2024-02-18T23:59:59">
 				<span class="small">종료</span><br> <span
 				style="text-decoration: none; color: #212529; font-size: 16px;"><span
 					style="font-size: 20px;">4</span>주차</span>
 			</a> <a class="btn btn-outline-secondary me-1"
-				href="/pred?startDate=2024-02-21T00:00:00&endDate=2024-02-25T00:00:00">
+				href="/pred?startDate=2024-02-21T00:00:00&endDate=2024-02-25T23:59:59">
 				<span class="small">종료</span><br> <span
 				style="text-decoration: none; color: #212529; font-size: 16px;"><span
 					style="font-size: 20px;">5</span>주차</span>
 			</a> <a class="btn btn-outline-secondary me-1"
-				href="/pred?startDate=2024-02-28T00:00:00&endDate=2024-03-03T00:00:00">
+				href="/pred?startDate=2024-02-28T00:00:00&endDate=2024-03-03T23:59:59">
 				<span class="small">진행 중</span><br> <span
 				style="text-decoration: none; color: #212529; font-size: 16px;"><span
 					style="font-size: 20px;">6</span>주차</span>
 			</a> <a class="btn btn-outline-secondary me-1 disabled"
-				href="/pred?startDate=2024-03-06T00:00:00&endDate=2024-03-10T00:00:00">
+				href="/pred?startDate=2024-03-06T00:00:00&endDate=2024-03-10T23:59:59">
 				<span class="small">예정</span><br> <span
 				style="text-decoration: none; color: #212529; font-size: 16px;"><span
 					style="font-size: 20px;">7</span>주차</span>
 			</a> <a class="btn btn-outline-secondary me-1 disabled"
-				href="/pred?startDate=2024-03-13T00:00:00&endDate=2024-03-17T00:00:00">
+				href="/pred?startDate=2024-03-13T00:00:00&endDate=2024-03-17T23:59:59">
 				<span class="small">예정</span><br> <span
 				style="text-decoration: none; color: #212529; font-size: 16px;"><span
 					style="font-size: 20px;">8</span>주차</span>
 			</a> <a class="btn btn-outline-secondary me-1 disabled"
-				href="/pred?startDate=2024-03-20T00:00:00&endDate=2024-03-24T00:00:00">
+				href="/pred?startDate=2024-03-20T00:00:00&endDate=2024-03-24T23:59:59">
 				<span class="small">예정</span><br> <span
 				style="text-decoration: none; color: #212529; font-size: 16px;"><span
 					style="font-size: 20px;">9</span>주차</span>
@@ -89,7 +89,7 @@
 			<div class="container mt-3 col-md-8 mb-5">
 				<c:if test="${empty pred}">
 					<div class="text-center mt-5">
-						<h3>현재 예정된 일정이 존재하지 않습니다.</h3>
+						<h3>승부예측 가능한 경기가 존재하지 않습니다.</h3>
 					</div>
 				</c:if>
 				<c:if test="${!empty pred}">
@@ -107,8 +107,7 @@
 						<table class="table mb-4 mt-1" style="min-width: 880px">
 							<tbody>
 								<tr>
-									<td width="300">
-										<c:if test="${pred.status eq '예정'}">
+									<td width="300"><c:if test="${pred.status eq '예정'}">
 											<button
 												class="btn btn-home container-fluid text-start fw-bold fs-5"
 												id="choice-btn" value="${pred.id}"
@@ -140,9 +139,7 @@
 											<img src="/img/team/hle.png" alt="hle.png" width="50">
 										</c:if> ${pred.homeTeam}
 
-										</button>
-
-									</td>
+										</button></td>
 
 									<td width="100"
 										style="text-align: right; font-weight: bold; font-size: 25px; padding: 20px;">${pred.homeScore}</td>
@@ -151,8 +148,7 @@
 									<td width="100"
 										style="text-align: left; font-weight: bold; font-size: 25px; padding: 20px;">${pred.awayScore}</td>
 
-									<td width="300">
-										<c:if test="${pred.status eq '예정'}">
+									<td width="300"><c:if test="${pred.status eq '예정'}">
 											<button
 												class="btn btn-away container-fluid text-end fw-bold fs-5"
 												id="choice-btn" value="${pred.id}"
@@ -183,8 +179,7 @@
 										</c:if> <c:if test="${pred.awayTeam eq '한화생명e스포츠'}">
 											<img src="/img/team/hle.png" alt="Team Logo" width="50">
 										</c:if>
-										</button>
-									</td>
+										</button></td>
 
 								</tr>
 							</tbody>
@@ -205,7 +200,7 @@
 					<table class="table" border="2">
 						<c:if test="${empty rank}">
 							<div class="mt-5 text-center">
-								<h5>현재 기록된 정보가 존재하지 않습니다.</h5>
+								<h5>현재 예측 랭킹이 존재하지 않습니다.</h5>
 							</div>
 						</c:if>
 
@@ -213,7 +208,7 @@
 							<thead style="background-color: #e9ecef;">
 								<th class="text-center">순위</th>
 								<th style="padding-right: 70px;">사용자</th>
-								<th style="padding-right: 10px;">적중</th>
+								<th style="padding-right: 10px; text-align: center;">적중</th>
 								<th class="text-center">적중률</th>
 							</thead>
 
@@ -227,7 +222,7 @@
 											<c:set var="previousSumHits" value="${currentRank[1]}"></c:set>
 											<td style="margin-right: 10px; text-align: center;">${currentCount}</td>
 											<td style="margin-right: 30px;">${currentRank[0].userNickname}</td>
-											<td>${currentRank[1]}/${totalMatch}</td>
+											<td style="text-align: center;">${currentRank[1]}</td>
 											<td style="margin-right: 10px; text-align: center;">${Math.round(currentRank[1]/totalMatch*100)}%</td>
 										</c:if>
 
@@ -236,7 +231,7 @@
 											<td style="margin-right: 10px; text-align: center;">${currentCount}</td>
 											<c:set value="${count + 1}" var="count" />
 											<td style="margin-right: 30px;">${currentRank[0].userNickname}</td>
-											<td>${currentRank[1]}/${totalMatch}</td>
+											<td style="text-align: center;">${currentRank[1]}</td>
 											<td style="margin-right: 10px; text-align: center;">${Math.round(currentRank[1]/totalMatch*100)}%</td>
 										</c:if>
 
@@ -247,13 +242,13 @@
 											<c:set value="${count + currentCount}" var="currentCount" />
 											<c:set value="1" var="count" />
 											<td style="margin-right: 30px;">${currentRank[0].userNickname}</td>
-											<td>${currentRank[1]}/${totalMatch}</td>
+											<td style="text-align: center;">${currentRank[1]}</td>
 											<td style="margin-right: 10px; text-align: center;">${Math.round(currentRank[1]/totalMatch*100)}%</td>
 										</c:if>
 									</tr>
 								</c:forEach>
+							</tbody>
 						</c:if>
-						</tbody>
 					</table>
 				</div>
 			</div>
