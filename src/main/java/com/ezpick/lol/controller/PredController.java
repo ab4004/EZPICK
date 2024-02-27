@@ -50,29 +50,25 @@ public class PredController {
 
 	// 홈 팀 승리 예측 버튼
 	@PostMapping("/pred/pickHome")
-	public @ResponseBody ResponseDTO<?> pickHome(@RequestBody Book book, Pdb pdb, HttpSession session) {
-
+	public @ResponseBody ResponseDTO<?> pickHome(@RequestBody Book book, HttpSession session) {
 		User user = (User) session.getAttribute("user");
-		Book books = predService.getBook(book.getId());
+		Book books = bookService.getBook(book.getId());
 
 		if (user != null) {
 			List<Pdb> existingPdb1 = predService.getPdbByUserIdAndBook(user, books);
 
 			if (existingPdb1.size() != 0) {
-
 				Pdb existingPdb = predService.getPdbByUserIdAndBook(user, books).get(0);
 				// 이미 예측이 존재하는 경우
 				if (existingPdb.getPick() == 1) {
 					// 이미 예측이 홈 팀이면서, 경기 번호가 같을 경우
-					return new ResponseDTO<>(HttpStatus.OK.value(), "이미 홈 팀을 선택하였습니다");
-
+					return new ResponseDTO<>(HttpStatus.OK.value(), "이미 홈 팀을 선택하였습니다.");
 				} else if (existingPdb.getPick() == 2) {
 					// 원정 팀에서 홈 팀으로 승리 예측을 변경하려는 경우
 					existingPdb.setPick(1); // 홈 팀으로 변경함
 					predService.pickHome(existingPdb); // 업데이트
-					return new ResponseDTO<>(HttpStatus.OK.value(), "홈 팀으로 선택을 변경하셨습니다");
+					return new ResponseDTO<>(HttpStatus.OK.value(), "홈 팀으로 선택을 변경하였습니다.");
 				}
-
 			} else {
 				// 새로운 예측을 추가하는 경우
 				Pdb newPdb = new Pdb();
@@ -82,37 +78,32 @@ public class PredController {
 				predService.pickHome(newPdb); // 저장
 				return new ResponseDTO<>(HttpStatus.OK.value(), "홈 팀을 선택하였습니다.");
 			}
-
 		}
 		return new ResponseDTO<>(HttpStatus.BAD_REQUEST.value(), "로그인 후 이용해주시기 바랍니다.");
-
 	}
 
 	// 원정 팀 승리 예측 버튼
 	@PostMapping("/pred/pickAway")
-	public @ResponseBody ResponseDTO<?> pickAway(@RequestBody Book book, Pdb pdb, HttpSession session) {
-
+	public @ResponseBody ResponseDTO<?> pickAway(@RequestBody Book book, HttpSession session) {
 		User user = (User) session.getAttribute("user");
-		Book books = predService.getBook(book.getId());
+		Book books = bookService.getBook(book.getId());
 
 		if (user != null) {
 			List<Pdb> existingPdb1 = predService.getPdbByUserIdAndBook(user, books);
 
 			if (existingPdb1.size() != 0) {
-
 				Pdb existingPdb = predService.getPdbByUserIdAndBook(user, books).get(0);
 				// 이미 동일 경기 예측한 이력이 있는 경우
 				if (existingPdb.getPick() == 2) {
 					// 이미 진행한 예측이 원정 팀이면서, 경기 번호가 같을 경우
-					return new ResponseDTO<>(HttpStatus.OK.value(), "이미 원정 팀을 선택하였습니다");
+					return new ResponseDTO<>(HttpStatus.OK.value(), "이미 원정 팀을 선택하였습니다.");
 
 				} else if (existingPdb.getPick() == 1) {
 					// 홈 팀에서 원정 팀으로 승리 예측을 변경하려는 경우
 					existingPdb.setPick(2); // 원정 팀으로 변경함
 					predService.pickAway(existingPdb); // 업데이트
-					return new ResponseDTO<>(HttpStatus.OK.value(), "원정 팀으로 선택을 변경하였습니다");
+					return new ResponseDTO<>(HttpStatus.OK.value(), "원정 팀으로 선택을 변경하였습니다.");
 				}
-
 			} else {
 				// 해당 경기 처음 예측을 진행하는 경우
 				Pdb newPdb = new Pdb();
@@ -122,10 +113,7 @@ public class PredController {
 				predService.pickAway(newPdb); // 저장
 				return new ResponseDTO<>(HttpStatus.OK.value(), "원정 팀을 선택하였습니다.");
 			}
-
 		}
 		return new ResponseDTO<>(HttpStatus.BAD_REQUEST.value(), "로그인 후 이용해주시기 바랍니다.");
-
 	}
-
 }

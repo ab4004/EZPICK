@@ -120,7 +120,6 @@ public class NewsService {
 
 			List<NewsItemDTO> newsList = new ArrayList<>(); // 크롤링한 뉴스 데이터를 리스트에 담기 위해 선언
 
-//            List<WebElement> newsElements = driver.findElements(By.cssSelector("li.news_card_item__2lh4o"));
 			By cards = By.cssSelector("li.news_card_item__2lh4o");
 			wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(cards));
 			List<WebElement> newsElements = driver.findElements(cards);
@@ -218,8 +217,7 @@ public class NewsService {
 	// WebDriver 초기화 및 설정 (ChromeDriver를 사용할 경우)
 	private WebDriver initWebDriver() {
 		// 크롬 드라이버를 사용하고, 크롤링할 웹 페이지를 드라이버로 가져옴
-		ChromeOptions options = new ChromeOptions(); // 원래 기본으로 실행하면 웹 스크래핑 동안 브라우저가 뜨는데 옵션 설정을 통해 백그라운드로 데이터를 가져올 수 있도록
-														// 설정
+		ChromeOptions options = new ChromeOptions(); // 원래 기본으로 실행하면 웹 스크래핑 동안 브라우저가 뜨는데 옵션 설정을 통해 백그라운드로 데이터를 가져올 수 있도록 설정
 		options.addArguments("--headless");
 		options.addArguments("--disable-gpu");
 		options.addArguments("--window-size=1920,1080");

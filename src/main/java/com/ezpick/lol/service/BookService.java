@@ -83,4 +83,16 @@ public class BookService {
 	public boolean existsByBookId(int id) {
 		return bookRepository.existsById(id);
 	}
+	
+
+	// Book 에서 id 기준으로 조회
+	@Transactional(readOnly = true)
+	public Book getBook(int id) {
+
+		Book findBook = bookRepository.findById(id).orElseGet(() -> {
+			return new Book();
+		});
+
+		return findBook;
+	}
 }

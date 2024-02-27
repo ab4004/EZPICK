@@ -49,7 +49,7 @@
 						</a>
 					</c:forEach>
 				</c:if>
-				<div>
+				<div class="d-flex justify-content-center">
 					<!-- 페이지가 1페이지가 넘으면 페이징 링크 생성 -->
 					<c:if test="${totalPages > 1}">
 						<ul class="pagination">

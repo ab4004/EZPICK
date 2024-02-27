@@ -227,7 +227,9 @@
 			<div class="card-container">
 				<c:choose>
 					<c:when test="${empty duoList }">
+					<div class="d-flex flex-grow-1 justify-content-center mt-5">
 						<p style="font-weight: bold; font-size: 35px;">등록된 글이 없습니다.</p>
+					</div>
 					</c:when>
 					<c:otherwise>
 						<c:forEach var="list" items="${duoList }">
