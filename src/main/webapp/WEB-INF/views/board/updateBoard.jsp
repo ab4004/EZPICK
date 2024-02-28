@@ -15,7 +15,7 @@
 			<jsp:include page="./boardNav.jsp"></jsp:include>
 		</div>
 		
-		<div class="card mb-5 p-4">
+		<div class="card mb-5 p-4 flex-grow-1">
 			<div class="d-flex">
 				<div class="w-25 me-3">
 					<input type="hidden" id="boardSeq" value="${board.boardSeq}"> <select class="form-select"
