@@ -20,7 +20,8 @@ public class BookController {
 	private BookService bookService;
 
 	@GetMapping("/match")
-	public String getMatchAndBook(Model model, @RequestParam(required = false, defaultValue = "0") int month,  @RequestParam(required = false) String team) {
+	public String getMatchAndBook(Model model, @RequestParam(required = false, defaultValue = "0") int month, 
+			@RequestParam(required = false) String team) {
 		int[] monthList = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
 		List<Book> bookList = null;
 		

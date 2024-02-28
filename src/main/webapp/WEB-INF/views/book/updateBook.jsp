@@ -112,14 +112,15 @@
 		<div class="container mt-3">
 			<div class="d-flex my-3">
 				<span class="badge bg-danger me-2">참고</span>
-				<span class="me-2">yyyy-MM-ddThh:mm</span>
-				<span class="me-2">[예정|종료]</span>
-				<span class="me-2">[정규 시즌 1R|정규 시즌 2R]</span>
-				<span class="me-2">홈팀</span>
-				<span class="me-2">[VS(예정)|:(종료)]</span>
-				<span class="me-2">원정팀</span>
-				<span class="me-2">링크</span>
-				<span class="me-2">장소</span>
+				<span class="me-2">"yyyy-MM-ddThh:mm"</span>
+				<span class="me-2">"[예정|종료]"</span>
+				<span class="me-2">"[정규 시즌 1R|정규 시즌 2R]"</span>
+				<span class="me-2">"홈팀"</span>
+				<span class="me-2">"[VS(예정)|:(종료)]"</span>
+				<span class="me-2">"원정팀"</span>
+				<span class="me-2">"링크"</span>
+				<span class="me-2">"장소"</span>
+				<span class="me-2">"[1 (홈) | 2 (원정)]"</span>
 			</div>
 			
 			<hr>
@@ -128,22 +129,15 @@
 
 			<c:if test="${empty book}">
 				<div class="mt-5 text-center">
-					<h2>현재 잡혀있는 일정이 없습니다.</h2>
+					<h2>현재 경기 일정이 존재하지 않습니다.</h2>
 				</div>
 			</c:if>
 			<c:if test="${!empty book}">
 				<c:forEach items="${book}" var="book" varStatus="loop">
 					<c:set var="dateTime" value="${book.date}" />
 
-					<%
-					// 가져온 데이터가 LocalDateTime 형식인데 실제로 JSP에서 나타낼 땐 Date 형식으로 바꿔줘야 해서 포맷팅 진행
-					DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 (E) HH:mm:ss");
-					LocalDateTime localDateTime = (LocalDateTime) pageContext.getAttribute("dateTime");
-					String fmtDate = formatter.format(localDateTime);
-					pageContext.setAttribute("matchDate", fmtDate);
-					%>
-					<fmt:parseDate var="parsedDate" value="${matchDate}"
-						pattern="yyyy년 MM월 dd일 (E) HH:mm:ss" />
+					<fmt:parseDate var="parsedDate" value="${dateTime}"
+						pattern="yyyy-MM-dd'T'HH:mm" />
 
 					<fmt:formatDate value="${parsedDate}" pattern="MM월 dd일 (E)"
 						var="date" />
@@ -168,15 +162,21 @@
 
 								<td width="30"
 									style="text-align: right; font-weight: bold; font-size: 18px;"><input type="text" value="${book.homeScore}" id="homeScore" style="width: 20px;"></td>
+									
 								<td width="10" style="text-align: center; color: gray;"><input type="text" value="${book.versus}" id="versus" style="width: 30px;"></td>
+								
 								<td width="30"
 									style="text-align: left; font-weight: bold; font-size: 18px;"><input type="text" value="${book.awayScore}" id="awayScore" style="width: 20px;"></td>
 
 								<td width="100" style="text-align: left; font-size: 17px;"><input type="text" value="${book.awayTeam}" id="awayTeam" style="width: 100px;"></td>
 
-								<td width="150" style="text-align: right"><input type="text" value="${book.link}" id="link" style="width: 100px;"></td>
-								<td width="200"
+								<td width="100" style="text-align: right"><input type="text" value="${book.link}" id="link" style="width: 100px;"></td>
+								
+								<td width="100"
 									style="text-align: center; color: gray; font-size: 15px;"><input type="text" value="${book.stadium}" id="stadium" style="width: 100px;"></td>
+								
+								<td width="100"><input type="text" value="${book.result}" id="result" style="width: 50px;"></td>
+								
 								<td>
 									<button class="btn btn-warning btn-updateBook" data-updateid="${book.id}" style="white-space: nowrap;">수정</button>
 								</td>

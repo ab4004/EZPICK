@@ -8,10 +8,14 @@
 <title>EZPICK - 글 수정</title>
 </head>
 <body class="totalBodyStyle">
-	<jsp:include page="../layout/nav.jsp"></jsp:include>
-	<div class="container flex-grow-1 mt-3">
-		<div class="card my-5 p-4">
-
+	<jsp:include page="../layout/search_nav.jsp"></jsp:include>
+	<div class="container d-flex flex-grow-1 mt-3">
+		<!-- 게시판 메뉴부분 -->
+		<div class="w-25 mb-4 me-3 d-flex-column">
+			<jsp:include page="./boardNav.jsp"></jsp:include>
+		</div>
+		
+		<div class="card mb-5 p-4 flex-grow-1">
 			<div class="d-flex">
 				<div class="w-25 me-3">
 					<input type="hidden" id="boardSeq" value="${board.boardSeq}"> <select class="form-select"

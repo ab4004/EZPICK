@@ -26,6 +26,7 @@ let bookObject = {
 				versus: row.find("#versus").val(),
 				link: row.find("#link").val(),
 				stadium: row.find("#stadium").val(),
+				result: row.find("#result").val(),
 				bookId: $(this).data("updateid") // 수정 버튼의 data-updateid 값을 가져옴
 			};
 

@@ -6,16 +6,6 @@
 <head>
 <title>EZPICK - 관리자</title>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
-<link href="/webjars/bootstrap/5.1.3/css/bootstrap.min.css"
-	rel="stylesheet">
-<script src="/webjars/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
-<script src="/webjars/jquery/3.6.0/dist/jquery.min.js"></script>
-
-<link href="/webjars/summernote/0.8.10/summernote-bs4.css"
-	rel="stylesheet">
-<script src="/webjars/summernote/0.8.10/summernote-bs4.min.js"></script>
 </head>
 
 <body class="totalBodyStyle">

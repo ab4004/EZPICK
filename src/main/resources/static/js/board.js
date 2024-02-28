@@ -86,6 +86,8 @@ let boardObject = {
 			url: "/board/likeUp/" + boardSeq
 		}).done(function() {
 			location.reload();
+		}).fail(function() {
+			location.href="/auth/login"
 		})
 	},
 	
@@ -97,6 +99,8 @@ let boardObject = {
 			url: "/board/hateUp/" + boardSeq
 		}).done(function() {
 			location.reload();
+		}).fail(function() {
+			location.href="/auth/login"
 		})
 	},
 }

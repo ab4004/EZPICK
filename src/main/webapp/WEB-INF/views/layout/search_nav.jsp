@@ -36,7 +36,8 @@
 	rel="stylesheet">
 <script src="/webjars/summernote/0.8.10/summernote-bs4.min.js"></script>
 <!-- summernate  종료 -->
-<script src="/js/loading.js"></script>
+
+<!-- 로딩창 <script src="/js/loading.js"></script> -->
 </head>
 <body>
 	<div class="loader"></div>
@@ -56,7 +57,7 @@
 					<a class="navbar-brand mx-3" href="/duo/duoList">듀오찾기</a> <a
 						class="navbar-brand mx-3" href="/board">커뮤니티</a> <a
 						class="navbar-brand mx-3" href="/match">경기 & 예매</a> <a
-						class="navbar-brand mx-3" href="#">승부 예측</a> <a
+						class="navbar-brand mx-3" href="/pred?startDate=2024-02-11T00:00:00&endDate=2024-02-18T23:59:59">승부 예측</a> <a
 						class="navbar-brand mx-3" href="/news">뉴스</a>
 				</div>
 			</div>
