@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.ezpick.lol.domain.Book;
@@ -26,4 +27,7 @@ public interface PdbRepository extends JpaRepository<Pdb, Integer> {
 	@Modifying
 	@Query("UPDATE Pdb p SET p.hits = 1 WHERE p.pick IN (SELECT b.result FROM Book b WHERE p.book.id = b.id)")
 	void updateHits();
+	
+	@Query("SELECT p.book, p.pick FROM Pdb p WHERE p.userId.id = :userId")
+	List<Object[]> pickList(@Param("userId") String userId);
 }

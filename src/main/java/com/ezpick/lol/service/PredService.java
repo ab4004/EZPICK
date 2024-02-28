@@ -75,4 +75,9 @@ public class PredService {
 	public void updateHits() {
 		pdbRepository.updateHits();
 	}
+	
+	@Transactional(readOnly = true)
+	public List<Object[]> pickList(String userId) {
+		return pdbRepository.pickList(userId);
+	}
 }

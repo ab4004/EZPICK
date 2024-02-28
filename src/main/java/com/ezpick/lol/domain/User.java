@@ -1,14 +1,17 @@
 package com.ezpick.lol.domain;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.springframework.data.annotation.CreatedDate;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -46,4 +49,13 @@ public class User {
 	@Enumerated(EnumType.STRING)
 	@Column(name = "user_role")
 	private RoleType userRole;
+	
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	private List<Board> board;
+	
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	private List<Reply> reply;
+
+	@OneToMany(mappedBy = "userId", cascade = CascadeType.ALL)
+	private List<Pdb> Pdb;
 }
