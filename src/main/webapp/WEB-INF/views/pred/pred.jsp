@@ -12,20 +12,9 @@
 <title>EZPICK - 승부예측</title>
 
 <style>
-#btn-pred {
-	background-color: transparent;
-	padding: 2px 15px;
-}
-
 .table-predTitle {
 	background-color: #e9ecef;
 	font-size: 18px;
-}
-
-.clicked-button {
-	background-color: #6610f2; /* 클릭된 상태의 배경색 */
-	color: #fff; /* 클릭된 상태의 텍스트 색 */
-	/* 다른 스타일 속성들 추가 가능 */
 }
 </style>
 </head>
@@ -107,17 +96,42 @@
 						<table class="table mb-4 mt-1" style="min-width: 880px">
 							<tbody>
 								<tr>
-									<td width="300"><c:if test="${pred.status eq '예정'}">
-											<button
-												class="btn btn-home container-fluid text-start fw-bold fs-5"
-												id="choice-btn" value="${pred.id}"
-												style="padding: 7px 20px;">
-										</c:if> <c:if test="${pred.status eq '종료'}">
-											<button
-												class="btn btn-home container-fluid text-start fw-bold fs-5 disabled"
-												id="choice-btn" value="${pred.id}"
-												style="padding: 7px 20px;">
-										</c:if> <c:if test="${pred.homeTeam eq 'DRX'}">
+									<td width="300">
+										<c:set var="checkHomePick" value="0" />
+										<c:if test="${!empty pick}">
+											<c:forEach var="myPick" items="${pick}">
+												<c:if test="${myPick[0].id eq pred.id and myPick[1] eq 1}">
+													<c:set var="checkHomePick" value="1" />
+												</c:if>
+											</c:forEach>
+										</c:if>
+										<c:choose>
+											<c:when test="${checkHomePick eq 1 and pred.status ne '종료'}">
+												<button
+													class="btn btn-home container-fluid text-start fw-bold fs-5"
+													id="choice-btn" value="${pred.id}"
+													style="padding: 7px 20px; background: linear-gradient(90deg, #6AE4FA, #C4E9EB, white); border: none; outline: none;">
+											</c:when>
+											<c:when test="${checkHomePick eq 1 and pred.status eq '종료'}">
+												<button
+													class="btn btn-home container-fluid text-start fw-bold fs-5 disabled"
+													id="choice-btn" value="${pred.id}"
+													style="padding: 7px 20px; background: linear-gradient(90deg, #C4E9EB, white); border: none; outline: none;">
+											</c:when>
+											<c:when test="${checkHomePick ne 1 and pred.status ne '종료'}">
+												<button
+													class="btn btn-home container-fluid text-start fw-bold fs-5"
+													id="choice-btn" value="${pred.id}"
+													style="padding: 7px 20px;">
+											</c:when>
+											<c:otherwise>
+												<button
+													class="btn btn-home container-fluid text-start fw-bold fs-5 disabled"
+													id="choice-btn" value="${pred.id}"
+													style="padding: 7px 20px;">
+											</c:otherwise>
+										</c:choose>
+										<c:if test="${pred.homeTeam eq 'DRX'}">
 											<img src="/img/team/drx.png" alt="drx.png" width="50">
 										</c:if> <c:if test="${pred.homeTeam eq '피어엑스'}">
 											<img src="/img/team/fox.png" alt="fox.png" width="50">
@@ -148,17 +162,42 @@
 									<td width="100"
 										style="text-align: left; font-weight: bold; font-size: 25px; padding: 20px;">${pred.awayScore}</td>
 
-									<td width="300"><c:if test="${pred.status eq '예정'}">
-											<button
-												class="btn btn-away container-fluid text-end fw-bold fs-5"
-												id="choice-btn" value="${pred.id}"
-												style="padding: 7px 20px;">
-										</c:if> <c:if test="${pred.status eq '종료'}">
-											<button
-												class="btn btn-away container-fluid text-end fw-bold fs-5 disabled"
-												id="choice-btn" value="${pred.id}"
-												style="padding: 7px 20px;">
-										</c:if> ${pred.awayTeam} <c:if test="${pred.awayTeam eq 'DRX'}">
+									<td width="300">
+									<c:set var="checkAwayPick" value="0" />
+										<c:if test="${!empty pick}">
+											<c:forEach var="myPick" items="${pick}">
+												<c:if test="${myPick[0].id eq pred.id and myPick[1] eq 2}">
+													<c:set var="checkAwayPick" value="1" />
+												</c:if>
+											</c:forEach>
+										</c:if>
+										<c:choose>
+											<c:when test="${checkAwayPick eq 1 and pred.status ne '종료'}">
+												<button
+													class="btn btn-away container-fluid text-end fw-bold fs-5"
+													id="choice-btn" value="${pred.id}"
+													style="padding: 7px 20px; background: linear-gradient(90deg, white, #C4E9EB, #6AE4FA); border: none; outline: none;">
+											</c:when>
+											<c:when test="${checkAwayPick eq 1 and pred.status eq '종료'}">
+												<button
+													class="btn btn-away container-fluid text-end fw-bold fs-5 disabled"
+													id="choice-btn" value="${pred.id}"
+													style="padding: 7px 20px; background: linear-gradient(90deg, white, #C4E9EB); border: none; outline: none;">
+											</c:when>
+											<c:when test="${checkAwayPick ne 1 and pred.status ne '종료'}">
+												<button
+													class="btn btn-away container-fluid text-end fw-bold fs-5"
+													id="choice-btn" value="${pred.id}"
+													style="padding: 7px 20px;">
+											</c:when>
+											<c:otherwise>
+												<button
+													class="btn btn-away container-fluid text-end fw-bold fs-5 disabled"
+													id="choice-btn" value="${pred.id}"
+													style="padding: 7px 20px;">
+											</c:otherwise>
+										</c:choose>
+										${pred.awayTeam} <c:if test="${pred.awayTeam eq 'DRX'}">
 											<img src="/img/team/drx.png" alt="Team Logo" width="50">
 										</c:if> <c:if test="${pred.awayTeam eq '농심 레드포스'}">
 											<img src="/img/team/ns.png" alt="Team Logo" width="50">
@@ -254,10 +293,10 @@
 			</div>
 		</div>
 		<!--  div class="row" 끝부분 -->
-	</div>
-	<!--  div class="container mt-3 flex-grow-1" 끝부분 -->
+			</div>
+			<!--  div class="container mt-3 flex-grow-1" 끝부분 -->
 
-	<jsp:include page="../layout/footer.jsp"></jsp:include>
-	<script src="/js/pred.js"></script>
+			<jsp:include page="../layout/footer.jsp"></jsp:include>
+			<script src="/js/pred.js"></script>
 </body>
 </html>

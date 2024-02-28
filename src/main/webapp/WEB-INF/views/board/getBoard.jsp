@@ -115,7 +115,7 @@
 					<div class="comment" data-reply-id="${reply.id}">
 						<div class="card-body mb-3">
 							<div class="d-flex mb-2">
-								<c:if test="${reply.user eq user or user.userRole eq 'ADMIN'}">
+								<c:if test="${reply.user.userNickname eq user.userNickname or user.userRole eq 'ADMIN'}">
 									<span class="flex-grow-1 fw-bold">${reply.user.userNickname}
 										<button
 											class="btn btn-danger btn-sm text-center px-1 reply_delete_btn"
@@ -124,7 +124,7 @@
 										</button>
 									</span>
 								</c:if>
-								<c:if test="${reply.user ne user and user.userRole ne 'ADMIN'}">
+								<c:if test="${reply.user.userNickname ne user.userNickname and user.userRole ne 'ADMIN'}">
 									<span class="flex-grow-1 fw-bold">${reply.user.userNickname}</span>
 								</c:if>
 								<span class="ms-3 text-black-50"><fmt:formatDate

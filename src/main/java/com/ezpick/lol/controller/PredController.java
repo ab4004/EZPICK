@@ -33,15 +33,21 @@ public class PredController {
 
 	// 승부예측 메인 화면
 	@GetMapping("/pred")
-	public String pred(Model model, @RequestParam(required = false) LocalDateTime startDate,
+	public String pred(Model model, HttpSession session, @RequestParam(required = false) LocalDateTime startDate,
 			@RequestParam(required = false) LocalDateTime endDate) {
-	
+
 		List<Book> pred = predService.date(startDate, endDate);
-	
+		
+		User user = (User) session.getAttribute("user");
+		
+		if (user!= null) {
+			model.addAttribute("pick", predService.pickList(user.getUserId()));
+		}
+		
 		model.addAttribute("pred", pred);
 		model.addAttribute("rank", predService.createRank());
 		model.addAttribute("totalMatch", bookService.getTotalMatch());
-
+		
 
 		return "pred/pred";
 	}
@@ -74,7 +80,7 @@ public class PredController {
 				Pdb newPdb = new Pdb();
 				newPdb.setUserId(user);
 				newPdb.setBook(books);
-				newPdb.setPick(1); // 홈 팀을 선택함				
+				newPdb.setPick(1); // 홈 팀을 선택함
 				predService.pickHome(newPdb); // 저장
 				return new ResponseDTO<>(HttpStatus.OK.value(), "홈 팀을 선택하였습니다.");
 			}
@@ -109,7 +115,7 @@ public class PredController {
 				Pdb newPdb = new Pdb();
 				newPdb.setUserId(user);
 				newPdb.setBook(books);
-				newPdb.setPick(2); // 원정 팀을 선택함				
+				newPdb.setPick(2); // 원정 팀을 선택함
 				predService.pickAway(newPdb); // 저장
 				return new ResponseDTO<>(HttpStatus.OK.value(), "원정 팀을 선택하였습니다.");
 			}

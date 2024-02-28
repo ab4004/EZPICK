@@ -17,10 +17,12 @@ let predObject = {
 					success: function(
 						response) {
 						alert(response["data"]);
+						location.reload();
 					},
 					error: function(
 						error) {
 						alert(error["data"]);
+						location.reload();
 					}
 				});
 			});
@@ -40,10 +42,12 @@ let predObject = {
 					success: function(
 						response) {
 						alert(response["data"]);
+						location.reload();
 					},
 					error: function(
 						error) {
 						alert(error["data"]);
+						location.reload();
 					}
 				});
 			});
