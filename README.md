@@ -1,5 +1,6 @@
 롤 전적 검색 및 커뮤니티 등 기능이 추가된 사이트 입니다.
 
+
 * 데이터베이스 관련 임시 스키마 작성 :
 
 create user 'admin'@'%' identified by 'admin1234';
